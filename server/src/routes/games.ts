@@ -53,14 +53,16 @@ router.post("/start", async (req: Request, res: Response) => {
 
     // For each question: pick 3 answers (correct + 2 random wrong), shuffle, strip correctAnswerId
     const sanitizedQuestions = allQuestions.map(
-      ({ correctAnswerId, answers, ...rest }) => {
+      ({ correctAnswerId, answers, imageUrl, ...rest }) => {
         const correctAnswer = answers.find((a) => a.id === correctAnswerId)!;
         const wrongAnswers = answers.filter((a) => a.id !== correctAnswerId);
         // Shuffle wrong answers and pick 2
         const shuffledWrong = wrongAnswers.sort(() => Math.random() - 0.5).slice(0, 2);
         // Combine correct + 2 wrong and shuffle
         const picked = [correctAnswer, ...shuffledWrong].sort(() => Math.random() - 0.5);
-        return { ...rest, answers: picked };
+        // Always derive imageUrl from question ID (images are static assets)
+        const resolvedImageUrl = `/images/questions/${rest.id}.png`;
+        return { ...rest, imageUrl: resolvedImageUrl, answers: picked };
       }
     );
 
