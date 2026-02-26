@@ -64,13 +64,19 @@ export default function GamePage() {
       return () => clearTimeout(timer);
     } else if (!showYalla) {
       setShowYalla(true);
-      const timer = setTimeout(() => {
-        setGameState("playing");
-        questionStartTime.current = Date.now();
-      }, 1000);
-      return () => clearTimeout(timer);
     }
   }, [gameState, countdownNum, showYalla]);
+
+  // Transition from "yalla" to playing (separate effect to avoid cleanup race)
+  useEffect(() => {
+    if (gameState !== "countdown" || !showYalla) return;
+
+    const timer = setTimeout(() => {
+      setGameState("playing");
+      questionStartTime.current = Date.now();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [gameState, showYalla]);
 
   const handleAnswer = useCallback(
     async (answerId: string) => {
@@ -158,18 +164,14 @@ export default function GamePage() {
       <div className="flex items-center justify-between px-4 pt-4">
         <button
           onClick={() => navigate("/")}
-          className="rounded-full border border-border-card p-2"
+          aria-label="חזרה לדף הבית"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-border-card"
         >
           <QuestionIcon size={18} color="#5b6478" />
         </button>
 
         <div className="flex flex-1 flex-col items-center gap-1 px-4">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-text-secondary">התקדמות</span>
-            <span className="text-sm font-bold text-blue-primary">
-              {currentQuestionIndex + 1}/{totalQuestions}
-            </span>
-          </div>
+          <span className="text-sm text-text-secondary">התקדמות</span>
           <ProgressBar current={currentQuestionIndex + 1} total={totalQuestions} />
         </div>
 
@@ -177,15 +179,29 @@ export default function GamePage() {
       </div>
 
       {/* Question content */}
-      <div className="flex flex-1 flex-col items-center px-6 pt-8">
-        {/* Lightbulb icon */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-primary/20"
-        >
-          <LightbulbIcon size={32} color="#2563eb" />
-        </motion.div>
+      <div className="flex flex-1 flex-col items-center px-6 pt-6">
+        {/* Question image or lightbulb fallback */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`img-${currentQuestionIndex}`}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mb-4"
+          >
+            {currentQuestion.imageUrl ? (
+              <QuestionImage
+                src={currentQuestion.imageUrl}
+                alt={`איור לשאלה`}
+              />
+            ) : (
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-primary/20">
+                <LightbulbIcon size={32} color="#2563eb" />
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Question text */}
         <AnimatePresence mode="wait">
@@ -219,12 +235,23 @@ export default function GamePage() {
                 let borderColor = "border-border-card";
                 let radioColor = "border-text-muted";
                 let radioFill = "transparent";
+                let bgColor = "bg-bg-card";
 
+                // Immediate "selected" feedback before API responds
+                if (selectedAnswer === answer.id && !answerResult) {
+                  borderColor = "border-blue-primary";
+                  radioColor = "border-blue-primary";
+                  radioFill = "#2563eb";
+                  bgColor = "bg-blue-primary/10";
+                }
+
+                // Final correct/wrong state after API responds
                 if (answerResult && selectedAnswer) {
                   if (answer.id === answerResult.correctAnswerId) {
                     borderColor = "border-success";
                     radioColor = "border-success";
                     radioFill = "#22c55e";
+                    bgColor = "bg-success/10";
                   } else if (
                     answer.id === selectedAnswer &&
                     !answerResult.correct
@@ -232,6 +259,9 @@ export default function GamePage() {
                     borderColor = "border-error";
                     radioColor = "border-error";
                     radioFill = "#ef4444";
+                    bgColor = "bg-error/10";
+                  } else {
+                    bgColor = "bg-bg-card";
                   }
                 }
 
@@ -244,9 +274,10 @@ export default function GamePage() {
                     whileTap={!selectedAnswer ? { scale: 0.98 } : {}}
                     onClick={() => handleAnswer(answer.id)}
                     disabled={!!selectedAnswer}
-                    className={`flex items-center gap-4 rounded-2xl border ${borderColor} bg-bg-card px-5 py-4 text-right transition-colors disabled:cursor-default`}
+                    aria-label={`תשובה: ${answer.text}`}
+                    className={`flex items-center gap-4 rounded-2xl border ${borderColor} ${bgColor} px-5 py-4 min-h-[56px] text-right transition-colors disabled:cursor-default`}
                   >
-                    {/* Radio circle on LEFT (visually, since RTL it goes to right of flex) */}
+                    {/* Radio circle */}
                     <div
                       className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 ${radioColor}`}
                     >
@@ -272,12 +303,36 @@ export default function GamePage() {
           <p className="text-center text-sm text-text-muted leading-relaxed">
             {answerResult
               ? answerResult.explanation
-              : "הסבר קצר על התשובה יופיע כאן לאחר הבחירה"}
+              : "בחר את התשובה הנכונה ביותר"}
           </p>
         </div>
       </div>
 
       <BottomNav variant="game" />
+    </div>
+  );
+}
+
+// --- Question image with fallback ---
+function QuestionImage({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-primary/20">
+        <LightbulbIcon size={32} color="#2563eb" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-28 w-28 overflow-hidden rounded-2xl border-2 border-blue-primary/30 shadow-lg">
+      <img
+        src={src}
+        alt={alt}
+        className="h-full w-full object-cover"
+        onError={() => setFailed(true)}
+      />
     </div>
   );
 }
@@ -297,20 +352,23 @@ function CountdownScreen({
       {/* Header */}
       <div className="flex items-center justify-between px-4 pt-4">
         <span className="text-lg font-bold text-white">מתחילים</span>
-        <button className="text-text-muted">
+        <button
+          aria-label="סגור"
+          className="rounded-full p-2 text-text-muted"
+        >
           <CloseIcon size={24} color="#5b6478" />
         </button>
       </div>
 
       {/* Map background area */}
       <div className="relative flex flex-1 flex-col items-center justify-center">
-        {/* Semi-transparent map overlay */}
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            background:
-              "radial-gradient(circle at center, #2d5a7b 0%, transparent 70%)",
-          }}
+        {/* Map background image */}
+        <img
+          src="/images/ui/jerusalem-map-bg.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover opacity-15"
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
         />
 
         {/* Countdown numbers */}
@@ -323,10 +381,9 @@ function CountdownScreen({
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.5, opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="text-7xl font-extrabold text-white"
+                className="text-8xl font-extrabold text-white"
               >
-                ...{countdownNum}...{countdownNum > 1 ? countdownNum - 1 : ""}
-                ...{countdownNum > 2 ? countdownNum - 2 : ""}
+                {countdownNum}
               </motion.div>
             ) : (
               <motion.div
@@ -348,40 +405,45 @@ function CountdownScreen({
             transition={{ delay: 0.5 }}
             className="mt-6 inline-block rounded-full bg-bg-card/80 px-6 py-2 backdrop-blur-sm"
           >
-            <span className="text-sm text-text-secondary">
-              ...מתכוננים למסע, <span className="font-bold text-white">{playerName}</span>
+            <span className="text-base text-text-secondary">
+              ,<span className="font-bold text-white">{playerName}</span> המשחק עומד להתחיל
             </span>
           </motion.div>
         </div>
       </div>
 
-      {/* Loading card at bottom */}
+      {/* Jerusalem image card at bottom (no fake progress bar) */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
         className="mx-4 mb-8 rounded-2xl bg-bg-card p-4"
       >
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-success">65%</span>
-          <span className="text-sm text-text-secondary">...טוען נתונים</span>
-        </div>
-        <div className="h-2 w-full rounded-full bg-border-card overflow-hidden">
+        <p className="mb-3 text-center text-sm text-text-secondary">
+          ...טוען נתונים
+        </p>
+        {/* Loading bar that matches design */}
+        <div className="mb-3 h-2 w-full rounded-full bg-border-card overflow-hidden">
           <motion.div
             className="h-full rounded-full bg-blue-primary"
-            initial={{ width: "20%" }}
+            initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{ duration: 3, ease: "easeInOut" }}
           />
         </div>
-        {/* Jerusalem image placeholder */}
-        <div
-          className="mt-3 h-32 rounded-xl overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(135deg, #2d5a7b 0%, #c4a86c 50%, #4a7c5b 100%)",
-          }}
-        />
+        {/* Jerusalem image */}
+        <div className="h-32 rounded-xl overflow-hidden">
+          <img
+            src="/images/ui/jerusalem-countdown.png"
+            alt="נוף ירושלים"
+            className="h-full w-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+              (e.target as HTMLImageElement).parentElement!.style.background =
+                "linear-gradient(135deg, #2d5a7b 0%, #c4a86c 50%, #4a7c5b 100%)";
+            }}
+          />
+        </div>
       </motion.div>
     </div>
   );

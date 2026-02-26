@@ -17,7 +17,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "flex items-center justify-center gap-3 rounded-full px-8 py-4 text-lg font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+    "flex items-center justify-center gap-3 rounded-full px-8 py-4 min-h-[52px] text-lg font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variants = {
     primary: "bg-blue-primary hover:bg-blue-dark text-white",
@@ -32,7 +32,7 @@ export default function Button({
       {...(props as any)}
     >
       {children}
-      {icon && <span className="flex items-center">{icon}</span>}
+      {icon && <span className="flex items-center" aria-hidden="true">{icon}</span>}
     </motion.button>
   );
 }

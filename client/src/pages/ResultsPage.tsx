@@ -1,11 +1,52 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Badge from "../components/Badge";
 import BottomNav from "../components/BottomNav";
+import Footer from "../components/Footer";
 import { ArrowRightIcon, ChartIcon, RefreshIcon } from "../components/Icons";
 import { getEncouragingMessage } from "../lib/constants";
+
+// Celebratory floating particles for kids
+function CelebrationParticles({ count = 12 }: { count?: number }) {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: count }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        delay: Math.random() * 2,
+        duration: 3 + Math.random() * 3,
+        size: 4 + Math.random() * 8,
+        color: ["#f59e0b", "#3b82f6", "#22c55e", "#a855f7", "#ec4899"][i % 5],
+      })),
+    [count]
+  );
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${p.x}%`,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+          }}
+          initial={{ y: "100vh", opacity: 0 }}
+          animate={{ y: "-20vh", opacity: [0, 1, 1, 0] }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            ease: "easeOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -44,6 +85,7 @@ export default function ResultsPage() {
   }, [totalScore]);
 
   const handlePlayAgain = () => {
+    // Keep playerName for quick replay (Fix #17)
     sessionStorage.removeItem("sessionId");
     sessionStorage.removeItem("questions");
     sessionStorage.removeItem("gameResult");
@@ -51,11 +93,18 @@ export default function ResultsPage() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
+    <div className="relative flex min-h-dvh flex-col bg-bg-primary pb-20">
+      {/* Celebration particles */}
+      {totalScore > 0 && <CelebrationParticles count={correctAnswers >= totalQuestions / 2 ? 16 : 8} />}
+
       {/* Header */}
       <div className="flex items-center justify-between px-4 pt-4">
         <span className="text-lg font-bold text-white">תוצאות המשחק</span>
-        <button onClick={() => navigate("/")} className="text-text-muted">
+        <button
+          onClick={() => navigate("/")}
+          className="flex h-12 w-12 items-center justify-center text-text-muted"
+          aria-label="חזרה לדף הבית"
+        >
           <ArrowRightIcon size={24} color="#8b95a8" />
         </button>
       </div>
@@ -167,6 +216,7 @@ export default function ResultsPage() {
         </Button>
       </motion.div>
 
+      <Footer />
       <BottomNav variant="results" />
     </div>
   );
