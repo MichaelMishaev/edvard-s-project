@@ -1,0 +1,808 @@
+{
+  "version": "1.0",
+  "language": "he",
+  "grade": 4,
+  "ageRange": "9-10",
+  "questions": [
+    {
+      "id": "JLM-001",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "מהי עיר הבירה של מדינת ישראל?",
+      "answers": [
+        { "id": "A", "text": "תל אביב" },
+        { "id": "B", "text": "חיפה" },
+        { "id": "C", "text": "ירושלים" },
+        { "id": "D", "text": "באר שבע" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "ירושלים היא בירת ישראל ובה נמצאים מוסדות השלטון.",
+      "tags": ["בירה", "ישראל"]
+    },
+    {
+      "id": "JLM-002",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "איך נקרא הקיר הקדוש ליהודים בעיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "מגדל דוד" },
+        { "id": "B", "text": "הכותל המערבי" },
+        { "id": "C", "text": "כיפת הסלע" },
+        { "id": "D", "text": "שער יפו" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "הכותל המערבי הוא מקום תפילה חשוב ליהודים.",
+      "tags": ["כותל", "יהדות"]
+    },
+    {
+      "id": "JLM-003",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "כמה שערים יש בחומת העיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "4" },
+        { "id": "B", "text": "6" },
+        { "id": "C", "text": "8" },
+        { "id": "D", "text": "12" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "לחומת העיר העתיקה יש 8 שערים.",
+      "tags": ["שערים", "עיר עתיקה"]
+    },
+    {
+      "id": "JLM-004",
+      "topic": "WARS_HISTORY",
+      "difficulty": 2,
+      "question": "באיזו מלחמה אוחדה ירושלים?",
+      "answers": [
+        { "id": "A", "text": "מלחמת העצמאות" },
+        { "id": "B", "text": "מלחמת ששת הימים" },
+        { "id": "C", "text": "מלחמת יום כיפור" },
+        { "id": "D", "text": "מבצע קדש" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "ירושלים אוחדה במלחמת ששת הימים בשנת 1967.",
+      "tags": ["מלחמה", "1967"]
+    },
+    {
+      "id": "JLM-005",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 1,
+      "question": "ירושלים קדושה לאילו דתות?",
+      "answers": [
+        { "id": "A", "text": "רק ליהדות" },
+        { "id": "B", "text": "רק לנצרות" },
+        { "id": "C", "text": "רק לאסלאם" },
+        { "id": "D", "text": "ליהדות, נצרות ואסלאם" }
+      ],
+      "correctAnswerId": "D",
+      "timeLimitSec": 20,
+      "explanation": "ירושלים קדושה לשלוש הדתות הגדולות.",
+      "tags": ["דתות", "קדושה"]
+    },
+    {
+      "id": "JLM-006",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איך נקרא הפרלמנט של ישראל שנמצא בירושלים?",
+      "answers": [
+        { "id": "A", "text": "הכנסת" },
+        { "id": "B", "text": "העירייה" },
+        { "id": "C", "text": "בית המשפט" },
+        { "id": "D", "text": "המשטרה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "הכנסת היא המקום שבו מחוקקים חוקים בישראל.",
+      "tags": ["כנסת", "שלטון"]
+    },
+    {
+      "id": "JLM-007",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איך נקרא השוק המפורסם בירושלים?",
+      "answers": [
+        { "id": "A", "text": "שוק מחנה יהודה" },
+        { "id": "B", "text": "שוק רמלה" },
+        { "id": "C", "text": "שוק הכרמל" },
+        { "id": "D", "text": "שוק עכו" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "שוק מחנה יהודה הוא שוק גדול ומפורסם בירושלים.",
+      "tags": ["שוק", "מחנה יהודה"]
+    },
+    {
+      "id": "JLM-008",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "איזה מבנה מוכר נמצא בהר הבית?",
+      "answers": [
+        { "id": "A", "text": "כיפת הסלע" },
+        { "id": "B", "text": "הכנסת" },
+        { "id": "C", "text": "גן סאקר" },
+        { "id": "D", "text": "בנייני האומה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "כיפת הסלע היא מבנה בעל כיפה זהובה שנמצא בהר הבית.",
+      "tags": ["הר הבית", "כיפת הסלע"]
+    },
+    {
+      "id": "JLM-009",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 2,
+      "question": "איך נקראת הכנסייה החשובה לנוצרים בעיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "כנסיית הקבר" },
+        { "id": "B", "text": "כנסיית יפו" },
+        { "id": "C", "text": "כנסיית הכרמל" },
+        { "id": "D", "text": "כנסיית השלום" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "כנסיית הקבר היא מקום קדוש מאוד לנוצרים.",
+      "tags": ["נצרות", "כנסייה"]
+    },
+    {
+      "id": "JLM-010",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איזה חיה מופיעה בסמל העיר ירושלים?",
+      "answers": [
+        { "id": "A", "text": "אריה" },
+        { "id": "B", "text": "נשר" },
+        { "id": "C", "text": "יונה" },
+        { "id": "D", "text": "סוס" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "בסמל ירושלים מופיע אריה עם ענף זית.",
+      "tags": ["סמל", "אריה"]
+    },
+    {
+      "id": "JLM-011",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "מה השם של הרכבת הקלה שנוסעת בירושלים?",
+      "answers": [
+        { "id": "A", "text": "הרכבת הקלה" },
+        { "id": "B", "text": "המטרו" },
+        { "id": "C", "text": "רכבת ישראל" },
+        { "id": "D", "text": "אגד" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "הרכבת הקלה היא אמצעי תחבורה ציבורי שעובר דרך מרכז העיר.",
+      "tags": ["תחבורה", "רכבת קלה"]
+    },
+    {
+      "id": "JLM-012",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "מה השם של הרובע היהודי בעיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "הרובע הנוצרי" },
+        { "id": "B", "text": "הרובע המוסלמי" },
+        { "id": "C", "text": "הרובע הארמני" },
+        { "id": "D", "text": "הרובע היהודי" }
+      ],
+      "correctAnswerId": "D",
+      "timeLimitSec": 20,
+      "explanation": "הרובע היהודי הוא אחד מארבעת הרבעים בעיר העתיקה.",
+      "tags": ["עיר עתיקה", "רובע יהודי"]
+    },
+    {
+      "id": "JLM-013",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 1,
+      "question": "איזה מקום קדוש לאסלאם נמצא בירושלים?",
+      "answers": [
+        { "id": "A", "text": "מסגד אל-אקצא" },
+        { "id": "B", "text": "הכותל המערבי" },
+        { "id": "C", "text": "כנסיית הקבר" },
+        { "id": "D", "text": "בית הכנסת החורבה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "מסגד אל-אקצא הוא מקום קדוש למוסלמים בהר הבית.",
+      "tags": ["אסלאם", "מסגד"]
+    },
+    {
+      "id": "JLM-014",
+      "topic": "WARS_HISTORY",
+      "difficulty": 1,
+      "question": "מי בנה את חומות העיר העתיקה שאנחנו רואים היום?",
+      "answers": [
+        { "id": "A", "text": "המלך דוד" },
+        { "id": "B", "text": "הרומאים" },
+        { "id": "C", "text": "סולימאן המפואר" },
+        { "id": "D", "text": "הבריטים" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "סולימאן המפואר בנה את החומות שאנחנו רואים היום לפני כ-500 שנה.",
+      "tags": ["חומות", "סולימאן"]
+    },
+    {
+      "id": "JLM-015",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "איזה מוזיאון מפורסם נמצא בירושלים ומציג ממצאים מארץ ישראל?",
+      "answers": [
+        { "id": "A", "text": "מוזיאון ישראל" },
+        { "id": "B", "text": "מוזיאון תל אביב" },
+        { "id": "C", "text": "מוזיאון חיפה" },
+        { "id": "D", "text": "מוזיאון הנגב" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "מוזיאון ישראל הוא מוזיאון גדול וחשוב בירושלים.",
+      "tags": ["מוזיאון", "תרבות"]
+    },
+    {
+      "id": "JLM-016",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "כמה רבעים יש בעיר העתיקה של ירושלים?",
+      "answers": [
+        { "id": "A", "text": "2" },
+        { "id": "B", "text": "3" },
+        { "id": "C", "text": "4" },
+        { "id": "D", "text": "6" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "בעיר העתיקה יש 4 רבעים: יהודי, מוסלמי, נוצרי וארמני.",
+      "tags": ["עיר עתיקה", "רבעים"]
+    },
+    {
+      "id": "JLM-017",
+      "topic": "WARS_HISTORY",
+      "difficulty": 1,
+      "question": "באיזו שנה הוקמה מדינת ישראל?",
+      "answers": [
+        { "id": "A", "text": "1945" },
+        { "id": "B", "text": "1948" },
+        { "id": "C", "text": "1950" },
+        { "id": "D", "text": "1967" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "מדינת ישראל הוקמה בשנת 1948.",
+      "tags": ["עצמאות", "1948"]
+    },
+    {
+      "id": "JLM-018",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "מה השם של גן החיות המפורסם בירושלים?",
+      "answers": [
+        { "id": "A", "text": "גן החיות התנכי" },
+        { "id": "B", "text": "ספארי רמת גן" },
+        { "id": "C", "text": "גן החיות של חיפה" },
+        { "id": "D", "text": "אקווריום אילת" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "גן החיות התנכי מציג בעלי חיים שמוזכרים בתנך.",
+      "tags": ["גן חיות", "בילוי"]
+    },
+    {
+      "id": "JLM-019",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "מה השם של השער הכי מפורסם בעיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "שער יפו" },
+        { "id": "B", "text": "שער חיפה" },
+        { "id": "C", "text": "שער תל אביב" },
+        { "id": "D", "text": "שער אילת" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "שער יפו הוא אחד השערים המפורסמים והכניסה הראשית לעיר העתיקה.",
+      "tags": ["שער יפו", "עיר עתיקה"]
+    },
+    {
+      "id": "JLM-020",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 1,
+      "question": "מה הכותל המערבי היה חלק ממנו בעבר?",
+      "answers": [
+        { "id": "A", "text": "חומת בית המקדש" },
+        { "id": "B", "text": "חומת העיר" },
+        { "id": "C", "text": "ארמון המלך" },
+        { "id": "D", "text": "בית כנסת" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "הכותל המערבי הוא שריד מחומת בית המקדש השני.",
+      "tags": ["כותל", "בית המקדש"]
+    },
+    {
+      "id": "JLM-021",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "מה השם של בית הנשיא שנמצא בירושלים?",
+      "answers": [
+        { "id": "A", "text": "בית הנשיא" },
+        { "id": "B", "text": "הבית הלבן" },
+        { "id": "C", "text": "ארמון המלך" },
+        { "id": "D", "text": "בית ראש הממשלה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "בית הנשיא הוא מקום המגורים והעבודה של נשיא המדינה.",
+      "tags": ["נשיא", "שלטון"]
+    },
+    {
+      "id": "JLM-022",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "איזה שער בעיר העתיקה סגור ואי אפשר לעבור בו?",
+      "answers": [
+        { "id": "A", "text": "שער יפו" },
+        { "id": "B", "text": "שער הרחמים" },
+        { "id": "C", "text": "שער שכם" },
+        { "id": "D", "text": "שער ציון" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "שער הרחמים סגור כבר מאות שנים.",
+      "tags": ["שער הרחמים", "עיר עתיקה"]
+    },
+    {
+      "id": "JLM-023",
+      "topic": "WARS_HISTORY",
+      "difficulty": 2,
+      "question": "מי כבש את ירושלים מהצלבנים לפני כ-800 שנה?",
+      "answers": [
+        { "id": "A", "text": "אלכסנדר מוקדון" },
+        { "id": "B", "text": "צלאח א-דין" },
+        { "id": "C", "text": "נפוליאון" },
+        { "id": "D", "text": "הרומאים" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "צלאח א-דין כבש את ירושלים מהצלבנים בשנת 1187.",
+      "tags": ["צלאח א-דין", "צלבנים"]
+    },
+    {
+      "id": "JLM-024",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "איזה פרח נחשב לסמל של ירושלים?",
+      "answers": [
+        { "id": "A", "text": "כלנית" },
+        { "id": "B", "text": "רקפת" },
+        { "id": "C", "text": "חבצלת" },
+        { "id": "D", "text": "פרג" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "הכלנית נבחרה כפרח הלאומי של ישראל ומופיעה הרבה באזור ירושלים.",
+      "tags": ["כלנית", "טבע"]
+    },
+    {
+      "id": "JLM-025",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "מה השם של המגדל המפורסם ליד שער יפו?",
+      "answers": [
+        { "id": "A", "text": "מגדל דוד" },
+        { "id": "B", "text": "מגדל אייפל" },
+        { "id": "C", "text": "מגדל בבל" },
+        { "id": "D", "text": "מגדל שלמה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "מגדל דוד הוא מצודה עתיקה ליד שער יפו.",
+      "tags": ["מגדל דוד", "עיר עתיקה"]
+    },
+    {
+      "id": "JLM-026",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 2,
+      "question": "איזה דרך מפורסמת עוברת בעיר העתיקה וקשורה לנצרות?",
+      "answers": [
+        { "id": "A", "text": "דרך בית לחם" },
+        { "id": "B", "text": "ויה דולורוזה" },
+        { "id": "C", "text": "דרך חברון" },
+        { "id": "D", "text": "דרך שכם" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "ויה דולורוזה היא דרך שבה לפי המסורת הנוצרית הלך ישו.",
+      "tags": ["נצרות", "ויה דולורוזה"]
+    },
+    {
+      "id": "JLM-027",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "מה השם של הגן הציבורי הגדול במרכז ירושלים?",
+      "answers": [
+        { "id": "A", "text": "גן סאקר" },
+        { "id": "B", "text": "גן מאיר" },
+        { "id": "C", "text": "פארק הירקון" },
+        { "id": "D", "text": "גן העצמאות" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "גן סאקר הוא הפארק הגדול ביותר בירושלים.",
+      "tags": ["גן סאקר", "פארק"]
+    },
+    {
+      "id": "JLM-028",
+      "topic": "WARS_HISTORY",
+      "difficulty": 2,
+      "question": "איזה עם עתיק הרס את בית המקדש הראשון?",
+      "answers": [
+        { "id": "A", "text": "הרומאים" },
+        { "id": "B", "text": "היוונים" },
+        { "id": "C", "text": "הבבלים" },
+        { "id": "D", "text": "המצרים" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "הבבלים הרסו את בית המקדש הראשון בשנת 586 לפני הספירה.",
+      "tags": ["בית המקדש", "בבל"]
+    },
+    {
+      "id": "JLM-029",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "מה צבע האבן שממנה בנויים רוב הבניינים בירושלים?",
+      "answers": [
+        { "id": "A", "text": "אדום" },
+        { "id": "B", "text": "לבן-צהבהב" },
+        { "id": "C", "text": "אפור" },
+        { "id": "D", "text": "חום כהה" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "יש חוק שמחייב לבנות בירושלים עם אבן ירושלמית בצבע לבן-צהבהב.",
+      "tags": ["אבן ירושלמית", "בנייה"]
+    },
+    {
+      "id": "JLM-030",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "מה השם של האוניברסיטה הכי ותיקה בירושלים?",
+      "answers": [
+        { "id": "A", "text": "האוניברסיטה העברית" },
+        { "id": "B", "text": "אוניברסיטת תל אביב" },
+        { "id": "C", "text": "הטכניון" },
+        { "id": "D", "text": "אוניברסיטת בן גוריון" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "האוניברסיטה העברית נוסדה בירושלים בשנת 1925.",
+      "tags": ["אוניברסיטה", "חינוך"]
+    },
+    {
+      "id": "JLM-031",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 2,
+      "question": "מה צבע הכיפה של כיפת הסלע?",
+      "answers": [
+        { "id": "A", "text": "כסף" },
+        { "id": "B", "text": "לבן" },
+        { "id": "C", "text": "זהב" },
+        { "id": "D", "text": "תכלת" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "לכיפת הסלע יש כיפה מכוסה בזהב.",
+      "tags": ["כיפת הסלע", "הר הבית"]
+    },
+    {
+      "id": "JLM-032",
+      "topic": "WARS_HISTORY",
+      "difficulty": 1,
+      "question": "מי היה המלך שבנה את בית המקדש הראשון?",
+      "answers": [
+        { "id": "A", "text": "המלך דוד" },
+        { "id": "B", "text": "המלך שלמה" },
+        { "id": "C", "text": "המלך שאול" },
+        { "id": "D", "text": "המלך הורדוס" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "המלך שלמה בנה את בית המקדש הראשון בירושלים.",
+      "tags": ["בית המקדש", "שלמה"]
+    },
+    {
+      "id": "JLM-033",
+      "topic": "DAILY_LIFE",
+      "difficulty": 3,
+      "question": "באיזה חודש חוגגים את יום ירושלים?",
+      "answers": [
+        { "id": "A", "text": "ניסן" },
+        { "id": "B", "text": "אייר" },
+        { "id": "C", "text": "תשרי" },
+        { "id": "D", "text": "אדר" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 30,
+      "explanation": "יום ירושלים חל בכ\"ח באייר, התאריך שבו אוחדה ירושלים.",
+      "tags": ["יום ירושלים", "חגים"]
+    },
+    {
+      "id": "JLM-034",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "מה השם של הגבעה שעליה עומד בית הנשיא?",
+      "answers": [
+        { "id": "A", "text": "הר הצופים" },
+        { "id": "B", "text": "הר הרצל" },
+        { "id": "C", "text": "גבעת רם" },
+        { "id": "D", "text": "הר ציון" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "הר הרצל הוא הר חשוב בירושלים שעליו גם בית העלמין הצבאי.",
+      "tags": ["הר הרצל", "הרים"]
+    },
+    {
+      "id": "JLM-035",
+      "topic": "WARS_HISTORY",
+      "difficulty": 3,
+      "question": "מי הכריז על ירושלים כבירת ממלכת ישראל בתנך?",
+      "answers": [
+        { "id": "A", "text": "משה" },
+        { "id": "B", "text": "יהושע" },
+        { "id": "C", "text": "המלך דוד" },
+        { "id": "D", "text": "המלך שלמה" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 30,
+      "explanation": "המלך דוד כבש את ירושלים והפך אותה לבירת ממלכתו.",
+      "tags": ["דוד המלך", "בירה"]
+    },
+    {
+      "id": "JLM-036",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 2,
+      "question": "מה מיוחד בהר הזיתים בירושלים?",
+      "answers": [
+        { "id": "A", "text": "יש בו בית חולים" },
+        { "id": "B", "text": "יש בו בית עלמין עתיק מאוד" },
+        { "id": "C", "text": "יש בו מגרש כדורגל" },
+        { "id": "D", "text": "יש בו קניון" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "הר הזיתים הוא בית עלמין יהודי עתיק מאוד וקדוש.",
+      "tags": ["הר הזיתים", "קבורה"]
+    },
+    {
+      "id": "JLM-037",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "מה השם של מקום ההנצחה לזכר השואה בירושלים?",
+      "answers": [
+        { "id": "A", "text": "יד ושם" },
+        { "id": "B", "text": "בית התפוצות" },
+        { "id": "C", "text": "מוזיאון ישראל" },
+        { "id": "D", "text": "היכל הזיכרון" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "יד ושם הוא מקום ההנצחה הלאומי לזכר השואה בירושלים.",
+      "tags": ["יד ושם", "שואה"]
+    },
+    {
+      "id": "JLM-038",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "מה נמצא מתחת לכותל המערבי?",
+      "answers": [
+        { "id": "A", "text": "מנהרות הכותל" },
+        { "id": "B", "text": "חניון" },
+        { "id": "C", "text": "קניון" },
+        { "id": "D", "text": "בריכת שחייה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "מנהרות הכותל הן מנהרות עתיקות שנמצאות מתחת לכותל.",
+      "tags": ["מנהרות", "כותל"]
+    },
+    {
+      "id": "JLM-039",
+      "topic": "HOLY_CITY",
+      "difficulty": 3,
+      "question": "מה השם העתיק של ירושלים שמוזכר בתנך?",
+      "answers": [
+        { "id": "A", "text": "שלם" },
+        { "id": "B", "text": "יבוס" },
+        { "id": "C", "text": "שניהם נכונים" },
+        { "id": "D", "text": "אף תשובה אינה נכונה" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 30,
+      "explanation": "ירושלים נקראה בתנך גם 'שלם' וגם 'יבוס' לפני שדוד כבש אותה.",
+      "tags": ["שמות עתיקים", "תנך"]
+    },
+    {
+      "id": "JLM-040",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "מה אוכלים הרבה בשוק מחנה יהודה?",
+      "answers": [
+        { "id": "A", "text": "פירות, ירקות ומאפים" },
+        { "id": "B", "text": "רק בשר" },
+        { "id": "C", "text": "רק דגים" },
+        { "id": "D", "text": "רק ממתקים" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "בשוק מחנה יהודה מוכרים פירות, ירקות, תבלינים ומאפים טעימים.",
+      "tags": ["שוק", "אוכל"]
+    },
+    {
+      "id": "JLM-041",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "מה השם של השער שדרכו נכנסים לרובע המוסלמי?",
+      "answers": [
+        { "id": "A", "text": "שער יפו" },
+        { "id": "B", "text": "שער שכם" },
+        { "id": "C", "text": "שער ציון" },
+        { "id": "D", "text": "שער האשפות" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "שער שכם הוא השער הגדול והמרשים ביותר בחומה הצפונית.",
+      "tags": ["שער שכם", "רובע מוסלמי"]
+    },
+    {
+      "id": "JLM-042",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 1,
+      "question": "כמה בתי מקדש היו ליהודים בירושלים?",
+      "answers": [
+        { "id": "A", "text": "1" },
+        { "id": "B", "text": "2" },
+        { "id": "C", "text": "3" },
+        { "id": "D", "text": "4" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "היו שני בתי מקדש: בית המקדש הראשון ובית המקדש השני.",
+      "tags": ["בית המקדש", "יהדות"]
+    },
+    {
+      "id": "JLM-043",
+      "topic": "WARS_HISTORY",
+      "difficulty": 2,
+      "question": "איזה עם עתיק הרס את בית המקדש השני?",
+      "answers": [
+        { "id": "A", "text": "הבבלים" },
+        { "id": "B", "text": "היוונים" },
+        { "id": "C", "text": "הרומאים" },
+        { "id": "D", "text": "הפרסים" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "הרומאים הרסו את בית המקדש השני בשנת 70 לספירה.",
+      "tags": ["בית המקדש", "רומאים"]
+    },
+    {
+      "id": "JLM-044",
+      "topic": "DAILY_LIFE",
+      "difficulty": 3,
+      "question": "מה מיוחד בחוק הבנייה בירושלים?",
+      "answers": [
+        { "id": "A", "text": "חייבים לכסות בניינים באבן ירושלמית" },
+        { "id": "B", "text": "אפשר לבנות רק בניינים נמוכים" },
+        { "id": "C", "text": "חייבים לצבוע בניינים בכחול" },
+        { "id": "D", "text": "אסור לבנות בלילה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "יש חוק שמחייב לחפות בניינים בירושלים באבן ירושלמית.",
+      "tags": ["בנייה", "חוק"]
+    },
+    {
+      "id": "JLM-045",
+      "topic": "HOLY_CITY",
+      "difficulty": 3,
+      "question": "מהי בריכת השילוח בעיר דוד?",
+      "answers": [
+        { "id": "A", "text": "בריכה עתיקה שאליה הגיעו מים ממעיין הגיחון" },
+        { "id": "B", "text": "בריכת שחייה מודרנית" },
+        { "id": "C", "text": "מזרקה בפארק" },
+        { "id": "D", "text": "בריכת דגים" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "בריכת השילוח היא בריכה עתיקה שהיוותה מקור מים חשוב.",
+      "tags": ["עיר דוד", "מים"]
+    },
+    {
+      "id": "JLM-046",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 3,
+      "question": "מהו הרובע הארמני בעיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "רובע של קהילה נוצרית מארמניה" },
+        { "id": "B", "text": "שוק של תבלינים" },
+        { "id": "C", "text": "מוזיאון עתיק" },
+        { "id": "D", "text": "גן ציבורי" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "הרובע הארמני הוא מקום מגורים של קהילה ארמנית נוצרית עתיקה.",
+      "tags": ["רובע ארמני", "ארמנים"]
+    },
+    {
+      "id": "JLM-047",
+      "topic": "WARS_HISTORY",
+      "difficulty": 3,
+      "question": "מה קרה בירושלים בזמן המנדט הבריטי?",
+      "answers": [
+        { "id": "A", "text": "הבריטים שלטו בארץ ישראל וירושלים הייתה בירת המנדט" },
+        { "id": "B", "text": "הבריטים הרסו את העיר העתיקה" },
+        { "id": "C", "text": "הבריטים בנו את הכותל" },
+        { "id": "D", "text": "הבריטים עזבו אחרי שנה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "בריטניה שלטה בארץ ישראל מ-1917 עד 1948 וירושלים הייתה הבירה.",
+      "tags": ["מנדט", "בריטים"]
+    },
+    {
+      "id": "JLM-048",
+      "topic": "HOLY_CITY",
+      "difficulty": 3,
+      "question": "מה מיוחד במנהרת חזקיהו בעיר דוד?",
+      "answers": [
+        { "id": "A", "text": "היא מנהרת מים שנחצבה לפני כ-2,700 שנה" },
+        { "id": "B", "text": "היא מנהרת רכבת" },
+        { "id": "C", "text": "היא מנהרת כבישים" },
+        { "id": "D", "text": "היא נבנתה לפני 100 שנה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "המלך חזקיהו חצב מנהרת מים באורך 533 מטר לפני כ-2,700 שנה.",
+      "tags": ["חזקיהו", "עיר דוד"]
+    },
+    {
+      "id": "JLM-049",
+      "topic": "WARS_HISTORY",
+      "difficulty": 3,
+      "question": "מה היה קורה בתשעה באב בהיסטוריה של ירושלים?",
+      "answers": [
+        { "id": "A", "text": "נחרבו שני בתי המקדש" },
+        { "id": "B", "text": "נבנתה העיר העתיקה" },
+        { "id": "C", "text": "הגיעו העולים הראשונים" },
+        { "id": "D", "text": "נחתם הסכם שלום" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "לפי המסורת, שני בתי המקדש נחרבו בתשעה באב.",
+      "tags": ["תשעה באב", "חורבן"]
+    },
+    {
+      "id": "JLM-050",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 3,
+      "question": "למה ירושלים נקראת גם 'עיר השלום'?",
+      "answers": [
+        { "id": "A", "text": "כי השם ירושלים מכיל את המילה 'שלום'" },
+        { "id": "B", "text": "כי שם חתמו על הסכם שלום" },
+        { "id": "C", "text": "כי אין שם מלחמות" },
+        { "id": "D", "text": "כי שם גרים רק אנשים טובים" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "השם ירושלים מכיל את המילה 'שלום' ולכן נקראת עיר השלום.",
+      "tags": ["שם", "שלום"]
+    }
+  ]
+}

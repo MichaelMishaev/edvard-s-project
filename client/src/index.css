@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heebo: "Heebo", sans-serif;
+
+  --color-bg-primary: #0a0e1a;
+  --color-bg-card: #131a2e;
+  --color-bg-card-hover: #1a2340;
+  --color-border-card: #1e2a45;
+  --color-border-subtle: #151d33;
+
+  --color-blue-primary: #2563eb;
+  --color-blue-light: #3b82f6;
+  --color-blue-dark: #1d4ed8;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #8b95a8;
+  --color-text-muted: #5b6478;
+
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+
+  --color-rank-gold: #f59e0b;
+  --color-rank-silver: #9ca3af;
+  --color-rank-bronze: #d97706;
+  --color-rank-blue: #3b82f6;
+  --color-rank-green: #22c55e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Heebo", sans-serif;
+  direction: rtl;
+}
+
+body {
+  background-color: #0a0e1a;
+  color: #ffffff;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  font-family: "Heebo", sans-serif;
+}
+
+/* Hide scrollbar but allow scrolling */
+::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+/* Disable text selection on buttons for children */
+button {
+  -webkit-user-select: none;
+  user-select: none;
+}

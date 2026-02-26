@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1772118656949,
+      "tag": "0000_cloudy_junta",
+      "breakpoints": true
+    }
+  ]
+}
