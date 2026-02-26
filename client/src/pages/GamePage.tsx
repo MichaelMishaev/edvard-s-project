@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ScoreDisplay from "../components/ScoreDisplay";
 import ProgressBar from "../components/ProgressBar";
 import BottomNav from "../components/BottomNav";
+import Footer from "../components/Footer";
 import { CloseIcon, QuestionIcon, LightbulbIcon } from "../components/Icons";
 import { useSubmitAnswer, useCompleteGame } from "../hooks/useGame";
 import type { Question } from "../lib/types";
@@ -306,6 +307,19 @@ export default function GamePage() {
               : "בחר את התשובה הנכונה ביותר"}
           </p>
         </div>
+
+        <Footer />
+      </div>
+
+      {/* Decorative Jerusalem illustration - fills remaining space */}
+      <div className="relative mt-auto w-full overflow-hidden" style={{ maxHeight: '35vh' }}>
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-bg-primary to-transparent z-10" />
+        <img
+          src="/images/ui/jerusalem-quiz-bg.png"
+          alt=""
+          aria-hidden="true"
+          className="w-full object-cover object-top opacity-30"
+        />
       </div>
 
       <BottomNav variant="game" />
@@ -326,7 +340,7 @@ function QuestionImage({ src, alt }: { src: string; alt: string }) {
   }
 
   return (
-    <div className="h-28 w-28 overflow-hidden rounded-2xl border-2 border-blue-primary/30 shadow-lg">
+    <div className="h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-56 lg:w-56 overflow-hidden rounded-2xl border-2 border-blue-primary/30 shadow-lg">
       <img
         src={src}
         alt={alt}
