@@ -1,31 +1,78 @@
 export const BADGE_CONFIG: Record<
   string,
-  { icon: string; color: string; bgColor: string }
+  { icon: string; color: string; bgColor: string; borderColor: string }
 > = {
   "אלוף ירושלים": {
     icon: "star-medal",
     color: "#22c55e",
     bgColor: "#14532d",
+    borderColor: "#22c55e",
   },
   "מהיר כברק": {
     icon: "lightning",
     color: "#f59e0b",
     bgColor: "#78350f",
+    borderColor: "#f59e0b",
   },
   "חוקר מתחיל": {
     icon: "compass",
     color: "#3b82f6",
     bgColor: "#1e3a5f",
+    borderColor: "#3b82f6",
   },
   "כוכב היסטוריה": {
     icon: "history-star",
     color: "#a855f7",
     bgColor: "#581c87",
+    borderColor: "#a855f7",
   },
   "גיבור השתתפות": {
     icon: "participation",
     color: "#ec4899",
     bgColor: "#831843",
+    borderColor: "#ec4899",
+  },
+  "מגן דוד": {
+    icon: "shield",
+    color: "#eab308",
+    bgColor: "#713f12",
+    borderColor: "#eab308",
+  },
+  "שער האריות": {
+    icon: "lion",
+    color: "#60a5fa",
+    bgColor: "#1e3a5f",
+    borderColor: "#60a5fa",
+  },
+  "מנורת הזהב": {
+    icon: "menorah",
+    color: "#fbbf24",
+    bgColor: "#78350f",
+    borderColor: "#fbbf24",
+  },
+  "חומות ירושלים": {
+    icon: "walls",
+    color: "#94a3b8",
+    bgColor: "#334155",
+    borderColor: "#94a3b8",
+  },
+  "ענף זית": {
+    icon: "olive",
+    color: "#4ade80",
+    bgColor: "#14532d",
+    borderColor: "#4ade80",
+  },
+  "נבל דוד": {
+    icon: "harp",
+    color: "#c084fc",
+    bgColor: "#581c87",
+    borderColor: "#c084fc",
+  },
+  "כתר מלכות": {
+    icon: "crown",
+    color: "#fbbf24",
+    bgColor: "#78350f",
+    borderColor: "#fbbf24",
   },
 };
 

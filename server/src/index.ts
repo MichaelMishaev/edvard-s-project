@@ -7,6 +7,7 @@ import "dotenv/config";
 import playerRoutes from "./routes/players.js";
 import gameRoutes from "./routes/games.js";
 import leaderboardRoutes from "./routes/leaderboard.js";
+import badgeRoutes from "./routes/badges.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +34,7 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/players", playerRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
+app.use("/api/badges", badgeRoutes);
 
 // Serve built client in production
 const clientDist = path.join(__dirname, "../../client/dist");

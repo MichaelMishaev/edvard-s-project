@@ -201,6 +201,16 @@ router.post("/:id/complete", async (req: Request, res: Response) => {
     // Calculate badges
     const badges = calculateBadges(answers, sessionQuestions, totalTimeSeconds);
 
+    // Get existing player to merge badges cumulatively
+    const [existingPlayer] = await db
+      .select()
+      .from(players)
+      .where(eq(players.id, session.playerId));
+
+    const cumulativeBadges = [
+      ...new Set([...(existingPlayer?.badges || []), ...badges]),
+    ];
+
     // Update player
     await db
       .update(players)
@@ -209,7 +219,7 @@ router.post("/:id/complete", async (req: Request, res: Response) => {
         correctAnswers: correctCount,
         totalQuestions: answers.length,
         timeSeconds: totalTimeSeconds,
-        badges,
+        badges: cumulativeBadges,
       })
       .where(eq(players.id, session.playerId));
 

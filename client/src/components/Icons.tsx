@@ -295,6 +295,17 @@ export function ParticipationIcon({
   );
 }
 
+export function MilitaryTechIcon({
+  size = 24,
+  color = "currentColor",
+}: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M17 10.43V2H7V10.43C7 10.78 7.18 11.11 7.49 11.29L11.67 13.8L10.51 16.64L6.3 16.21L8.82 19.99L7.66 22.82L12 20.99L16.34 22.82L15.18 19.99L17.7 16.21L13.49 16.64L12.33 13.8L16.51 11.29C16.82 11.11 17 10.79 17 10.43ZM11 3H13V4H11V3ZM11 5H13V9.57L12 10.14L11 9.57V5Z" />
+    </svg>
+  );
+}
+
 export function BadgeStarIcon({
   size = 16,
   color = "currentColor",

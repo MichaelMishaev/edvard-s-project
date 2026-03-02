@@ -43,3 +43,12 @@ export function useLeaderboard() {
     staleTime: 5000,
   });
 }
+
+export function useBadgeCollection(playerId: string | null) {
+  return useQuery({
+    queryKey: ["badges", playerId],
+    queryFn: () => api.getPlayerBadges(playerId!),
+    enabled: !!playerId,
+    staleTime: 10000,
+  });
+}

@@ -41,3 +41,17 @@ export interface CompleteGameResponse {
 }
 
 export type LeaderboardEntry = Player;
+
+export interface BadgeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  earned: boolean;
+}
+
+export interface BadgeCollectionResponse {
+  badges: BadgeDefinition[];
+  earnedCount: number;
+  totalCount: number;
+}

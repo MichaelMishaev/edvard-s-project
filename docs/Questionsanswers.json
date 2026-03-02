@@ -803,6 +803,246 @@
       "timeLimitSec": 30,
       "explanation": "השם ירושלים מכיל את המילה 'שלום' ולכן נקראת עיר השלום.",
       "tags": ["שם", "שלום"]
+    },
+    {
+      "id": "JLM-051",
+      "topic": "HOLY_CITY",
+      "difficulty": 1,
+      "question": "איך נקראת העיר העתיקה שמוקפת חומה?",
+      "answers": [
+        { "id": "A", "text": "העיר החדשה" },
+        { "id": "B", "text": "העיר העתיקה" },
+        { "id": "C", "text": "תלפיות" },
+        { "id": "D", "text": "רמות" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "העיר העתיקה מוקפת חומה ובה מקומות קדושים.",
+      "tags": ["עיר עתיקה"]
+    },
+    {
+      "id": "JLM-052",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איזו רכבת נוסעת ברחובות ירושלים?",
+      "answers": [
+        { "id": "A", "text": "רכבת ישראל" },
+        { "id": "B", "text": "רכבת קלה" },
+        { "id": "C", "text": "מטרו" },
+        { "id": "D", "text": "רכבת הרים" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "הרכבת הקלה נוסעת ברחובות מרכזיים בעיר.",
+      "tags": ["תחבורה"]
+    },
+    {
+      "id": "JLM-053",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 2,
+      "question": "איזה מסגד חשוב נמצא בירושלים?",
+      "answers": [
+        { "id": "A", "text": "מסגד אל-אקצא" },
+        { "id": "B", "text": "מסגד השלום" },
+        { "id": "C", "text": "מסגד יפו" },
+        { "id": "D", "text": "מסגד הכרמל" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "מסגד אל-אקצא הוא מקום קדוש למוסלמים.",
+      "tags": ["אסלאם"]
+    },
+    {
+      "id": "JLM-054",
+      "topic": "WARS_HISTORY",
+      "difficulty": 2,
+      "question": "באיזו שנה אוחדה ירושלים?",
+      "answers": [
+        { "id": "A", "text": "1948" },
+        { "id": "B", "text": "1967" },
+        { "id": "C", "text": "1973" },
+        { "id": "D", "text": "1956" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "בשנת 1967 במלחמת ששת הימים אוחדה העיר.",
+      "tags": ["1967"]
+    },
+    {
+      "id": "JLM-055",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איך נקרא גן החיות בירושלים?",
+      "answers": [
+        { "id": "A", "text": "הספארי" },
+        { "id": "B", "text": "גן החיות התנ\"כי" },
+        { "id": "C", "text": "גן חיות חיפה" },
+        { "id": "D", "text": "גן חיות תל אביב" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "גן החיות התנ\"כי הוא אחד המקומות האהובים בעיר.",
+      "tags": ["משפחה"]
+    },
+    {
+      "id": "JLM-056",
+      "topic": "HOLY_CITY",
+      "difficulty": 2,
+      "question": "איזה שער מוביל לעיר העתיקה מצד מערב?",
+      "answers": [
+        { "id": "A", "text": "שער יפו" },
+        { "id": "B", "text": "שער האריות" },
+        { "id": "C", "text": "שער ציון" },
+        { "id": "D", "text": "שער האשפות" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "שער יפו הוא אחד השערים המרכזיים לעיר העתיקה.",
+      "tags": ["שערים"]
+    },
+    {
+      "id": "JLM-057",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "איזו אוניברסיטה גדולה נמצאת בירושלים?",
+      "answers": [
+        { "id": "A", "text": "האוניברסיטה העברית" },
+        { "id": "B", "text": "הטכניון" },
+        { "id": "C", "text": "אוניברסיטת תל אביב" },
+        { "id": "D", "text": "בן גוריון" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "האוניברסיטה העברית נמצאת בהר הצופים.",
+      "tags": ["השכלה"]
+    },
+    {
+      "id": "JLM-058",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 2,
+      "question": "איזו דת מתפללת בכותל המערבי?",
+      "answers": [
+        { "id": "A", "text": "יהדות" },
+        { "id": "B", "text": "נצרות" },
+        { "id": "C", "text": "אסלאם" },
+        { "id": "D", "text": "בודהיזם" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "הכותל הוא מקום תפילה קדוש ליהודים.",
+      "tags": ["יהדות"]
+    },
+    {
+      "id": "JLM-059",
+      "topic": "WARS_HISTORY",
+      "difficulty": 3,
+      "question": "איך נקרא היום שבו חוגגים את איחוד ירושלים?",
+      "answers": [
+        { "id": "A", "text": "יום הזיכרון" },
+        { "id": "B", "text": "יום ירושלים" },
+        { "id": "C", "text": "יום העצמאות" },
+        { "id": "D", "text": "פורים" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 30,
+      "explanation": "יום ירושלים מציין את איחוד העיר בשנת 1967.",
+      "tags": ["יום ירושלים"]
+    },
+    {
+      "id": "JLM-060",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איזה מאפה מפורסם בירושלים?",
+      "answers": [
+        { "id": "A", "text": "בייגל ירושלמי" },
+        { "id": "B", "text": "סושי" },
+        { "id": "C", "text": "פיצה" },
+        { "id": "D", "text": "קרואסון" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "בייגל ירושלמי נמכר בדוכנים בעיר.",
+      "tags": ["אוכל"]
+    },
+    {
+      "id": "JLM-061",
+      "topic": "HOLY_CITY",
+      "difficulty": 3,
+      "question": "איזה הר נמצא בעיר העתיקה?",
+      "answers": [
+        { "id": "A", "text": "הר הבית" },
+        { "id": "B", "text": "הר החרמון" },
+        { "id": "C", "text": "הר מירון" },
+        { "id": "D", "text": "הר תבור" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "הר הבית הוא מקום קדוש לשלוש הדתות.",
+      "tags": ["הר הבית"]
+    },
+    {
+      "id": "JLM-062",
+      "topic": "DAILY_LIFE",
+      "difficulty": 2,
+      "question": "איזה מקום גדול משמש לכנסים ומופעים?",
+      "answers": [
+        { "id": "A", "text": "בנייני האומה" },
+        { "id": "B", "text": "הכותל" },
+        { "id": "C", "text": "הכנסת" },
+        { "id": "D", "text": "שוק" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "בנייני האומה משמשים לאירועים גדולים.",
+      "tags": ["אירועים"]
+    },
+    {
+      "id": "JLM-063",
+      "topic": "THREE_RELIGIONS",
+      "difficulty": 1,
+      "question": "באיזו עיר יש מקומות קדושים ליהודים, נוצרים ומוסלמים?",
+      "answers": [
+        { "id": "A", "text": "תל אביב" },
+        { "id": "B", "text": "חיפה" },
+        { "id": "C", "text": "ירושלים" },
+        { "id": "D", "text": "אילת" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "ירושלים קדושה לשלוש הדתות.",
+      "tags": ["דתות"]
+    },
+    {
+      "id": "JLM-064",
+      "topic": "WARS_HISTORY",
+      "difficulty": 2,
+      "question": "איך נקראה המלחמה בשנת 1948?",
+      "answers": [
+        { "id": "A", "text": "מלחמת העצמאות" },
+        { "id": "B", "text": "מלחמת ששת הימים" },
+        { "id": "C", "text": "מלחמת יום כיפור" },
+        { "id": "D", "text": "מבצע קדש" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "מלחמת העצמאות הייתה בשנת 1948.",
+      "tags": ["1948"]
+    },
+    {
+      "id": "JLM-065",
+      "topic": "DAILY_LIFE",
+      "difficulty": 1,
+      "question": "איזה צבע אבן מאפיין את ירושלים?",
+      "answers": [
+        { "id": "A", "text": "צהוב בהיר" },
+        { "id": "B", "text": "כחול" },
+        { "id": "C", "text": "ירוק" },
+        { "id": "D", "text": "אדום" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "אבן ירושלמית היא בצבע בהיר-צהבהב.",
+      "tags": ["אבן"]
     }
   ]
 }

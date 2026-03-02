@@ -4,6 +4,8 @@ import type {
   StartGameResponse,
   SubmitAnswerResponse,
   CompleteGameResponse,
+  BadgeDefinition,
+  BadgeCollectionResponse,
 } from "./types";
 
 const api = axios.create({
@@ -51,5 +53,17 @@ export async function completeGame(
 
 export async function getLeaderboard(): Promise<Player[]> {
   const { data } = await api.get("/leaderboard");
+  return data;
+}
+
+export async function getBadgeDefinitions(): Promise<BadgeDefinition[]> {
+  const { data } = await api.get("/badges");
+  return data;
+}
+
+export async function getPlayerBadges(
+  playerId: string
+): Promise<BadgeCollectionResponse> {
+  const { data } = await api.get(`/badges/${playerId}`);
   return data;
 }

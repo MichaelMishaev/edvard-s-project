@@ -8,6 +8,7 @@ import {
   SettingsIcon,
   UserIcon,
   SwordsIcon,
+  MilitaryTechIcon,
 } from "./Icons";
 
 interface NavItem {
@@ -18,7 +19,7 @@ interface NavItem {
 }
 
 interface BottomNavProps {
-  variant?: "game" | "results" | "leaderboard";
+  variant?: "game" | "results" | "leaderboard" | "badges";
 }
 
 const navConfigs: Record<string, NavItem[]> = {
@@ -29,14 +30,20 @@ const navConfigs: Record<string, NavItem[]> = {
   ],
   results: [
     { path: "/", label: "בית", icon: HomeIcon },
+    { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
     { path: "/results", label: "תוצאות", icon: TrophyIcon },
-    { path: "/profile", label: "פרופיל", icon: UserIcon, disabled: true },
   ],
   leaderboard: [
     { path: "/", label: "בית", icon: HomeIcon },
-    { path: "/training", label: "אימון", icon: SwordsIcon, disabled: true },
+    { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
     { path: "/leaderboard", label: "מובילים", icon: TrophyIcon },
     { path: "/profile", label: "פרופיל", icon: UserIcon, disabled: true },
+  ],
+  badges: [
+    { path: "/profile", label: "פרופיל", icon: UserIcon, disabled: true },
+    { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
+    { path: "/leaderboard", label: "מובילים", icon: TrophyIcon },
+    { path: "/", label: "בית", icon: HomeIcon },
   ],
 };
 

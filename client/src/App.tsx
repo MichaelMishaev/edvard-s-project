@@ -4,6 +4,7 @@ import WelcomePage from "./pages/WelcomePage";
 import GamePage from "./pages/GamePage";
 import ResultsPage from "./pages/ResultsPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import BadgeCollectionPage from "./pages/BadgeCollectionPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/game" element={<GamePage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/badges" element={<BadgeCollectionPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
