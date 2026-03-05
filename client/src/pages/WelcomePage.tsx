@@ -37,7 +37,7 @@ export default function WelcomePage() {
   const { data: leaderboard } = useLeaderboard();
   const { data: contest } = useCurrentContest();
   const [heroLoaded, setHeroLoaded] = useState(false);
-  const errorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Preload hero image
   useEffect(() => {
@@ -336,7 +336,7 @@ export default function WelcomePage() {
             </label>
             <ClassSelector
               value={selectedClass}
-              onChange={(newValue) => {
+              onChange={(newValue: string) => {
                 setSelectedClass(newValue);
 
                 // Clear error only if selection becomes valid
