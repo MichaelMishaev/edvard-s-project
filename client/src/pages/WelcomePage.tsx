@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import BottomNav from "../components/BottomNav";
 import ContestTimer from "../components/ContestTimer";
+import CharacterCounter from "../components/CharacterCounter";
+import ValidationIcon, { type ValidationState } from "../components/ValidationIcon";
+import ClassSelector from "../components/ClassSelector";
 import { PlayIcon, ChartIcon, CastleIcon, UserIcon, MedalIcon, BadgeStarIcon } from "../components/Icons";
 import { useCreatePlayer, useStartGame, useLeaderboard, useCurrentContest } from "../hooks/useGame";
 import { RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG, CLASSES } from "../lib/constants";
 import type { Player } from "../lib/types";
+import { validateName, validateClass, debounce } from "../utils/formValidation";
 
 export default function WelcomePage() {
   const [name, setName] = useState(() => {
@@ -19,12 +23,21 @@ export default function WelcomePage() {
     return sessionStorage.getItem("playerClassName") || "";
   });
   const [error, setError] = useState("");
+  const [submissionStatus, setSubmissionStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [validationState, setValidationState] = useState<{
+    name: ValidationState;
+    class: ValidationState;
+  }>({
+    name: "idle",
+    class: "idle",
+  });
   const navigate = useNavigate();
   const createPlayer = useCreatePlayer();
   const startGame = useStartGame();
   const { data: leaderboard } = useLeaderboard();
   const { data: contest } = useCurrentContest();
   const [heroLoaded, setHeroLoaded] = useState(false);
+  const errorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Preload hero image
   useEffect(() => {
@@ -35,34 +48,61 @@ export default function WelcomePage() {
     img.onerror = () => setHeroLoaded(false);
   }, []);
 
-  const validateName = (value: string): string | null => {
-    if (!value.trim()) return "יש להזין שם";
-    if (value.trim().length > 15) return "השם ארוך מדי (עד 15 תווים)";
-    if (/[^a-zA-Zא-ת0-9\s]/.test(value.trim()))
-      return "אין להשתמש בתווים מיוחדים";
-    return null;
-  };
+  // Real-time validation with debouncing
+  const validateNameDebounced = useCallback(
+    debounce((value: string) => {
+      const result = validateName(value);
+      setValidationState((prev) => ({
+        ...prev,
+        name: result.isValid ? "valid" : "invalid",
+      }));
+    }, 500),
+    []
+  );
 
-  const validateClass = (value: string): string | null => {
-    if (!value.trim()) return "יש לבחור כיתה";
-    return null;
-  };
+  const validateClassDebounced = useCallback(
+    debounce((value: string) => {
+      const result = validateClass(value);
+      setValidationState((prev) => ({
+        ...prev,
+        class: result.isValid ? "valid" : "invalid",
+      }));
+    }, 300),
+    []
+  );
+
+  // Clear error timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleStart = async () => {
-    const nameError = validateName(name);
-    if (nameError) {
-      setError(nameError);
+    // Validate name
+    const nameResult = validateName(name);
+    if (!nameResult.isValid) {
+      setError(nameResult.error!);
+      setValidationState((prev) => ({ ...prev, name: "invalid" }));
+      setSubmissionStatus("error");
       return;
     }
 
-    const classError = validateClass(selectedClass);
-    if (classError) {
-      setError(classError);
+    // Validate class
+    const classResult = validateClass(selectedClass);
+    if (!classResult.isValid) {
+      setError(classResult.error!);
+      setValidationState((prev) => ({ ...prev, class: "invalid" }));
+      setSubmissionStatus("error");
       return;
     }
 
     try {
       setError("");
+      setSubmissionStatus("loading");
+
       const player = await createPlayer.mutateAsync({
         name: name.trim(),
         className: selectedClass,
@@ -77,15 +117,20 @@ export default function WelcomePage() {
       sessionStorage.setItem("sessionId", gameData.sessionId);
       sessionStorage.setItem("questions", JSON.stringify(gameData.questions));
 
-      navigate("/game");
+      // Show success state briefly before navigating
+      setSubmissionStatus("success");
+      setTimeout(() => {
+        navigate("/game");
+      }, 1000);
     } catch (err: any) {
       const msg =
         err?.response?.data?.error || "שגיאה בהתחברות לשרת, נסה שוב";
       setError(msg);
+      setSubmissionStatus("error");
     }
   };
 
-  const isLoading = createPlayer.isPending || startGame.isPending;
+  const isLoading = submissionStatus === "loading";
 
   return (
     <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
@@ -165,7 +210,7 @@ export default function WelcomePage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="flex flex-1 flex-col px-6 pb-8"
+        className="flex flex-1 flex-col px-8 pb-8"
       >
         {/* Contest Banner */}
         {contest && (
@@ -213,107 +258,195 @@ export default function WelcomePage() {
         </p>
 
         {/* Form Container - Centered & Compact */}
-        <div className="mx-auto mt-8 w-full max-w-md">
-        {/* Name Input - Industry Standard Design */}
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="player-name"
-            className="text-right text-sm font-bold text-white"
-          >
-            ?איך קוראים לך
-          </label>
-          <div className="relative">
-            <input
-              id="player-name"
-              type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setError("");
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleStart();
-              }}
-              placeholder="הכנס את שמך כאן..."
-              maxLength={15}
-              autoComplete="off"
-              aria-invalid={!!error}
-              aria-describedby={error ? "name-error" : undefined}
-              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 pe-11 text-right text-base font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 placeholder:text-gray-400 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-              dir="rtl"
-            />
-            {/* Icon */}
-            <div className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true">
-              <UserIcon size={20} color="currentColor" />
+        <form
+          className="mx-auto mt-8 w-full max-w-md"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleStart();
+          }}
+          noValidate
+        >
+          {/* Name Input - Enhanced UX */}
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <CharacterCounter
+                current={name.length}
+                max={15}
+                isError={validationState.name === "invalid"}
+              />
+              <label
+                htmlFor="player-name"
+                className="text-right text-lg font-bold text-white"
+              >
+                ?איך קוראים לך
+              </label>
+            </div>
+            <div className="relative">
+              <input
+                id="player-name"
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  setName(newValue);
+
+                  // Clear error only if input becomes valid
+                  const result = validateName(newValue);
+                  if (result.isValid && error) {
+                    setError("");
+                  }
+
+                  // Real-time validation with debounce
+                  if (newValue.trim()) {
+                    validateNameDebounced(newValue);
+                  } else {
+                    setValidationState((prev) => ({ ...prev, name: "idle" }));
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleStart();
+                  }
+                }}
+                placeholder="הכנס את שמך כאן..."
+                maxLength={15}
+                autoComplete="off"
+                aria-invalid={validationState.name === "invalid"}
+                aria-describedby={error ? "form-error" : undefined}
+                className="w-full rounded-lg border-2 border-gray-300 bg-white px-5 py-4 pe-24 text-right text-lg font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 placeholder:text-gray-500 hover:border-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                dir="rtl"
+              />
+              {/* Icons Container */}
+              <div className="pointer-events-none absolute end-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
+                <ValidationIcon state={validationState.name} />
+                <div className="text-gray-400" aria-hidden="true">
+                  <UserIcon size={20} color="currentColor" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Class Dropdown - Industry Standard Design */}
-        <div className="mt-5 flex flex-col gap-2">
-          <label
-            htmlFor="player-class"
-            className="text-right text-sm font-bold text-white"
-          >
-            ?באיזו כיתה את/ה לומד
-          </label>
-          <div className="relative">
-            <select
-              id="player-class"
-              value={selectedClass}
-              onChange={(e) => {
-                setSelectedClass(e.target.value);
-                setError("");
-              }}
-              aria-invalid={!!error}
-              className="w-full cursor-pointer appearance-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 pe-10 text-right text-base font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-              dir="rtl"
+          {/* Class Selection - Two-Step Enhanced UX */}
+          <div className="mt-6">
+            <label
+              className="mb-4 block text-right text-lg font-bold text-white"
             >
-              <option value="" className="text-gray-500">...בחר כיתה</option>
-              {CLASSES.map((cls) => (
-                <option key={cls.id} value={cls.id} className="text-gray-900">
-                  {cls.label}
-                </option>
-              ))}
-            </select>
-            {/* Dropdown arrow */}
-            <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </div>
-          </div>
-        </div>
+              ?באיזו כיתה את/ה לומד
+            </label>
+            <ClassSelector
+              value={selectedClass}
+              onChange={(newValue) => {
+                setSelectedClass(newValue);
 
-        {error && (
-          <motion.p
-            id="form-error"
-            role="alert"
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-3 text-center text-sm font-medium text-red-400 drop-shadow-lg"
-          >
-            {error}
-          </motion.p>
-        )}
-        </div>
+                // Clear error only if selection becomes valid
+                const result = validateClass(newValue);
+                if (result.isValid && error) {
+                  setError("");
+                }
+
+                // Real-time validation
+                if (newValue.trim()) {
+                  validateClassDebounced(newValue);
+                } else {
+                  setValidationState((prev) => ({ ...prev, class: "idle" }));
+                }
+              }}
+              error={validationState.class === "invalid"}
+            />
+          </div>
+
+          {/* Error Message - Enhanced visibility and contrast */}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4"
+              role="alert"
+              aria-live="polite"
+            >
+              <p
+                id="form-error"
+                className="rounded-lg bg-red-900/30 px-4 py-3 text-center text-base font-medium text-red-300 shadow-sm"
+              >
+                {error}
+              </p>
+            </motion.div>
+          )}
+
+          {/* Success Message */}
+          {submissionStatus === "success" && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mt-4"
+              role="status"
+              aria-live="polite"
+            >
+              <div className="flex items-center justify-center gap-2 rounded-lg bg-green-900/30 px-4 py-3 text-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-green-400"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+                <p className="text-base font-medium text-green-300">
+                  !נרשמת בהצלחה
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </form>
         {/* End Form Container */}
 
         {/* Start button */}
         <div className="mx-auto mt-8 w-full max-w-md">
           <Button
             onClick={handleStart}
-            disabled={isLoading}
-            aria-label={isLoading ? "מתחבר לשרת" : "התחל משחק"}
+            disabled={isLoading || submissionStatus === "success"}
+            aria-label={
+              submissionStatus === "success"
+                ? "נרשמת בהצלחה"
+                : isLoading
+                ? "מתחבר לשרת"
+                : "התחל משחק"
+            }
             icon={
-              isLoading ? (
+              submissionStatus === "success" ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-white"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              ) : isLoading ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
               ) : (
                 <PlayIcon size={20} color="white" />
               )
             }
           >
-            {isLoading ? "...מתחבר" : "התחל משחק"}
+            {submissionStatus === "success"
+              ? "!נרשמת בהצלחה"
+              : isLoading
+              ? "...מתחבר"
+              : "התחל משחק"}
           </Button>
         </div>
 
