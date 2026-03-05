@@ -210,7 +210,7 @@ export default function WelcomePage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="flex flex-1 flex-col px-8 pb-8"
+        className="flex flex-1 flex-col px-10 pb-8"
       >
         {/* Contest Banner */}
         {contest && (
