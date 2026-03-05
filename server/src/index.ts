@@ -52,7 +52,13 @@ app.listen(PORT, () => {
   console.log(`Jerusalem Quest server running on port ${PORT}`);
 
   // Initialize contest cron jobs
-  initContestJobs();
+  try {
+    console.log("[Server] Initializing contest cron jobs...");
+    initContestJobs();
+    console.log("[Server] Contest cron jobs initialization complete");
+  } catch (error) {
+    console.error("[Server] Failed to initialize contest cron jobs:", error);
+  }
 });
 
 export default app;
