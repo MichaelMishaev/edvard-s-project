@@ -9,6 +9,7 @@ import gameRoutes from "./routes/games.js";
 import leaderboardRoutes from "./routes/leaderboard.js";
 import badgeRoutes from "./routes/badges.js";
 import contestRoutes from "./routes/contests.js";
+import adminRoutes from "./routes/admin.js";
 import { initContestJobs } from "./jobs/contestJobs.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +39,7 @@ app.use("/api/games", gameRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/badges", badgeRoutes);
 app.use("/api/contests", contestRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Serve built client in production
 const clientDist = path.join(__dirname, "../../client/dist");
