@@ -1,15 +1,28 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
 import { MedalIcon, BadgeStarIcon } from "../components/Icons";
-import { useLeaderboard } from "../hooks/useGame";
+import { useClassLeaderboard, useSchoolLeaderboard } from "../hooks/useGame";
 import { getRankTitle, RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG } from "../lib/constants";
 import type { Player } from "../lib/types";
 
-export default function LeaderboardPage() {
-  const { data: leaderboard, isLoading } = useLeaderboard();
+type LeaderboardView = "class" | "school";
 
-  const entries: Player[] = leaderboard || [];
+export default function LeaderboardPage() {
+  const [view, setView] = useState<LeaderboardView>("class");
+  const [playerClassName, setPlayerClassName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const className = sessionStorage.getItem("playerClassName");
+    setPlayerClassName(className);
+  }, []);
+
+  const { data: classLeaderboard, isLoading: isLoadingClass } = useClassLeaderboard(playerClassName);
+  const { data: schoolLeaderboard, isLoading: isLoadingSchool } = useSchoolLeaderboard();
+
+  const entries: Player[] = view === "class" ? (classLeaderboard || []) : (schoolLeaderboard || []);
+  const isLoading = view === "class" ? isLoadingClass : isLoadingSchool;
 
   return (
     <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
@@ -19,9 +32,37 @@ export default function LeaderboardPage() {
         <MedalIcon size={28} color="#2563eb" />
       </div>
 
+      {/* Toggle Buttons */}
+      {playerClassName && (
+        <div className="mx-4 mt-4 flex gap-2 rounded-xl bg-bg-card p-1">
+          <button
+            onClick={() => setView("school")}
+            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+              view === "school"
+                ? "bg-blue-primary text-white"
+                : "text-text-muted hover:text-white"
+            }`}
+          >
+            כל בית הספר
+          </button>
+          <button
+            onClick={() => setView("class")}
+            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+              view === "class"
+                ? "bg-blue-primary text-white"
+                : "text-text-muted hover:text-white"
+            }`}
+          >
+            הכיתה שלי
+          </button>
+        </div>
+      )}
+
       {/* Content */}
       <div className="px-4 pt-6">
-        <h3 className="mb-3 text-right text-lg font-bold text-white">מובילים</h3>
+        <h3 className="mb-3 text-right text-lg font-bold text-white">
+          {view === "class" ? "מובילי הכיתה" : "מובילי בית הספר"}
+        </h3>
 
         {/* Column headers */}
         <div
@@ -44,7 +85,13 @@ export default function LeaderboardPage() {
         {/* Player rows */}
         <div className="flex flex-col gap-3" role="list" aria-label="רשימת שחקנים">
           {entries.map((entry, index) => (
-            <PlayerRow key={entry.id} entry={entry} rank={index + 1} index={index} />
+            <PlayerRow
+              key={entry.id}
+              entry={entry}
+              rank={index + 1}
+              index={index}
+              view={view}
+            />
           ))}
         </div>
 
@@ -67,17 +114,30 @@ function PlayerRow({
   entry,
   rank,
   index,
+  view,
 }: {
   entry: Player;
   rank: number;
   index: number;
+  view: LeaderboardView;
 }) {
-  const isTop5 = rank <= 5;
-  const rankColor = RANK_COLORS[rank];
+  const isTopHighlight = view === "class" ? rank <= 3 : rank <= 10;
+  const rankColor = view === "class" && rank <= 3 ? RANK_COLORS[rank] : undefined;
+
+  // School view gradient for top 10
+  const getSchoolTopGradient = (rank: number): string => {
+    if (view !== "school" || rank > 10) return "";
+    const opacity = 0.15 - (rank - 1) * 0.015; // Fade from 15% to 1.5%
+    return `rgba(37, 99, 235, ${opacity})`;
+  };
+
   const avatarColor = AVATAR_COLORS[(rank - 1) % AVATAR_COLORS.length];
   const rankTitle = getRankTitle(entry.score);
-
   const scoreColor = rankColor?.text || "#ffffff";
+
+  const bgStyle = view === "school" && rank <= 10
+    ? { backgroundColor: getSchoolTopGradient(rank) }
+    : {};
 
   return (
     <motion.div
@@ -87,10 +147,11 @@ function PlayerRow({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08 }}
       className={`flex items-center gap-3 rounded-2xl px-4 py-3 ${
-        isTop5
+        isTopHighlight
           ? "border border-border-card bg-bg-card"
           : ""
       }`}
+      style={bgStyle}
     >
       {/* Badges (far left) */}
       <div className="flex items-center gap-0.5 w-16 justify-start">
@@ -113,11 +174,19 @@ function PlayerRow({
         </span>
       </div>
 
-      {/* Name + rank title */}
+      {/* Name + rank title + class (school view) */}
       <div className="flex flex-1 items-center gap-3 justify-end">
         <div className="text-right">
           <div className="text-sm font-bold text-white">{entry.name}</div>
-          <div className="text-xs text-text-muted">{rankTitle}</div>
+          <div className="text-xs text-text-muted">
+            {view === "school" && entry.className ? (
+              <>
+                {rankTitle} • {entry.className}
+              </>
+            ) : (
+              rankTitle
+            )}
+          </div>
         </div>
 
         {/* Avatar */}

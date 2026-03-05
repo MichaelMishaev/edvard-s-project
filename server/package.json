@@ -14,10 +14,14 @@
     "generate-images": "tsx src/scripts/generate-images.ts"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.4.1",
+    "@types/node-cron": "^3.0.11",
     "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.3",
     "express": "^4.21.2",
+    "node-cron": "^4.2.1",
     "node-fetch": "^3.3.2",
     "postgres": "^3.4.5",
     "uuid": "^11.0.5"

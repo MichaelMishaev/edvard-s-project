@@ -6,7 +6,12 @@ import ProgressBar from "../components/ProgressBar";
 import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
 import { CloseIcon, QuestionIcon, LightbulbIcon } from "../components/Icons";
-import { useSubmitAnswer, useCompleteGame } from "../hooks/useGame";
+import {
+  useSubmitAnswer,
+  useCompleteGame,
+  useCurrentContest,
+  useRegisterContestParticipation,
+} from "../hooks/useGame";
 import type { Question } from "../lib/types";
 
 type GameState = "countdown" | "playing";
@@ -33,6 +38,8 @@ export default function GamePage() {
 
   const submitAnswer = useSubmitAnswer();
   const completeGame = useCompleteGame();
+  const { data: currentContest } = useCurrentContest();
+  const registerParticipation = useRegisterContestParticipation();
 
   const playerName = sessionStorage.getItem("playerName") || "";
   const sessionId = sessionStorage.getItem("sessionId") || "";
@@ -143,6 +150,25 @@ export default function GamePage() {
     try {
       const result = await completeGame.mutateAsync(sessionId);
       sessionStorage.setItem("gameResult", JSON.stringify(result));
+
+      // Register contest participation if there's an active contest
+      if (currentContest) {
+        const playerId = sessionStorage.getItem("playerId");
+        const playerClassName = sessionStorage.getItem("playerClassName");
+
+        if (playerId && playerClassName) {
+          try {
+            await registerParticipation.mutateAsync({
+              contestId: currentContest.contestId,
+              playerId,
+              className: playerClassName,
+            });
+          } catch (error) {
+            // Silent fail - contest registration is non-critical
+            console.error("Failed to register contest participation:", error);
+          }
+        }
+      }
     } catch {
       // Store fallback data
       sessionStorage.setItem(

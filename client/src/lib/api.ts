@@ -6,6 +6,8 @@ import type {
   CompleteGameResponse,
   BadgeDefinition,
   BadgeCollectionResponse,
+  Contest,
+  HallOfFameContest,
 } from "./types";
 
 const api = axios.create({
@@ -15,8 +17,11 @@ const api = axios.create({
   },
 });
 
-export async function createPlayer(name: string): Promise<Player> {
-  const { data } = await api.post("/players", { name });
+export async function createPlayer(
+  name: string,
+  className: string
+): Promise<Player> {
+  const { data } = await api.post("/players", { name, className });
   return data;
 }
 
@@ -65,5 +70,45 @@ export async function getPlayerBadges(
   playerId: string
 ): Promise<BadgeCollectionResponse> {
   const { data } = await api.get(`/badges/${playerId}`);
+  return data;
+}
+
+// Contest API
+export async function getCurrentContest(): Promise<Contest | null> {
+  try {
+    const { data } = await api.get("/contests/current");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+export async function getHallOfFame(): Promise<HallOfFameContest[]> {
+  const { data } = await api.get("/contests/hall-of-fame");
+  return data;
+}
+
+export async function registerContestParticipation(
+  contestId: string,
+  playerId: string,
+  className: string
+): Promise<void> {
+  await api.post(`/contests/${contestId}/participate`, {
+    playerId,
+    className,
+  });
+}
+
+// Leaderboard API
+export async function getClassLeaderboard(className: string): Promise<Player[]> {
+  const { data } = await api.get(`/players/leaderboard/class/${className}`);
+  return data;
+}
+
+export async function getSchoolLeaderboard(): Promise<Player[]> {
+  const { data } = await api.get(`/players/leaderboard/school`);
   return data;
 }

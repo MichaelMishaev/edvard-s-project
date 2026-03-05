@@ -9,6 +9,7 @@ import {
   UserIcon,
   SwordsIcon,
   MilitaryTechIcon,
+  CastleIcon,
 } from "./Icons";
 
 interface NavItem {
@@ -19,7 +20,7 @@ interface NavItem {
 }
 
 interface BottomNavProps {
-  variant?: "game" | "results" | "leaderboard" | "badges";
+  variant?: "game" | "results" | "leaderboard" | "badges" | "hall-of-fame";
 }
 
 const navConfigs: Record<string, NavItem[]> = {
@@ -30,20 +31,27 @@ const navConfigs: Record<string, NavItem[]> = {
   ],
   results: [
     { path: "/", label: "בית", icon: HomeIcon },
+    { path: "/hall-of-fame", label: "היכל", icon: CastleIcon },
     { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
     { path: "/results", label: "תוצאות", icon: TrophyIcon },
   ],
   leaderboard: [
     { path: "/", label: "בית", icon: HomeIcon },
+    { path: "/hall-of-fame", label: "היכל", icon: CastleIcon },
     { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
     { path: "/leaderboard", label: "מובילים", icon: TrophyIcon },
-    { path: "/profile", label: "פרופיל", icon: UserIcon, disabled: true },
   ],
   badges: [
-    { path: "/profile", label: "פרופיל", icon: UserIcon, disabled: true },
+    { path: "/hall-of-fame", label: "היכל", icon: CastleIcon },
     { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
     { path: "/leaderboard", label: "מובילים", icon: TrophyIcon },
     { path: "/", label: "בית", icon: HomeIcon },
+  ],
+  "hall-of-fame": [
+    { path: "/", label: "בית", icon: HomeIcon },
+    { path: "/hall-of-fame", label: "היכל", icon: CastleIcon },
+    { path: "/badges", label: "עיטורים", icon: MilitaryTechIcon },
+    { path: "/leaderboard", label: "מובילים", icon: TrophyIcon },
   ],
 };
 
@@ -77,10 +85,10 @@ export default function BottomNav({ variant = "game" }: BottomNavProps) {
       </AnimatePresence>
 
       <nav
-        className="fixed bottom-0 left-0 right-0 z-50 border-t border-border-card bg-bg-primary"
+        className="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.1)]"
         aria-label="ניווט ראשי"
       >
-        <div className="mx-auto flex max-w-md items-center justify-around py-2">
+        <div className="mx-auto flex max-w-md items-center justify-around py-2 px-2">
           {items.map((item) => {
             const isActive = location.pathname === item.path;
             return (
@@ -95,16 +103,22 @@ export default function BottomNav({ variant = "game" }: BottomNavProps) {
                 }}
                 aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
-                className={`flex min-h-[48px] min-w-[48px] flex-col items-center justify-center gap-1 px-4 py-1 ${
-                  item.disabled ? "opacity-50" : ""
+                className={`flex min-h-[56px] min-w-[60px] flex-1 flex-col items-center justify-center gap-1.5 rounded-lg transition-all duration-200 ${
+                  item.disabled
+                    ? "opacity-40 cursor-not-allowed"
+                    : isActive
+                      ? "bg-blue-50"
+                      : "hover:bg-gray-50 active:bg-gray-100"
                 }`}
               >
                 <item.icon
-                  size={22}
-                  color={isActive ? "#2563eb" : "#5b6478"}
+                  size={24}
+                  color={isActive ? "#2563eb" : "#64748b"}
                 />
                 <span
-                  className={`text-xs font-medium ${isActive ? "text-blue-primary" : "text-text-muted"}`}
+                  className={`text-xs font-semibold ${
+                    isActive ? "text-blue-600" : "text-gray-600"
+                  }`}
                 >
                   {item.label}
                 </span>

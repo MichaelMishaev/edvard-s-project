@@ -1,18 +1,29 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db/index.js";
 import { players } from "../db/schema.js";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, desc } from "drizzle-orm";
 import { isProfane } from "../services/profanity.js";
+import { isValidClass } from "../config/classes.js";
 
 const router = Router();
 
 // POST /api/players - Create player with name validation
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { name } = req.body as { name?: string };
+    const { name, className } = req.body as { name?: string; className?: string };
 
     if (!name || typeof name !== "string") {
       res.status(400).json({ error: "Name is required" });
+      return;
+    }
+
+    if (!className || typeof className !== "string") {
+      res.status(400).json({ error: "Class name is required" });
+      return;
+    }
+
+    if (!isValidClass(className)) {
+      res.status(400).json({ error: "Invalid class name" });
       return;
     }
 
@@ -60,7 +71,7 @@ router.post("/", async (req: Request, res: Response) => {
 
     const [newPlayer] = await db
       .insert(players)
-      .values({ name: finalName })
+      .values({ name: finalName, className })
       .returning();
 
     res.status(201).json(newPlayer);
@@ -88,6 +99,44 @@ router.get("/:id", async (req: Request, res: Response) => {
     res.json(player);
   } catch (error) {
     console.error("Error fetching player:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// GET /api/players/leaderboard/class/:className - Get class leaderboard
+router.get("/leaderboard/class/:className", async (req: Request, res: Response) => {
+  try {
+    const { className } = req.params;
+
+    if (!isValidClass(className)) {
+      res.status(400).json({ error: "Invalid class name" });
+      return;
+    }
+
+    const classPlayers = await db
+      .select()
+      .from(players)
+      .where(eq(players.className, className))
+      .orderBy(desc(players.score), players.timeSeconds);
+
+    res.json(classPlayers);
+  } catch (error) {
+    console.error("Error fetching class leaderboard:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// GET /api/players/leaderboard/school - Get school-wide leaderboard
+router.get("/leaderboard/school", async (req: Request, res: Response) => {
+  try {
+    const schoolPlayers = await db
+      .select()
+      .from(players)
+      .orderBy(desc(players.score), players.timeSeconds);
+
+    res.json(schoolPlayers);
+  } catch (error) {
+    console.error("Error fetching school leaderboard:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

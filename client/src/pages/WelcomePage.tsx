@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
+import BottomNav from "../components/BottomNav";
+import ContestTimer from "../components/ContestTimer";
 import { PlayIcon, ChartIcon, CastleIcon, UserIcon, MedalIcon, BadgeStarIcon } from "../components/Icons";
-import { useCreatePlayer, useStartGame, useLeaderboard } from "../hooks/useGame";
-import { RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG } from "../lib/constants";
+import { useCreatePlayer, useStartGame, useLeaderboard, useCurrentContest } from "../hooks/useGame";
+import { RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG, CLASSES } from "../lib/constants";
 import type { Player } from "../lib/types";
 
 export default function WelcomePage() {
@@ -13,11 +15,15 @@ export default function WelcomePage() {
     // Preserve player name for quick replay (Fix #17)
     return sessionStorage.getItem("playerName") || "";
   });
+  const [selectedClass, setSelectedClass] = useState(() => {
+    return sessionStorage.getItem("playerClassName") || "";
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const createPlayer = useCreatePlayer();
   const startGame = useStartGame();
   const { data: leaderboard } = useLeaderboard();
+  const { data: contest } = useCurrentContest();
   const [heroLoaded, setHeroLoaded] = useState(false);
 
   // Preload hero image
@@ -37,19 +43,34 @@ export default function WelcomePage() {
     return null;
   };
 
+  const validateClass = (value: string): string | null => {
+    if (!value.trim()) return "יש לבחור כיתה";
+    return null;
+  };
+
   const handleStart = async () => {
-    const validationError = validateName(name);
-    if (validationError) {
-      setError(validationError);
+    const nameError = validateName(name);
+    if (nameError) {
+      setError(nameError);
+      return;
+    }
+
+    const classError = validateClass(selectedClass);
+    if (classError) {
+      setError(classError);
       return;
     }
 
     try {
       setError("");
-      const player = await createPlayer.mutateAsync(name.trim());
+      const player = await createPlayer.mutateAsync({
+        name: name.trim(),
+        className: selectedClass,
+      });
 
       sessionStorage.setItem("playerId", player.id);
       sessionStorage.setItem("playerName", player.name);
+      sessionStorage.setItem("playerClassName", player.className);
 
       const gameData = await startGame.mutateAsync(player.id);
 
@@ -67,7 +88,7 @@ export default function WelcomePage() {
   const isLoading = createPlayer.isPending || startGame.isPending;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-bg-primary">
+    <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
       {/* Hero Image Area */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -105,12 +126,27 @@ export default function WelcomePage() {
           <CastleIcon size={28} color="white" />
         </motion.div>
 
-        {/* Title overlay */}
-        <div className="absolute bottom-8 left-0 right-0 z-10 text-center">
+        {/* Jerusalem Quest Logo - Main Hero */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4">
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="relative"
+          >
+            <img
+              src="/logo.png"
+              alt="לוגו מסע ירושלים"
+              className="h-32 w-32 rounded-full border-4 border-white/30 object-cover shadow-2xl backdrop-blur-sm"
+            />
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-full bg-blue-primary/20 blur-xl" />
+          </motion.div>
+
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
             className="font-heebo text-4xl font-extrabold tracking-tight text-white drop-shadow-lg"
           >
             Jerusalem Quest
@@ -119,7 +155,7 @@ export default function WelcomePage() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.6, duration: 0.4 }}
-            className="mx-auto mt-2 h-1 w-16 rounded-full bg-blue-primary"
+            className="h-1 w-16 rounded-full bg-blue-primary"
           />
         </div>
       </motion.div>
@@ -131,6 +167,38 @@ export default function WelcomePage() {
         transition={{ delay: 0.3, duration: 0.6 }}
         className="flex flex-1 flex-col px-6 pb-8"
       >
+        {/* Contest Banner */}
+        {contest && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-4 rounded-xl border border-blue-primary/30 bg-gradient-to-br from-blue-primary/10 to-purple-600/10 p-4"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex-1 text-right">
+                <h3 className="text-lg font-bold text-white">
+                  תחרות שבוע {contest.weekNumber}
+                </h3>
+                <p className="mt-0.5 text-xs text-text-secondary">
+                  {contest.totalParticipants} משתתפים
+                </p>
+                <div className="mt-2">
+                  <ContestTimer endDate={contest.endDate} />
+                </div>
+              </div>
+              {/* Jerusalem Quest Logo */}
+              <div className="flex-shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="לוגו מסע ירושלים"
+                  className="h-20 w-20 rounded-full border-2 border-blue-primary/20 object-cover"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Hebrew subtitle */}
         <motion.h2
           initial={{ opacity: 0 }}
@@ -144,11 +212,13 @@ export default function WelcomePage() {
           צאו למסע מרתק בין סמטאות העיר העתיקה
         </p>
 
-        {/* Name input - compact design */}
-        <div className="mt-8 flex flex-col gap-1.5">
+        {/* Form Container - Centered & Compact */}
+        <div className="mx-auto mt-8 w-full max-w-md">
+        {/* Name Input - Industry Standard Design */}
+        <div className="flex flex-col gap-2">
           <label
             htmlFor="player-name"
-            className="text-end text-xs font-medium text-text-secondary"
+            className="text-right text-sm font-bold text-white"
           >
             ?איך קוראים לך
           </label>
@@ -164,32 +234,73 @@ export default function WelcomePage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleStart();
               }}
-              placeholder="...הכנס שם"
+              placeholder="הכנס את שמך כאן..."
               maxLength={15}
+              autoComplete="off"
               aria-invalid={!!error}
               aria-describedby={error ? "name-error" : undefined}
-              className="w-full rounded-xl border border-border-card bg-bg-card px-4 py-2.5 pe-10 text-right text-base text-white placeholder-text-muted outline-none transition-colors focus:border-blue-primary focus:ring-2 focus:ring-blue-primary/20"
+              className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 pe-11 text-right text-base font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 placeholder:text-gray-400 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
               dir="rtl"
             />
-            <div className="absolute end-3 top-1/2 -translate-y-1/2 text-text-muted" aria-hidden="true">
-              <UserIcon size={16} color="#5b6478" />
+            {/* Icon */}
+            <div className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true">
+              <UserIcon size={20} color="currentColor" />
             </div>
           </div>
-          {error && (
-            <motion.p
-              id="name-error"
-              role="alert"
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center text-xs text-error"
-            >
-              {error}
-            </motion.p>
-          )}
         </div>
 
+        {/* Class Dropdown - Industry Standard Design */}
+        <div className="mt-5 flex flex-col gap-2">
+          <label
+            htmlFor="player-class"
+            className="text-right text-sm font-bold text-white"
+          >
+            ?באיזו כיתה את/ה לומד
+          </label>
+          <div className="relative">
+            <select
+              id="player-class"
+              value={selectedClass}
+              onChange={(e) => {
+                setSelectedClass(e.target.value);
+                setError("");
+              }}
+              aria-invalid={!!error}
+              className="w-full cursor-pointer appearance-none rounded-lg border-2 border-gray-300 bg-white px-4 py-3 pe-10 text-right text-base font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+              dir="rtl"
+            >
+              <option value="" className="text-gray-500">...בחר כיתה</option>
+              {CLASSES.map((cls) => (
+                <option key={cls.id} value={cls.id} className="text-gray-900">
+                  {cls.label}
+                </option>
+              ))}
+            </select>
+            {/* Dropdown arrow */}
+            <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {error && (
+          <motion.p
+            id="form-error"
+            role="alert"
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-3 text-center text-sm font-medium text-red-400 drop-shadow-lg"
+          >
+            {error}
+          </motion.p>
+        )}
+        </div>
+        {/* End Form Container */}
+
         {/* Start button */}
-        <div className="mt-6">
+        <div className="mx-auto mt-8 w-full max-w-md">
           <Button
             onClick={handleStart}
             disabled={isLoading}
@@ -312,6 +423,7 @@ export default function WelcomePage() {
         {/* Attribution */}
         <Footer />
       </motion.div>
+      <BottomNav variant="hall-of-fame" />
     </div>
   );
 }

@@ -3,7 +3,8 @@ import * as api from "../lib/api";
 
 export function useCreatePlayer() {
   return useMutation({
-    mutationFn: (name: string) => api.createPlayer(name),
+    mutationFn: ({ name, className }: { name: string; className: string }) =>
+      api.createPlayer(name, className),
   });
 }
 
@@ -50,5 +51,55 @@ export function useBadgeCollection(playerId: string | null) {
     queryFn: () => api.getPlayerBadges(playerId!),
     enabled: !!playerId,
     staleTime: 10000,
+  });
+}
+
+export function useCurrentContest() {
+  return useQuery({
+    queryKey: ["contest", "current"],
+    queryFn: api.getCurrentContest,
+    refetchInterval: 60000,
+    staleTime: 30000,
+  });
+}
+
+export function useHallOfFame() {
+  return useQuery({
+    queryKey: ["hall-of-fame"],
+    queryFn: api.getHallOfFame,
+    staleTime: 60000,
+  });
+}
+
+export function useClassLeaderboard(className: string | null) {
+  return useQuery({
+    queryKey: ["leaderboard", "class", className],
+    queryFn: () => api.getClassLeaderboard(className!),
+    enabled: !!className,
+    refetchInterval: 10000,
+    staleTime: 5000,
+  });
+}
+
+export function useSchoolLeaderboard() {
+  return useQuery({
+    queryKey: ["leaderboard", "school"],
+    queryFn: api.getSchoolLeaderboard,
+    refetchInterval: 10000,
+    staleTime: 5000,
+  });
+}
+
+export function useRegisterContestParticipation() {
+  return useMutation({
+    mutationFn: ({
+      contestId,
+      playerId,
+      className,
+    }: {
+      contestId: string;
+      playerId: string;
+      className: string;
+    }) => api.registerContestParticipation(contestId, playerId, className),
   });
 }
