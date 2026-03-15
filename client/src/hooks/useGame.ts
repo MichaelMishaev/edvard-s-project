@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as api from "../lib/api";
+import type { StartGameResponse } from "../lib/types";
 
 export function useCreatePlayer() {
   return useMutation({
@@ -9,8 +10,8 @@ export function useCreatePlayer() {
 }
 
 export function useStartGame() {
-  return useMutation({
-    mutationFn: (playerId: string) => api.startGame(playerId),
+  return useMutation<StartGameResponse, Error, { playerId: string; theme: string }>({
+    mutationFn: ({ playerId, theme }) => api.startGame(playerId, theme),
   });
 }
 

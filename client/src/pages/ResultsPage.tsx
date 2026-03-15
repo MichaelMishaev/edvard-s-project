@@ -6,7 +6,7 @@ import Badge from "../components/Badge";
 import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
 import { ArrowRightIcon, ChartIcon, RefreshIcon } from "../components/Icons";
-import { getEncouragingMessage } from "../lib/constants";
+import { getEncouragingMessage, PESACH_BADGE_MAP } from "../lib/constants";
 
 // Celebratory floating particles for kids
 function CelebrationParticles({ count = 12 }: { count?: number }) {
@@ -53,12 +53,19 @@ export default function ResultsPage() {
   const [displayScore, setDisplayScore] = useState(0);
 
   const resultStr = sessionStorage.getItem("gameResult");
-  const result = resultStr
-    ? JSON.parse(resultStr)
-    : { score: 0, correctAnswers: 0, totalQuestions: 10, badges: [], timeSeconds: 0 };
+  let result = { score: 0, correctAnswers: 0, totalQuestions: 10, badges: [], timeSeconds: 0 };
+  try {
+    if (resultStr) result = JSON.parse(resultStr);
+  } catch {
+    // malformed sessionStorage — use defaults
+  }
 
-  const totalScore = result.score ?? result.totalScore ?? 0;
-  const { correctAnswers, totalQuestions, badges } = result;
+  const gameTheme = sessionStorage.getItem("gameTheme") ?? "jerusalem";
+  const totalScore = result.score ?? (result as any).totalScore ?? 0;
+  const { correctAnswers, totalQuestions } = result;
+  const badges: string[] = (result.badges ?? []).map((b: string) =>
+    gameTheme === "pesach" ? (PESACH_BADGE_MAP[b] ?? b) : b
+  );
 
   // Count-up animation for score
   useEffect(() => {
@@ -89,6 +96,7 @@ export default function ResultsPage() {
     sessionStorage.removeItem("sessionId");
     sessionStorage.removeItem("questions");
     sessionStorage.removeItem("gameResult");
+    sessionStorage.removeItem("gameTheme");
     navigate("/");
   };
 
@@ -171,7 +179,7 @@ export default function ResultsPage() {
           {correctAnswers}/{totalQuestions} תשובות נכונות
         </h3>
         <p className="mt-2 text-sm text-text-secondary">
-          {getEncouragingMessage(correctAnswers, totalQuestions)}
+          {getEncouragingMessage(correctAnswers, totalQuestions, gameTheme)}
         </p>
       </motion.div>
 

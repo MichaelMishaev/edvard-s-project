@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
@@ -8,6 +9,7 @@ import { RANK_COLORS, BADGE_CONFIG } from "../lib/constants";
 import type { HallOfFameContest } from "../lib/types";
 
 export default function HallOfFamePage() {
+  const navigate = useNavigate();
   const { data: contests, isLoading } = useHallOfFame();
   const [expandedContest, setExpandedContest] = useState<number | null>(null);
 
@@ -71,14 +73,22 @@ export default function HallOfFamePage() {
 
         {/* Empty state */}
         {!isLoading && (!contests || contests.length === 0) && (
-          <div className="py-16 text-center">
-            <p className="text-lg text-text-muted">עדיין אין תחרויות קודמות</p>
-            <p className="mt-1 text-sm text-text-muted">התחרות הראשונה תופיע כאן בקרוב!</p>
+          <div className="flex flex-col items-center gap-4 py-16 text-center">
+            <span className="text-5xl" aria-hidden="true">🏰</span>
+            <div>
+              <p className="text-lg font-bold text-white">עדיין אין תחרויות קודמות</p>
+              <p className="mt-1 text-sm text-text-secondary">התחרות הראשונה תופיע כאן בקרוב!</p>
+            </div>
+            <button
+              onClick={() => navigate("/")}
+              className="min-h-[48px] rounded-xl bg-blue-primary px-8 py-3 text-base font-bold text-white"
+            >
+              שחק עכשיו
+            </button>
           </div>
         )}
       </div>
 
-      <Footer />
       <BottomNav variant="hall-of-fame" />
     </div>
   );
