@@ -37,6 +37,13 @@ const UI_IMAGES: ImageRequest[] = [
     aspectRatio: "9x16",
     style: "CHILDRENS_BOOK",
   },
+  {
+    name: "pesach-hero",
+    prompt:
+      "A festive and colorful Passover Seder scene for children, showing a beautiful seder table with matzah, wine cup, seder plate, haggadah book, and candles. Warm golden and red tones, joyful Passover holiday atmosphere. Children's book illustration style, bright and inviting. No text.",
+    aspectRatio: "16x9",
+    style: "CHILDRENS_BOOK",
+  },
 ];
 
 async function generateImage(req: ImageRequest): Promise<string> {
