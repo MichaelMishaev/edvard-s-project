@@ -9,7 +9,7 @@ const router = Router();
 // POST /api/games/start - Start a new game session
 router.post("/start", async (req: Request, res: Response) => {
   try {
-    const { playerId } = req.body as { playerId?: string };
+    const { playerId, theme = "jerusalem" } = req.body as { playerId?: string; theme?: string };
 
     if (!playerId) {
       res.status(400).json({ error: "playerId is required" });
@@ -27,12 +27,13 @@ router.post("/start", async (req: Request, res: Response) => {
       return;
     }
 
-    // Pick 10 random questions
+    // Pick 25 random questions filtered by theme
     const allQuestions = await db
       .select()
       .from(questions)
+      .where(eq(questions.theme, theme))
       .orderBy(sql`RANDOM()`)
-      .limit(10);
+      .limit(25);
 
     if (allQuestions.length === 0) {
       res.status(500).json({ error: "No questions available" });
@@ -122,6 +123,15 @@ router.post("/:id/answer", async (req: Request, res: Response) => {
 
     const correct = question.correctAnswerId === answerId;
 
+    // Compute points awarded (base + speed bonus)
+    let pointsAwarded = 0;
+    if (correct) {
+      pointsAwarded = 10;
+      if (question.timeLimitSec && timeMs < (question.timeLimitSec * 1000) / 2) {
+        pointsAwarded += 5;
+      }
+    }
+
     // Update session answers
     const updatedAnswers = [
       ...session.answers,
@@ -137,6 +147,7 @@ router.post("/:id/answer", async (req: Request, res: Response) => {
       correct,
       correctAnswerId: question.correctAnswerId,
       explanation: question.explanation,
+      pointsAwarded,
     });
   } catch (error) {
     console.error("Error submitting answer:", error);

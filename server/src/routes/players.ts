@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db/index.js";
 import { players } from "../db/schema.js";
-import { eq, sql, desc } from "drizzle-orm";
+import { eq, sql, desc, asc } from "drizzle-orm";
 import { isProfane } from "../services/profanity.js";
 import { isValidClass } from "../config/classes.js";
 
@@ -117,7 +117,7 @@ router.get("/leaderboard/class/:className", async (req: Request, res: Response) 
       .select()
       .from(players)
       .where(eq(players.className, className))
-      .orderBy(desc(players.score), players.timeSeconds);
+      .orderBy(desc(players.score), asc(players.timeSeconds));
 
     res.json(classPlayers);
   } catch (error) {
@@ -132,7 +132,7 @@ router.get("/leaderboard/school", async (req: Request, res: Response) => {
     const schoolPlayers = await db
       .select()
       .from(players)
-      .orderBy(desc(players.score), players.timeSeconds);
+      .orderBy(desc(players.score), asc(players.timeSeconds));
 
     res.json(schoolPlayers);
   } catch (error) {

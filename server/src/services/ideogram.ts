@@ -12,15 +12,27 @@ export async function generateQuestionImage(
   }
 
   const topicDescriptions: Record<string, string> = {
+    // Jerusalem topics
     DAILY_LIFE: "daily life and modern culture in Jerusalem",
     HOLY_CITY: "holy sites and ancient architecture in Jerusalem",
     THREE_RELIGIONS: "the three religions coexisting in Jerusalem",
     WARS_HISTORY: "historical events and ancient battles in Jerusalem",
+    // Pesach topics
+    EXODUS: "the Exodus from Egypt, Moses leading the Israelites to freedom",
+    PLAGUES: "the ten plagues of Egypt from the Passover story",
+    SEDER: "the Passover Seder plate and festive family dinner table",
+    HAGGADAH: "the Passover Haggadah book and Jewish traditions",
+    TRADITIONS: "Passover Jewish holiday traditions and customs",
   };
 
-  const topicDesc = topicDescriptions[topic] || "Jerusalem landmarks";
+  const topicDesc = topicDescriptions[topic] || "Passover and Jewish holiday traditions";
 
-  const prompt = `A colorful children's book illustration about ${topicDesc}. Related to the question: "${question}". Style: friendly, educational, suitable for 9-10 year old children. Bright colors, simple shapes, warm and inviting atmosphere. No text in the image.`;
+  const isPesach = ["EXODUS", "PLAGUES", "SEDER", "HAGGADAH", "TRADITIONS"].includes(topic);
+  const baseStyle = isPesach
+    ? "A colorful children's book illustration with warm Passover holiday atmosphere, golden and warm tones, festive Jewish Passover theme"
+    : "A colorful children's book illustration about Jerusalem";
+
+  const prompt = `${baseStyle} related to: ${topicDesc}. Specific scene: "${question}". Style: friendly, educational, suitable for 9-10 year old Israeli children. Bright warm colors, simple shapes, cheerful and inviting. No text or letters in the image.`;
 
   const formData = new FormData();
   formData.append("prompt", prompt);

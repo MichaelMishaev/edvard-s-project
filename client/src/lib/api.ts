@@ -30,8 +30,8 @@ export async function getPlayer(id: string): Promise<Player> {
   return data;
 }
 
-export async function startGame(playerId: string): Promise<StartGameResponse> {
-  const { data } = await api.post("/games/start", { playerId });
+export async function startGame(playerId: string, theme: string = "jerusalem"): Promise<StartGameResponse> {
+  const { data } = await api.post("/games/start", { playerId, theme });
   return data;
 }
 

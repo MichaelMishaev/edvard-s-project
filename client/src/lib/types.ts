@@ -32,6 +32,7 @@ export interface SubmitAnswerResponse {
   correct: boolean;
   correctAnswerId: string;
   explanation: string;
+  pointsAwarded: number;
 }
 
 export interface CompleteGameResponse {

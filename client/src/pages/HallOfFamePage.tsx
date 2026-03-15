@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "../components/BottomNav";
-import Footer from "../components/Footer";
 import { MedalIcon, BadgeStarIcon } from "../components/Icons";
 import { useHallOfFame } from "../hooks/useGame";
 import { RANK_COLORS, BADGE_CONFIG } from "../lib/constants";

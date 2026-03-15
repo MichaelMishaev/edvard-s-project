@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import BottomNav from "../components/BottomNav";
-import Footer from "../components/Footer";
 import { MedalIcon, BadgeStarIcon } from "../components/Icons";
 import { useClassLeaderboard, useSchoolLeaderboard } from "../hooks/useGame";
 import { getRankTitle, RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG } from "../lib/constants";
@@ -10,12 +10,14 @@ import type { Player } from "../lib/types";
 type LeaderboardView = "class" | "school";
 
 export default function LeaderboardPage() {
-  const [view, setView] = useState<LeaderboardView>("class");
+  const navigate = useNavigate();
   const [playerClassName, setPlayerClassName] = useState<string | null>(null);
+  const [view, setView] = useState<LeaderboardView>("school");
 
   useEffect(() => {
     const className = sessionStorage.getItem("playerClassName");
     setPlayerClassName(className);
+    if (className) setView("class");
   }, []);
 
   const { data: classLeaderboard, isLoading: isLoadingClass } = useClassLeaderboard(playerClassName);
@@ -33,18 +35,18 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Toggle Buttons */}
-      {playerClassName && (
-        <div className="mx-4 mt-4 flex gap-2 rounded-xl bg-bg-card p-1">
-          <button
-            onClick={() => setView("school")}
-            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-              view === "school"
-                ? "bg-blue-primary text-white"
-                : "text-text-muted hover:text-white"
-            }`}
-          >
-            כל בית הספר
-          </button>
+      <div className="mx-4 mt-4 flex gap-2 rounded-xl bg-bg-card p-1">
+        <button
+          onClick={() => setView("school")}
+          className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            view === "school"
+              ? "bg-blue-primary text-white"
+              : "text-text-muted hover:text-white"
+          }`}
+        >
+          כל בית הספר
+        </button>
+        {playerClassName && (
           <button
             onClick={() => setView("class")}
             className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
@@ -55,8 +57,8 @@ export default function LeaderboardPage() {
           >
             הכיתה שלי
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Content */}
       <div className="px-4 pt-6">
@@ -97,14 +99,22 @@ export default function LeaderboardPage() {
 
         {/* Empty state */}
         {!isLoading && entries.length === 0 && (
-          <div className="py-16 text-center">
-            <p className="text-lg text-text-muted">עדיין אין שחקנים</p>
-            <p className="mt-1 text-sm text-text-muted">היה הראשון לשחק!</p>
+          <div className="flex flex-col items-center gap-4 py-16 text-center">
+            <span className="text-5xl" aria-hidden="true">🏆</span>
+            <div>
+              <p className="text-lg font-bold text-white">עדיין אין שחקנים</p>
+              <p className="mt-1 text-sm text-text-secondary">היה הראשון לשחק!</p>
+            </div>
+            <button
+              onClick={() => navigate("/")}
+              className="min-h-[48px] rounded-xl bg-blue-primary px-8 py-3 text-base font-bold text-white"
+            >
+              התחל לשחק
+            </button>
           </div>
         )}
       </div>
 
-      <Footer />
       <BottomNav variant="leaderboard" />
     </div>
   );
@@ -151,7 +161,16 @@ function PlayerRow({
           ? "border border-border-card bg-bg-card"
           : ""
       }`}
-      style={bgStyle}
+      style={{
+        ...bgStyle,
+        boxShadow: view === "class" && rank === 1
+          ? "0 0 20px rgba(245,158,11,0.15)"
+          : view === "class" && rank === 2
+            ? "0 0 15px rgba(156,163,175,0.1)"
+            : view === "class" && rank === 3
+              ? "0 0 15px rgba(217,119,6,0.1)"
+              : undefined,
+      }}
     >
       {/* Badges (far left) */}
       <div className="flex items-center gap-0.5 w-16 justify-start">
@@ -191,7 +210,7 @@ function PlayerRow({
 
         {/* Avatar */}
         <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold text-white"
+          className={`flex ${rank === 1 ? "h-12 w-12 text-base" : "h-10 w-10 text-sm"} shrink-0 items-center justify-center rounded-full border-2 font-bold text-white`}
           style={{ borderColor: avatarColor, backgroundColor: `${avatarColor}22` }}
           aria-hidden="true"
         >
@@ -201,7 +220,7 @@ function PlayerRow({
 
       {/* Rank number */}
       <div
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold"
+        className={`flex h-8 w-8 shrink-0 items-center justify-center ${rank <= 3 ? "rounded-full" : "rounded-lg"} text-sm font-bold`}
         style={{
           color: rankColor?.text || "#8b95a8",
           backgroundColor: rankColor?.bg || "transparent",

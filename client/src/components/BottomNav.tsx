@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -60,10 +60,18 @@ export default function BottomNav({ variant = "game" }: BottomNavProps) {
   const location = useLocation();
   const items = navConfigs[variant];
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
 
   const showToast = (label: string) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     setToast(label);
-    setTimeout(() => setToast(null), 2000);
+    toastTimerRef.current = setTimeout(() => setToast(null), 2000);
   };
 
   return (
@@ -85,7 +93,7 @@ export default function BottomNav({ variant = "game" }: BottomNavProps) {
       </AnimatePresence>
 
       <nav
-        className="fixed bottom-0 left-0 right-0 z-50 border-t-2 border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.1)]"
+        className="fixed bottom-0 left-0 right-0 z-50 border-t border-border-card bg-bg-primary shadow-[0_-4px_20px_rgba(0,0,0,0.4)]"
         aria-label="ניווט ראשי"
       >
         <div className="mx-auto flex max-w-md items-center justify-around py-2 px-2">
@@ -103,21 +111,24 @@ export default function BottomNav({ variant = "game" }: BottomNavProps) {
                 }}
                 aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
-                className={`flex min-h-[56px] min-w-[60px] flex-1 flex-col items-center justify-center gap-1.5 rounded-lg transition-all duration-200 ${
+                className={`relative flex min-h-[56px] min-w-[60px] flex-1 flex-col items-center justify-center gap-1.5 rounded-lg transition-all duration-200 ${
                   item.disabled
                     ? "opacity-40 cursor-not-allowed"
                     : isActive
-                      ? "bg-blue-50"
-                      : "hover:bg-gray-50 active:bg-gray-100"
+                      ? "bg-blue-primary/10"
+                      : "hover:bg-bg-card active:bg-bg-card-hover"
                 }`}
               >
+                {isActive && (
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-8 rounded-full bg-blue-light" />
+                )}
                 <item.icon
                   size={24}
-                  color={isActive ? "#2563eb" : "#64748b"}
+                  color={isActive ? "#3b82f6" : "#5b6478"}
                 />
                 <span
                   className={`text-xs font-semibold ${
-                    isActive ? "text-blue-600" : "text-gray-600"
+                    isActive ? "text-blue-light" : "text-text-muted"
                   }`}
                 >
                   {item.label}

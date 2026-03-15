@@ -1,0 +1,646 @@
+{
+  "version": "1.0",
+  "language": "he",
+  "questions": [
+    {
+      "id": "PSC-001",
+      "topic": "EXODUS",
+      "difficulty": 1,
+      "question": "מי הוציא את בני ישראל ממצרים?",
+      "answers": [
+        { "id": "A", "text": "משה" },
+        { "id": "B", "text": "דוד המלך" },
+        { "id": "C", "text": "אברהם" },
+        { "id": "D", "text": "שלמה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "משה הנהיג את בני ישראל והוציא אותם מעבדות מצרים.",
+      "tags": ["יציאת מצרים", "מנהיגות"]
+    },
+    {
+      "id": "PSC-002",
+      "topic": "PLAGUES",
+      "difficulty": 1,
+      "question": "כמה מכות הביא אלוהים על מצרים?",
+      "answers": [
+        { "id": "A", "text": "7" },
+        { "id": "B", "text": "8" },
+        { "id": "C", "text": "10" },
+        { "id": "D", "text": "12" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "עשר המכות נשלחו כדי לשכנע את פרעה לשחרר את בני ישראל.",
+      "tags": ["מכות מצרים"]
+    },
+    {
+      "id": "PSC-003",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "איך נקראת הארוחה החגיגית בליל פסח?",
+      "answers": [
+        { "id": "A", "text": "קידוש" },
+        { "id": "B", "text": "סעודת חג" },
+        { "id": "C", "text": "סדר פסח" },
+        { "id": "D", "text": "סעודת שבת" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "בליל פסח עורכים את סדר הפסח שבו מספרים את סיפור יציאת מצרים.",
+      "tags": ["סדר", "פסח"]
+    },
+    {
+      "id": "PSC-004",
+      "topic": "TRADITIONS",
+      "difficulty": 1,
+      "question": "איזה מאכל אוכלים במקום לחם בפסח?",
+      "answers": [
+        { "id": "A", "text": "פיתה" },
+        { "id": "B", "text": "מצה" },
+        { "id": "C", "text": "לחמנייה" },
+        { "id": "D", "text": "בגט" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "מצה נאכלת בפסח לזכר היציאה המהירה ממצרים ללא זמן להתפחת הבצק.",
+      "tags": ["מצה", "מסורת"]
+    },
+    {
+      "id": "PSC-005",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "כמה כוסות יין שותים בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "2" },
+        { "id": "B", "text": "3" },
+        { "id": "C", "text": "4" },
+        { "id": "D", "text": "6" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "בליל הסדר שותים ארבע כוסות יין המסמלות ארבע לשונות גאולה.",
+      "tags": ["סדר", "יין"]
+    },
+    {
+      "id": "PSC-006",
+      "topic": "HAGGADAH",
+      "difficulty": 1,
+      "question": "איזה ספר קוראים בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "התורה" },
+        { "id": "B", "text": "הגדה של פסח" },
+        { "id": "C", "text": "תלמוד" },
+        { "id": "D", "text": "סידור" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "ההגדה של פסח מספרת את סיפור יציאת מצרים ומנחה את סדר הפסח.",
+      "tags": ["הגדה"]
+    },
+    {
+      "id": "PSC-007",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "איך נקראת המצה שמחביאים לילדים בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "כרפס" },
+        { "id": "B", "text": "מרור" },
+        { "id": "C", "text": "אפיקומן" },
+        { "id": "D", "text": "חרוסת" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "האפיקומן הוא חתיכת מצה שמחביאים והילדים מחפשים בסוף הסדר.",
+      "tags": ["אפיקומן", "סדר"]
+    },
+    {
+      "id": "PSC-008",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "מי בדרך כלל שואל את ארבע הקושיות בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "הסבא" },
+        { "id": "B", "text": "הילד הצעיר ביותר" },
+        { "id": "C", "text": "האמא" },
+        { "id": "D", "text": "הרב" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "נהוג שהילד הצעיר ביותר שואל את ארבע הקושיות.",
+      "tags": ["מה נשתנה"]
+    },
+    {
+      "id": "PSC-009",
+      "topic": "PLAGUES",
+      "difficulty": 1,
+      "question": "איזו מכה הפכה את מי הנילוס לדם?",
+      "answers": [
+        { "id": "A", "text": "המכה הראשונה" },
+        { "id": "B", "text": "המכה השלישית" },
+        { "id": "C", "text": "המכה השישית" },
+        { "id": "D", "text": "המכה התשיעית" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "המכה הראשונה הייתה דם – מי הנילוס הפכו לדם.",
+      "tags": ["מכות מצרים"]
+    },
+    {
+      "id": "PSC-010",
+      "topic": "TRADITIONS",
+      "difficulty": 1,
+      "question": "איזה מאכל מסמל את טעם העבדות המר?",
+      "answers": [
+        { "id": "A", "text": "חרוסת" },
+        { "id": "B", "text": "כרפס" },
+        { "id": "C", "text": "מרור" },
+        { "id": "D", "text": "ביצה" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "מרור מסמל את המרירות של חיי העבדות במצרים.",
+      "tags": ["מרור", "סדר"]
+    },
+    {
+      "id": "PSC-011",
+      "topic": "EXODUS",
+      "difficulty": 1,
+      "question": "באיזה מקום היו בני ישראל עבדים לפני יציאת מצרים?",
+      "answers": [
+        { "id": "A", "text": "בבל" },
+        { "id": "B", "text": "מצרים" },
+        { "id": "C", "text": "יוון" },
+        { "id": "D", "text": "רומא" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "בני ישראל היו עבדים במצרים עד יציאת מצרים.",
+      "tags": ["מצרים", "עבדות"]
+    },
+    {
+      "id": "PSC-012",
+      "topic": "EXODUS",
+      "difficulty": 1,
+      "question": "מי היה מלך מצרים בזמן יציאת מצרים?",
+      "answers": [
+        { "id": "A", "text": "שלמה" },
+        { "id": "B", "text": "דוד" },
+        { "id": "C", "text": "פרעה" },
+        { "id": "D", "text": "נבוכדנצר" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 20,
+      "explanation": "פרעה היה שליט מצרים שסירב לשחרר את בני ישראל.",
+      "tags": ["פרעה", "מצרים"]
+    },
+    {
+      "id": "PSC-013",
+      "topic": "PLAGUES",
+      "difficulty": 2,
+      "question": "איזו מכה הביאה צפרדעים למצרים?",
+      "answers": [
+        { "id": "A", "text": "המכה הראשונה" },
+        { "id": "B", "text": "המכה השנייה" },
+        { "id": "C", "text": "המכה הרביעית" },
+        { "id": "D", "text": "המכה השישית" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "המכה השנייה הייתה צפרדע – צפרדעים כיסו את הארץ.",
+      "tags": ["מכות מצרים"]
+    },
+    {
+      "id": "PSC-014",
+      "topic": "PLAGUES",
+      "difficulty": 2,
+      "question": "איזו מכה גרמה לחושך כבד במצרים?",
+      "answers": [
+        { "id": "A", "text": "המכה השביעית" },
+        { "id": "B", "text": "המכה השמינית" },
+        { "id": "C", "text": "המכה התשיעית" },
+        { "id": "D", "text": "המכה העשירית" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "המכה התשיעית הייתה חושך שנמשך שלושה ימים.",
+      "tags": ["מכות מצרים", "חושך"]
+    },
+    {
+      "id": "PSC-015",
+      "topic": "PLAGUES",
+      "difficulty": 2,
+      "question": "מה הייתה המכה האחרונה במצרים?",
+      "answers": [
+        { "id": "A", "text": "ברד" },
+        { "id": "B", "text": "חושך" },
+        { "id": "C", "text": "מכת בכורות" },
+        { "id": "D", "text": "ארבה" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "מכת בכורות גרמה למות הבכורות במצרים.",
+      "tags": ["מכות מצרים", "בכורות"]
+    },
+    {
+      "id": "PSC-016",
+      "topic": "TRADITIONS",
+      "difficulty": 1,
+      "question": "מה חייבים להוציא מהבית לפני פסח?",
+      "answers": [
+        { "id": "A", "text": "חמץ" },
+        { "id": "B", "text": "ירקות" },
+        { "id": "C", "text": "פירות" },
+        { "id": "D", "text": "סוכר" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "חמץ הוא מאכל שתפח ואסור בפסח.",
+      "tags": ["חמץ", "ניקיון"]
+    },
+    {
+      "id": "PSC-017",
+      "topic": "TRADITIONS",
+      "difficulty": 2,
+      "question": "איך נקראת הפעולה של חיפוש החמץ בבית?",
+      "answers": [
+        { "id": "A", "text": "בדיקת חמץ" },
+        { "id": "B", "text": "שריפת חמץ" },
+        { "id": "C", "text": "ברכת חמץ" },
+        { "id": "D", "text": "הדלקת חמץ" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "בלילה לפני ערב פסח מחפשים חמץ בבית.",
+      "tags": ["בדיקת חמץ"]
+    },
+    {
+      "id": "PSC-018",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "איזה ירק טובלים במי מלח בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "כרפס" },
+        { "id": "B", "text": "מלפפון" },
+        { "id": "C", "text": "עגבנייה" },
+        { "id": "D", "text": "גזר" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "כרפס טובלים במי מלח לזכר הדמעות של העבדים.",
+      "tags": ["כרפס", "סדר"]
+    },
+    {
+      "id": "PSC-019",
+      "topic": "SEDER",
+      "difficulty": 2,
+      "question": "מה מסמלת החרוסת בקערת הסדר?",
+      "answers": [
+        { "id": "A", "text": "דם" },
+        { "id": "B", "text": "טיט הבנייה של העבדים" },
+        { "id": "C", "text": "ים סוף" },
+        { "id": "D", "text": "המדבר" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "חרוסת מזכירה את הטיט שבו עבדו בני ישראל במצרים.",
+      "tags": ["חרוסת"]
+    },
+    {
+      "id": "PSC-020",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "איזה מאכל בקערת הסדר מסמל את קורבן הפסח?",
+      "answers": [
+        { "id": "A", "text": "ביצה" },
+        { "id": "B", "text": "זרוע" },
+        { "id": "C", "text": "כרפס" },
+        { "id": "D", "text": "חרוסת" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "הזרוע בקערת הסדר מסמלת את קורבן הפסח.",
+      "tags": ["קערת הסדר"]
+    },
+    {
+      "id": "PSC-021",
+      "topic": "EXODUS",
+      "difficulty": 1,
+      "question": "איזה ים נבקע כאשר בני ישראל יצאו ממצרים?",
+      "answers": [
+        { "id": "A", "text": "ים סוף" },
+        { "id": "B", "text": "הכנרת" },
+        { "id": "C", "text": "הים התיכון" },
+        { "id": "D", "text": "ים המלח" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "ים סוף נבקע כדי שבני ישראל יוכלו לעבור.",
+      "tags": ["ים סוף"]
+    },
+    {
+      "id": "PSC-022",
+      "topic": "EXODUS",
+      "difficulty": 2,
+      "question": "מי היה אחיו של משה שעזר לו מול פרעה?",
+      "answers": [
+        { "id": "A", "text": "יוסף" },
+        { "id": "B", "text": "אהרון" },
+        { "id": "C", "text": "יצחק" },
+        { "id": "D", "text": "שמואל" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "אהרון היה אחיו של משה ועזר לו לדבר מול פרעה.",
+      "tags": ["אהרון", "משה"]
+    },
+    {
+      "id": "PSC-023",
+      "topic": "HAGGADAH",
+      "difficulty": 1,
+      "question": "מה שואלים בתחילת ארבע הקושיות?",
+      "answers": [
+        { "id": "A", "text": "מי הוציא אותנו ממצרים?" },
+        { "id": "B", "text": "מה נשתנה הלילה הזה מכל הלילות?" },
+        { "id": "C", "text": "למה אוכלים מצה?" },
+        { "id": "D", "text": "כמה כוסות שותים?" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "כך מתחילות ארבע הקושיות בליל הסדר.",
+      "tags": ["מה נשתנה"]
+    },
+    {
+      "id": "PSC-024",
+      "topic": "SEDER",
+      "difficulty": 2,
+      "question": "לאיזה צד נשענים כאשר שותים יין בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "ימין" },
+        { "id": "B", "text": "שמאל" },
+        { "id": "C", "text": "קדימה" },
+        { "id": "D", "text": "אחורה" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "הישענות שמאלה מסמלת חירות.",
+      "tags": ["חירות", "סדר"]
+    },
+    {
+      "id": "PSC-025",
+      "topic": "TRADITIONS",
+      "difficulty": 1,
+      "question": "איך נקרא חג הפסח באנגלית?",
+      "answers": [
+        { "id": "A", "text": "Freedom Day" },
+        { "id": "B", "text": "Passover" },
+        { "id": "C", "text": "Spring Holiday" },
+        { "id": "D", "text": "Exodus Day" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "Passover הוא השם באנגלית לחג פסח.",
+      "tags": ["אנגלית"]
+    },
+    {
+      "id": "PSC-026",
+      "topic": "TRADITIONS",
+      "difficulty": 1,
+      "question": "איזה חג נקרא גם חג החירות?",
+      "answers": [
+        { "id": "A", "text": "פורים" },
+        { "id": "B", "text": "פסח" },
+        { "id": "C", "text": "חנוכה" },
+        { "id": "D", "text": "סוכות" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "פסח נקרא חג החירות כי בו יצאנו מעבדות לחירות.",
+      "tags": ["חירות"]
+    },
+    {
+      "id": "PSC-027",
+      "topic": "SEDER",
+      "difficulty": 2,
+      "question": "כמה מצות מניחים על שולחן הסדר?",
+      "answers": [
+        { "id": "A", "text": "2" },
+        { "id": "B", "text": "3" },
+        { "id": "C", "text": "4" },
+        { "id": "D", "text": "5" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "שלוש מצות מונחות בקערת הסדר.",
+      "tags": ["מצות"]
+    },
+    {
+      "id": "PSC-028",
+      "topic": "SEDER",
+      "difficulty": 2,
+      "question": "מי מוזמן באופן סמלי לליל הסדר עם כוס מיוחדת?",
+      "answers": [
+        { "id": "A", "text": "ישעיהו" },
+        { "id": "B", "text": "אליהו הנביא" },
+        { "id": "C", "text": "שמואל" },
+        { "id": "D", "text": "ירמיהו" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "כוס מיוחדת מוזגת לאליהו הנביא בליל הסדר.",
+      "tags": ["אליהו"]
+    },
+    {
+      "id": "PSC-029",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "איזה מאכל מסמל את המרירות של העבדות?",
+      "answers": [
+        { "id": "A", "text": "מצה" },
+        { "id": "B", "text": "מרור" },
+        { "id": "C", "text": "כרפס" },
+        { "id": "D", "text": "ביצה" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "מרור מסמל את חיי העבדות המרים.",
+      "tags": ["מרור"]
+    },
+    {
+      "id": "PSC-030",
+      "topic": "SEDER",
+      "difficulty": 2,
+      "question": "מה מסמל מי המלח בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "גשם" },
+        { "id": "B", "text": "דמעות העבדים" },
+        { "id": "C", "text": "נהר הנילוס" },
+        { "id": "D", "text": "ים סוף" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "מי המלח מזכירים את הדמעות של בני ישראל בעבדות.",
+      "tags": ["דמעות"]
+    },
+    {
+      "id": "PSC-031",
+      "topic": "PLAGUES",
+      "difficulty": 3,
+      "question": "איזו מכה באה מיד אחרי צפרדע?",
+      "answers": [
+        { "id": "A", "text": "כינים" },
+        { "id": "B", "text": "ערוב" },
+        { "id": "C", "text": "שחין" },
+        { "id": "D", "text": "ברד" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 30,
+      "explanation": "אחרי מכת צפרדע באה מכת כינים.",
+      "tags": ["מכות"]
+    },
+    {
+      "id": "PSC-032",
+      "topic": "PLAGUES",
+      "difficulty": 3,
+      "question": "איזו מכה כללה ארבה שאכל את היבול?",
+      "answers": [
+        { "id": "A", "text": "השישית" },
+        { "id": "B", "text": "השביעית" },
+        { "id": "C", "text": "השמינית" },
+        { "id": "D", "text": "התשיעית" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 30,
+      "explanation": "המכה השמינית הייתה ארבה.",
+      "tags": ["ארבה"]
+    },
+    {
+      "id": "PSC-033",
+      "topic": "TRADITIONS",
+      "difficulty": 1,
+      "question": "איזה מאכל מכינים מקמח מצה?",
+      "answers": [
+        { "id": "A", "text": "קניידלך" },
+        { "id": "B", "text": "פסטה" },
+        { "id": "C", "text": "פיתה" },
+        { "id": "D", "text": "לחמנייה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "קניידלך הם כדורי מצה הנפוצים בפסח.",
+      "tags": ["אוכל"]
+    },
+    {
+      "id": "PSC-034",
+      "topic": "EXODUS",
+      "difficulty": 1,
+      "question": "מה קרה לפרעה ולצבאו אחרי קריעת ים סוף?",
+      "answers": [
+        { "id": "A", "text": "ניצלו" },
+        { "id": "B", "text": "טבעו בים" },
+        { "id": "C", "text": "ברחו למדבר" },
+        { "id": "D", "text": "חזרו למצרים" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 20,
+      "explanation": "המים חזרו והטביעו את צבא פרעה.",
+      "tags": ["ים סוף"]
+    },
+    {
+      "id": "PSC-035",
+      "topic": "HAGGADAH",
+      "difficulty": 1,
+      "question": "איזה שיר מפורסם שרים בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "דיינו" },
+        { "id": "B", "text": "התקווה" },
+        { "id": "C", "text": "שלום עליכם" },
+        { "id": "D", "text": "מעוז צור" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "דיינו הוא שיר מרכזי בהגדה של פסח.",
+      "tags": ["דיינו"]
+    },
+    {
+      "id": "PSC-036",
+      "topic": "HAGGADAH",
+      "difficulty": 2,
+      "question": "מה פירוש המילה 'דיינו'?",
+      "answers": [
+        { "id": "A", "text": "זה מספיק לנו" },
+        { "id": "B", "text": "תודה רבה" },
+        { "id": "C", "text": "שמחה גדולה" },
+        { "id": "D", "text": "ברכה" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 25,
+      "explanation": "דיינו פירושו: זה היה מספיק לנו.",
+      "tags": ["דיינו"]
+    },
+    {
+      "id": "PSC-037",
+      "topic": "TRADITIONS",
+      "difficulty": 2,
+      "question": "מה עושים עם החמץ שמוצאים?",
+      "answers": [
+        { "id": "A", "text": "אוכלים אותו" },
+        { "id": "B", "text": "שורפים אותו" },
+        { "id": "C", "text": "שומרים בארון" },
+        { "id": "D", "text": "נותנים לילדים" }
+      ],
+      "correctAnswerId": "B",
+      "timeLimitSec": 25,
+      "explanation": "את החמץ שורפים בבוקר ערב פסח.",
+      "tags": ["שריפת חמץ"]
+    },
+    {
+      "id": "PSC-038",
+      "topic": "EXODUS",
+      "difficulty": 2,
+      "question": "כמה שנים היו בני ישראל במדבר לאחר יציאת מצרים?",
+      "answers": [
+        { "id": "A", "text": "10" },
+        { "id": "B", "text": "20" },
+        { "id": "C", "text": "40" },
+        { "id": "D", "text": "70" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 25,
+      "explanation": "בני ישראל נדדו במדבר במשך 40 שנה.",
+      "tags": ["מדבר"]
+    },
+    {
+      "id": "PSC-039",
+      "topic": "EXODUS",
+      "difficulty": 3,
+      "question": "על איזה הר קיבל משה את התורה?",
+      "answers": [
+        { "id": "A", "text": "הר הכרמל" },
+        { "id": "B", "text": "הר תבור" },
+        { "id": "C", "text": "הר סיני" },
+        { "id": "D", "text": "הר ציון" }
+      ],
+      "correctAnswerId": "C",
+      "timeLimitSec": 30,
+      "explanation": "משה קיבל את התורה בהר סיני.",
+      "tags": ["הר סיני"]
+    },
+    {
+      "id": "PSC-040",
+      "topic": "SEDER",
+      "difficulty": 1,
+      "question": "מה חייבים לספר בליל הסדר?",
+      "answers": [
+        { "id": "A", "text": "סיפור יציאת מצרים" },
+        { "id": "B", "text": "סיפור בריאת העולם" },
+        { "id": "C", "text": "סיפור דוד וגוליית" },
+        { "id": "D", "text": "סיפור יוסף ואחיו" }
+      ],
+      "correctAnswerId": "A",
+      "timeLimitSec": 20,
+      "explanation": "בליל הסדר מספרים את סיפור יציאת מצרים.",
+      "tags": ["סיפור"]
+    }
+  ]
+}

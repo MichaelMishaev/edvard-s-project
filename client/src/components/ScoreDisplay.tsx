@@ -6,14 +6,14 @@ interface ScoreDisplayProps {
 
 export default function ScoreDisplay({ score }: ScoreDisplayProps) {
   return (
-    <div className="flex items-center gap-2 rounded-full bg-bg-card border border-border-card px-4 py-2">
+    <div className="flex items-center gap-2 rounded-full bg-bg-card border border-border-card px-4 py-2 shadow-[0_0_12px_rgba(37,99,235,0.3)]">
       <AnimatePresence mode="wait">
         <motion.span
           key={score}
           initial={{ scale: 1.3, color: "#22c55e" }}
           animate={{ scale: 1, color: "#ffffff" }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="text-lg font-bold"
+          className="text-xl font-extrabold"
         >
           {score.toLocaleString()}
         </motion.span>
@@ -23,7 +23,7 @@ export default function ScoreDisplay({ score }: ScoreDisplayProps) {
         height="20"
         viewBox="0 0 24 24"
         fill="none"
-        className="text-blue-primary"
+        className="text-yellow-400"
         animate={score > 0 ? { rotate: [0, 15, -15, 0] } : {}}
         transition={{ duration: 0.5 }}
         aria-hidden="true"

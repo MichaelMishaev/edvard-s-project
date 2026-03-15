@@ -44,7 +44,12 @@ export default function GamePage() {
   const playerName = sessionStorage.getItem("playerName") || "";
   const sessionId = sessionStorage.getItem("sessionId") || "";
   const questionsStr = sessionStorage.getItem("questions");
-  const questions: Question[] = questionsStr ? JSON.parse(questionsStr) : [];
+  let questions: Question[] = [];
+  try {
+    questions = questionsStr ? JSON.parse(questionsStr) : [];
+  } catch {
+    questions = [];
+  }
   const totalQuestions = questions.length;
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -107,7 +112,7 @@ export default function GamePage() {
           explanation: result.explanation,
         });
         if (result.correct) {
-          setScore((prev) => prev + 10);
+          setScore((prev) => prev + (result.pointsAwarded ?? 10));
         }
 
         // Auto advance after 2 seconds
@@ -194,11 +199,14 @@ export default function GamePage() {
           aria-label="חזרה לדף הבית"
           className="flex h-12 w-12 items-center justify-center rounded-full border border-border-card"
         >
-          <QuestionIcon size={18} color="#5b6478" />
+          <CloseIcon size={18} color="#5b6478" />
         </button>
 
         <div className="flex flex-1 flex-col items-center gap-1 px-4">
-          <span className="text-sm text-text-secondary">התקדמות</span>
+          <div className="flex items-center gap-1.5 rounded-full bg-bg-card px-3 py-1 border border-border-card">
+            <span className="text-sm font-bold text-white">{currentQuestionIndex + 1}</span>
+            <span className="text-sm text-text-muted">/ {totalQuestions}</span>
+          </div>
           <ProgressBar current={currentQuestionIndex + 1} total={totalQuestions} />
         </div>
 
@@ -302,7 +310,7 @@ export default function GamePage() {
                     onClick={() => handleAnswer(answer.id)}
                     disabled={!!selectedAnswer}
                     aria-label={`תשובה: ${answer.text}`}
-                    className={`flex items-center gap-4 rounded-2xl border ${borderColor} ${bgColor} px-5 py-4 min-h-[56px] text-right transition-colors disabled:cursor-default`}
+                    className={`flex items-center gap-4 rounded-2xl border ${borderColor} ${bgColor} px-5 py-4 min-h-[64px] text-right transition-colors disabled:cursor-default`}
                   >
                     {/* Radio circle */}
                     <div
@@ -325,16 +333,14 @@ export default function GamePage() {
           </AnimatePresence>
         </div>
 
-        {/* Explanation box */}
-        <div className="mt-6 w-full rounded-2xl border-2 border-dashed border-border-card px-5 py-4">
-          <p className="text-center text-sm text-text-muted leading-relaxed">
-            {answerResult
-              ? answerResult.explanation
-              : "בחר את התשובה הנכונה ביותר"}
-          </p>
-        </div>
-
-        <Footer />
+        {/* Explanation box — only visible after answering */}
+        {answerResult && (
+          <div className="mt-6 w-full rounded-2xl border-2 border-dashed border-border-card px-5 py-4">
+            <p className="text-center text-sm text-text-muted leading-relaxed">
+              {answerResult.explanation}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Decorative Jerusalem illustration - fills remaining space */}

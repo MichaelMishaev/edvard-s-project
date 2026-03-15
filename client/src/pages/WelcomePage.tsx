@@ -142,7 +142,7 @@ export default function WelcomePage() {
   const isLoading = submissionStatus === "loading";
 
   return (
-    <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
+    <div className="flex min-h-dvh flex-col bg-bg-primary pb-28">
       {/* Hero Image Area */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -264,7 +264,7 @@ export default function WelcomePage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="flex flex-1 flex-col px-10 pb-8"
+        className="flex flex-1 flex-col px-10 pb-8 w-full max-w-xl mx-auto"
       >
         {/* Theme Selector */}
         <motion.div
@@ -555,7 +555,7 @@ export default function WelcomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-auto pt-8"
+            className="mt-auto pt-8 pb-4"
           >
             <div className="mb-3 flex items-center justify-between">
               <button
@@ -655,7 +655,7 @@ export default function WelcomePage() {
         {/* Attribution */}
         <Footer />
       </motion.div>
-      <BottomNav variant="hall-of-fame" />
+      <BottomNav variant="leaderboard" />
 
       {/* About Project Modal */}
       <AnimatePresence>

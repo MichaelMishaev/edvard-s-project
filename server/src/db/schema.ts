@@ -24,6 +24,7 @@ export const players = pgTable("players", {
 
 export const questions = pgTable("questions", {
   id: varchar("id", { length: 10 }).primaryKey(),
+  theme: varchar("theme", { length: 20 }).notNull().default("jerusalem"),
   topic: varchar("topic", { length: 50 }).notNull(),
   difficulty: integer("difficulty").notNull(),
   question: text("question").notNull(),

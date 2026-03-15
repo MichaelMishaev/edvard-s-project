@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useBadgeCollection } from "../hooks/useGame";
 import BottomNav from "../components/BottomNav";
-import Footer from "../components/Footer";
 import { ArrowRightIcon } from "../components/Icons";
 import { BADGE_CONFIG } from "../lib/constants";
 import type { BadgeDefinition } from "../lib/types";
@@ -37,18 +36,16 @@ export default function BadgeCollectionPage() {
 
       {/* Progress Section */}
       <div className="m-4 flex flex-col gap-4 rounded-xl border border-border-card bg-bg-card p-6">
-        <div className="flex items-end justify-between">
-          <p className="mb-1 text-sm text-text-secondary">
-            עוד {remaining} עיטורים לסיום האוסף
-          </p>
-          <div className="flex flex-col items-end gap-1">
-            <p className="text-sm font-medium text-text-secondary">
-              התקדמות האוסף
-            </p>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col items-start gap-1">
+            <p className="text-sm font-medium text-text-secondary">התקדמות האוסף</p>
             <p className="text-2xl font-bold text-blue-primary">
               {earnedCount} / {totalCount}
             </p>
           </div>
+          <p className="text-sm text-text-secondary">
+            עוד {remaining} עיטורים לסיום האוסף
+          </p>
         </div>
         <div className="h-3 w-full overflow-hidden rounded-full bg-[#1e2a45]">
           <motion.div
@@ -73,11 +70,13 @@ export default function BadgeCollectionPage() {
         )}
 
         {!isLoading && !playerId && (
-          <div className="py-16 text-center">
-            <p className="text-lg text-text-muted">התחל משחק כדי לאסוף עיטורים!</p>
+          <div className="mb-4 rounded-xl border border-blue-primary/20 bg-blue-primary/5 px-4 py-3 text-center">
+            <p className="text-base font-semibold text-blue-light">
+              התחל משחק כדי לאסוף עיטורים!
+            </p>
             <button
               onClick={() => navigate("/")}
-              className="mt-4 rounded-xl bg-blue-primary px-6 py-3 text-sm font-bold text-white"
+              className="mt-3 min-h-[44px] rounded-xl bg-blue-primary px-6 py-2.5 text-sm font-bold text-white"
             >
               התחל לשחק
             </button>
@@ -85,13 +84,19 @@ export default function BadgeCollectionPage() {
         )}
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {badges.map((badge, i) => (
-            <BadgeCard key={badge.id} badge={badge} index={i} />
-          ))}
+          {!isLoading && !playerId
+            ? Object.keys(BADGE_CONFIG).slice(0, 12).map((badgeName, i) => (
+                <BadgeCard
+                  key={badgeName}
+                  badge={{ id: badgeName, name: badgeName, description: "השג כדי לגלות...", imageUrl: "", earned: false }}
+                  index={i}
+                />
+              ))
+            : badges.map((badge, i) => <BadgeCard key={badge.id} badge={badge} index={i} />)
+          }
         </div>
       </div>
 
-      <Footer />
       <BottomNav variant="badges" />
     </div>
   );

@@ -1,0 +1,1 @@
+ALTER TABLE "questions" ADD COLUMN "theme" varchar(20) DEFAULT 'jerusalem' NOT NULL;
