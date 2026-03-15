@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import BottomNav from "../components/BottomNav";
@@ -13,6 +13,7 @@ import { useCreatePlayer, useStartGame, useLeaderboard, useCurrentContest } from
 import { RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG, CLASSES } from "../lib/constants";
 import type { Player } from "../lib/types";
 import { validateName, validateClass, debounce } from "../utils/formValidation";
+import AboutProjectModal from "../components/AboutProjectModal";
 
 export default function WelcomePage() {
   const [name, setName] = useState(() => {
@@ -22,6 +23,8 @@ export default function WelcomePage() {
   const [selectedClass, setSelectedClass] = useState(() => {
     return sessionStorage.getItem("playerClassName") || "";
   });
+  const [selectedTheme, setSelectedTheme] = useState<"jerusalem" | "pesach">("jerusalem");
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [error, setError] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [validationState, setValidationState] = useState<{
@@ -36,17 +39,22 @@ export default function WelcomePage() {
   const startGame = useStartGame();
   const { data: leaderboard } = useLeaderboard();
   const { data: contest } = useCurrentContest();
-  const [heroLoaded, setHeroLoaded] = useState(false);
   const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Preload hero image
+  const heroSrc = selectedTheme === "pesach"
+    ? "/images/ui/pesach-hero.png"
+    : "/images/ui/jerusalem-hero.png";
+
+  // Track the currently visible image src — only swaps when new image is ready
+  const [visibleHeroSrc, setVisibleHeroSrc] = useState<string | null>(null);
+
+  // Preload hero image when theme changes, swap only when loaded (no flicker)
   useEffect(() => {
     const img = new Image();
-    img.onload = () => setHeroLoaded(true);
-    img.src = "/images/ui/jerusalem-hero.png";
-    // If image doesn't exist, still show gradient fallback
-    img.onerror = () => setHeroLoaded(false);
-  }, []);
+    img.onload = () => setVisibleHeroSrc(heroSrc);
+    img.onerror = () => setVisibleHeroSrc(null);
+    img.src = heroSrc;
+  }, [heroSrc]);
 
   // Real-time validation with debouncing
   const validateNameDebounced = useCallback(
@@ -112,10 +120,11 @@ export default function WelcomePage() {
       sessionStorage.setItem("playerName", player.name);
       sessionStorage.setItem("playerClassName", player.className);
 
-      const gameData = await startGame.mutateAsync(player.id);
+      const gameData = await startGame.mutateAsync({ playerId: player.id, theme: selectedTheme });
 
       sessionStorage.setItem("sessionId", gameData.sessionId);
       sessionStorage.setItem("questions", JSON.stringify(gameData.questions));
+      sessionStorage.setItem("gameTheme", selectedTheme);
 
       // Show success state briefly before navigating
       setSubmissionStatus("success");
@@ -141,34 +150,60 @@ export default function WelcomePage() {
         transition={{ duration: 0.8 }}
         className="relative h-[45vh] min-h-[280px] overflow-hidden"
       >
-        {/* Jerusalem panorama - real image or gradient fallback */}
-        {heroLoaded ? (
-          <img
-            src="/images/ui/jerusalem-hero.png"
-            alt="נוף פנורמי של ירושלים"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        ) : (
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, #1a3a5c 0%, #2d5a7b 30%, #c4a86c 60%, #8b7a4a 80%, #0a0e1a 100%)",
-            }}
-          />
-        )}
+        {/* Gradient fallback — always behind, transitions instantly */}
+        <div
+          className="absolute inset-0 transition-colors duration-500"
+          style={{
+            background: selectedTheme === "pesach"
+              ? "linear-gradient(180deg, #4a1a0a 0%, #8b3a1a 30%, #c4762c 60%, #d4a44c 80%, #0a0e1a 100%)"
+              : "linear-gradient(180deg, #1a3a5c 0%, #2d5a7b 30%, #c4a86c 60%, #8b7a4a 80%, #0a0e1a 100%)",
+          }}
+        />
+        {/* Hero image — cross-fades when new image is ready, no flicker */}
+        <AnimatePresence>
+          {visibleHeroSrc && (
+            <motion.img
+              key={visibleHeroSrc}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              src={visibleHeroSrc}
+              alt={selectedTheme === "pesach" ? "סדר פסח חגיגי" : "נוף פנורמי של ירושלים"}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
+        </AnimatePresence>
         {/* Overlay gradient for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-bg-primary" />
 
-        {/* Castle icon top-right */}
+        {/* Info button top-left */}
+        <button
+          onClick={() => setIsAboutOpen(true)}
+          className="absolute top-4 start-4 z-20 flex items-center gap-1.5 rounded-xl bg-white/20 px-2 py-1.5 backdrop-blur-sm hover:bg-white/30 transition-colors"
+          aria-label="איך בניתי את זה?"
+        >
+          <span>ℹ️</span>
+          <img
+            src="/images/ui/how-i-built-btn.png"
+            alt="איך בניתי"
+            className="h-8 w-8 rounded-lg object-cover"
+          />
+        </button>
+
+        {/* Theme icon top-right — changes with selected theme */}
         <motion.div
+          key={selectedTheme}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+          transition={{ type: "spring", stiffness: 300 }}
           className="absolute top-4 end-4 z-10 rounded-xl bg-white/20 p-2 backdrop-blur-sm"
           aria-hidden="true"
         >
-          <CastleIcon size={28} color="white" />
+          {selectedTheme === "pesach"
+            ? <span className="text-2xl leading-none">🍷</span>
+            : <CastleIcon size={28} color="white" />
+          }
         </motion.div>
 
         {/* Jerusalem Quest Logo - Main Hero */}
@@ -196,11 +231,30 @@ export default function WelcomePage() {
           >
             Jerusalem Quest
           </motion.h1>
+          {/* Theme badge — animates when theme changes */}
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={selectedTheme}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.25 }}
+              className={`rounded-full px-3 py-0.5 text-sm font-semibold ${
+                selectedTheme === "pesach"
+                  ? "bg-orange-500/30 text-orange-200"
+                  : "bg-blue-primary/30 text-blue-200"
+              }`}
+            >
+              {selectedTheme === "pesach" ? "🍷 פסח" : "🕌 ירושלים"}
+            </motion.span>
+          </AnimatePresence>
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.6, duration: 0.4 }}
-            className="h-1 w-16 rounded-full bg-blue-primary"
+            className={`h-1 w-16 rounded-full transition-colors duration-500 ${
+              selectedTheme === "pesach" ? "bg-orange-400" : "bg-blue-primary"
+            }`}
           />
         </div>
       </motion.div>
@@ -212,6 +266,50 @@ export default function WelcomePage() {
         transition={{ delay: 0.3, duration: 0.6 }}
         className="flex flex-1 flex-col px-10 pb-8"
       >
+        {/* Theme Selector */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="mt-4"
+          role="group"
+          aria-label="בחר נושא משחק"
+        >
+          <p className="mb-3 text-center text-sm font-semibold text-white/70">בחר נושא</p>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setSelectedTheme("jerusalem")}
+              className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-200 ${
+                selectedTheme === "jerusalem"
+                  ? "border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20"
+                  : "border-white/20 bg-white/5 hover:border-white/40"
+              }`}
+              aria-pressed={selectedTheme === "jerusalem"}
+            >
+              <span className="text-3xl" aria-hidden="true">🕌</span>
+              <span className={`text-base font-bold ${selectedTheme === "jerusalem" ? "text-yellow-300" : "text-white/80"}`}>
+                ירושלים
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedTheme("pesach")}
+              className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-200 ${
+                selectedTheme === "pesach"
+                  ? "border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20"
+                  : "border-white/20 bg-white/5 hover:border-white/40"
+              }`}
+              aria-pressed={selectedTheme === "pesach"}
+            >
+              <span className="text-3xl" aria-hidden="true">🍷</span>
+              <span className={`text-base font-bold ${selectedTheme === "pesach" ? "text-yellow-300" : "text-white/80"}`}>
+                פסח
+              </span>
+            </button>
+          </div>
+        </motion.div>
+
         {/* Contest Banner */}
         {contest && (
           <motion.div
@@ -246,15 +344,16 @@ export default function WelcomePage() {
 
         {/* Hebrew subtitle */}
         <motion.h2
+          key={selectedTheme}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.1 }}
           className="mt-6 text-center text-2xl font-bold text-white"
         >
-          !בואו נגלה את סודות ירושלים
+          {selectedTheme === "pesach" ? "!בואו נגלה את סודות הפסח" : "!בואו נגלה את סודות ירושלים"}
         </motion.h2>
         <p className="mt-2 text-center text-base text-white/70 drop-shadow-sm">
-          צאו למסע מרתק בין סמטאות העיר העתיקה
+          {selectedTheme === "pesach" ? "צאו למסע מרתק בעקבות יציאת מצרים" : "צאו למסע מרתק בין סמטאות העיר העתיקה"}
         </p>
 
         {/* Form Container - Centered & Compact */}
@@ -557,6 +656,13 @@ export default function WelcomePage() {
         <Footer />
       </motion.div>
       <BottomNav variant="hall-of-fame" />
+
+      {/* About Project Modal */}
+      <AnimatePresence>
+        {isAboutOpen && (
+          <AboutProjectModal onClose={() => setIsAboutOpen(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
