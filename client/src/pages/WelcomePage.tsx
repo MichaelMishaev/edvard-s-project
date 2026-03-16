@@ -142,13 +142,13 @@ export default function WelcomePage() {
   const isLoading = submissionStatus === "loading";
 
   return (
-    <div className="flex min-h-dvh flex-col bg-bg-primary pb-28">
+    <div className="flex min-h-dvh flex-col items-center bg-bg-primary pb-32">
       {/* Hero Image Area */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative h-[45vh] min-h-[280px] overflow-hidden"
+        className="relative h-[45vh] min-h-[280px] max-h-[50vh] w-full overflow-hidden"
       >
         {/* Gradient fallback — always behind, transitions instantly */}
         <div
@@ -264,7 +264,7 @@ export default function WelcomePage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="flex flex-1 flex-col px-10 pb-8 w-full max-w-xl mx-auto"
+        className="flex flex-1 flex-col px-4 sm:px-6 md:px-8 pb-8 w-full max-w-xl"
       >
         {/* Theme Selector */}
         <motion.div
@@ -555,7 +555,7 @@ export default function WelcomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-auto pt-8 pb-4"
+            className="mt-8 pb-4"
           >
             <div className="mb-3 flex items-center justify-between">
               <button

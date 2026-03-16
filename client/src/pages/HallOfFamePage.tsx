@@ -23,7 +23,7 @@ export default function HallOfFamePage() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="px-4 pt-6"
+        className="px-4 pt-6 w-full max-w-2xl mx-auto"
       >
         <div className="flex flex-col items-center gap-4">
           {/* Jerusalem Quest Logo */}
@@ -49,7 +49,7 @@ export default function HallOfFamePage() {
       </motion.div>
 
       {/* Content */}
-      <div className="px-4 pt-6">
+      <div className="px-4 pt-6 w-full max-w-2xl mx-auto">
         {/* Loading */}
         {isLoading && (
           <div className="flex justify-center py-12" role="status" aria-label="טוען נתונים">

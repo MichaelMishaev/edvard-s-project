@@ -35,7 +35,7 @@ export default function BadgeCollectionPage() {
       </header>
 
       {/* Progress Section */}
-      <div className="m-4 flex flex-col gap-4 rounded-xl border border-border-card bg-bg-card p-6">
+      <div className="m-4 flex flex-col gap-4 rounded-xl border border-border-card bg-bg-card p-6 max-w-2xl md:mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex flex-col items-start gap-1">
             <p className="text-sm font-medium text-text-secondary">התקדמות האוסף</p>
@@ -58,7 +58,7 @@ export default function BadgeCollectionPage() {
       </div>
 
       {/* Badges Grid */}
-      <div className="px-4 pb-8">
+      <div className="px-4 pb-8 w-full max-w-2xl mx-auto">
         <h2 className="px-2 pb-4 pt-2 text-lg font-bold text-white">
           העיטורים שלי
         </h2>
@@ -83,7 +83,7 @@ export default function BadgeCollectionPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
           {!isLoading && !playerId
             ? Object.keys(BADGE_CONFIG).slice(0, 12).map((badgeName, i) => (
                 <BadgeCard

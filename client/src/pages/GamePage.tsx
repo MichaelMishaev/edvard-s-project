@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import ScoreDisplay from "../components/ScoreDisplay";
 import ProgressBar from "../components/ProgressBar";
 import BottomNav from "../components/BottomNav";
-import Footer from "../components/Footer";
 import { CloseIcon, QuestionIcon, LightbulbIcon } from "../components/Icons";
 import {
   useSubmitAnswer,
@@ -193,7 +192,7 @@ export default function GamePage() {
   return (
     <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 pt-4">
+      <div className="flex items-center justify-between px-4 pt-4 w-full max-w-xl mx-auto">
         <button
           onClick={() => navigate("/")}
           aria-label="חזרה לדף הבית"
@@ -214,7 +213,7 @@ export default function GamePage() {
       </div>
 
       {/* Question content */}
-      <div className="flex flex-1 flex-col items-center px-6 pt-6">
+      <div className="flex flex-1 flex-col items-center px-6 sm:px-8 md:px-12 pt-6 w-full max-w-xl mx-auto">
         {/* Question image or lightbulb fallback */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -248,7 +247,7 @@ export default function GamePage() {
             transition={{ duration: 0.3 }}
             className="w-full text-center"
           >
-            <h2 className="text-2xl font-bold text-white leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white leading-relaxed">
               {currentQuestion.question}
             </h2>
             <p className="mt-2 text-sm text-text-secondary">
@@ -258,7 +257,7 @@ export default function GamePage() {
         </AnimatePresence>
 
         {/* Answer buttons */}
-        <div className="mt-8 flex w-full flex-col gap-3">
+        <div className="mt-8 flex w-full flex-col gap-3 max-w-lg mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentQuestionIndex}

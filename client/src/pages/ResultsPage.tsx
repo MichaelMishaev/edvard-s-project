@@ -118,7 +118,7 @@ export default function ResultsPage() {
       </div>
 
       {/* Score circle */}
-      <div className="flex justify-center pt-8 pb-6">
+      <div className="flex justify-center pt-8 pb-6 w-full max-w-lg mx-auto">
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -207,7 +207,7 @@ export default function ResultsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
-        className="mt-auto flex flex-col gap-3 px-6 pt-8"
+        className="mt-auto flex flex-col gap-3 px-6 pt-8 w-full max-w-sm mx-auto"
       >
         <Button
           onClick={() => navigate("/leaderboard")}

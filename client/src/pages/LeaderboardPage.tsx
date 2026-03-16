@@ -29,13 +29,13 @@ export default function LeaderboardPage() {
   return (
     <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 pt-4">
+      <div className="flex items-center justify-between px-4 pt-4 w-full max-w-2xl mx-auto">
         <span className="text-xl font-bold text-white">טבלת האלופים</span>
         <MedalIcon size={28} color="#2563eb" />
       </div>
 
       {/* Toggle Buttons */}
-      <div className="mx-4 mt-4 flex gap-2 rounded-xl bg-bg-card p-1">
+      <div className="mx-4 mt-4 flex gap-2 rounded-xl bg-bg-card p-1 max-w-2xl md:mx-auto">
         <button
           onClick={() => setView("school")}
           className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
@@ -61,7 +61,7 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Content */}
-      <div className="px-4 pt-6">
+      <div className="px-4 pt-6 w-full max-w-2xl mx-auto">
         <h3 className="mb-3 text-right text-lg font-bold text-white">
           {view === "class" ? "מובילי הכיתה" : "מובילי בית הספר"}
         </h3>
