@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db/index.js";
 import { players } from "../db/schema.js";
-import { eq, sql, desc, asc, and } from "drizzle-orm";
+import { eq, desc, asc, and } from "drizzle-orm";
 import { isProfane } from "../services/profanity.js";
 import { isValidClass } from "../config/classes.js";
 
@@ -51,27 +51,20 @@ router.post("/", async (req: Request, res: Response) => {
       return;
     }
 
-    // Check for duplicate names and generate unique name
-    let finalName = trimmedName;
-    const existingPlayers = await db
-      .select({ name: players.name })
+    // If same full name + class already exists → return that player (restores their badges)
+    const [existingPlayer] = await db
+      .select()
       .from(players)
-      .where(
-        sql`${players.name} = ${trimmedName} OR ${players.name} LIKE ${trimmedName + "%"}`
-      );
+      .where(and(eq(players.name, trimmedName), eq(players.className, className)));
 
-    const existingNames = new Set(existingPlayers.map((p) => p.name));
-    if (existingNames.has(trimmedName)) {
-      let counter = 2;
-      while (existingNames.has(`${trimmedName}${counter}`)) {
-        counter++;
-      }
-      finalName = `${trimmedName}${counter}`;
+    if (existingPlayer) {
+      res.status(200).json(existingPlayer);
+      return;
     }
 
     const [newPlayer] = await db
       .insert(players)
-      .values({ name: finalName, className })
+      .values({ name: trimmedName, className })
       .returning();
 
     res.status(201).json(newPlayer);

@@ -14,11 +14,11 @@ export default function LeaderboardPage() {
   const navigate = useNavigate();
   const [view, setView] = useState<LeaderboardView>("school");
   const [selectedClass, setSelectedClass] = useState<string>(() => {
-    return sessionStorage.getItem("playerClassName") || CLASSES[0].id;
+    return localStorage.getItem("playerClassName") || CLASSES[0].id;
   });
 
   useEffect(() => {
-    const className = sessionStorage.getItem("playerClassName");
+    const className = localStorage.getItem("playerClassName");
     if (className) {
       setSelectedClass(className);
       setView("class");

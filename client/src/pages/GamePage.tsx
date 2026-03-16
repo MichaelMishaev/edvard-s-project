@@ -40,7 +40,7 @@ export default function GamePage() {
   const { data: currentContest } = useCurrentContest();
   const registerParticipation = useRegisterContestParticipation();
 
-  const playerName = sessionStorage.getItem("playerName") || "";
+  const playerName = localStorage.getItem("playerName") || "";
   const sessionId = sessionStorage.getItem("sessionId") || "";
   const questionsStr = sessionStorage.getItem("questions");
   let questions: Question[] = [];
@@ -114,7 +114,8 @@ export default function GamePage() {
           setScore((prev) => prev + (result.pointsAwarded ?? 10));
         }
 
-        // Auto advance after 2 seconds
+        // Correct: advance after 2s. Wrong: give 3.5s to read the hint
+        const delay = result.correct ? 2000 : 3500;
         setTimeout(() => {
           const nextIndex = currentQuestionIndex + 1;
           if (nextIndex >= totalQuestions) {
@@ -126,7 +127,7 @@ export default function GamePage() {
             setAnswerResult(null);
             questionStartTime.current = Date.now();
           }
-        }, 2000);
+        }, delay);
       } catch {
         // If API fails, still advance (we don't know correct answer, just mark as wrong)
         setAnswerResult({
@@ -144,7 +145,7 @@ export default function GamePage() {
             setAnswerResult(null);
             questionStartTime.current = Date.now();
           }
-        }, 2000);
+        }, 3500);
       }
     },
     [currentQuestion, currentQuestionIndex, selectedAnswer, sessionId, totalQuestions]
@@ -158,8 +159,8 @@ export default function GamePage() {
 
       // Register contest participation if there's an active contest
       if (currentContest) {
-        const playerId = sessionStorage.getItem("playerId");
-        const playerClassName = sessionStorage.getItem("playerClassName");
+        const playerId = localStorage.getItem("playerId");
+        const playerClassName = localStorage.getItem("playerClassName");
 
         if (playerId && playerClassName) {
           try {
@@ -191,15 +192,26 @@ export default function GamePage() {
   if (!currentQuestion) return null;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-bg-primary pb-20">
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-4 pt-4 w-full max-w-xl mx-auto">
+    <div className="relative flex min-h-dvh flex-col bg-bg-primary">
+      {/* Jerusalem skyline — absolute backdrop, never takes layout space */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-bg-primary to-transparent z-10" />
+        <img
+          src="/images/ui/jerusalem-quiz-bg.png"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-top opacity-20"
+        />
+      </div>
+
+      {/* Top bar — sticky, full-width, contained */}
+      <div className="relative z-20 flex items-center justify-between px-4 sm:px-6 pt-4 pb-3 w-full max-w-5xl mx-auto">
         <button
           onClick={() => navigate("/")}
           aria-label="חזרה לדף הבית"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-border-card"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-border-card bg-bg-card/60 backdrop-blur-sm hover:bg-bg-card transition-colors"
         >
-          <CloseIcon size={18} color="#5b6478" />
+          <CloseIcon size={16} color="#5b6478" />
         </button>
 
         <div className="flex flex-1 flex-col items-center gap-1 px-4">
@@ -213,145 +225,157 @@ export default function GamePage() {
         <ScoreDisplay score={score} />
       </div>
 
-      {/* Question content */}
-      <div className="flex flex-1 flex-col items-center px-6 sm:px-8 md:px-12 pt-6 w-full max-w-xl mx-auto">
-        {/* Question image or lightbulb fallback */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`img-${currentQuestionIndex}`}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mb-4"
-          >
-            {currentQuestion.imageUrl ? (
-              <QuestionImage
-                src={currentQuestion.imageUrl}
-                alt={`איור לשאלה`}
-              />
-            ) : (
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-primary/20">
-                <LightbulbIcon size={32} color="#2563eb" />
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+      {/* ── Main content: vertically centered, fills remaining viewport ── */}
+      <div className="relative z-10 flex flex-1 items-center justify-center px-4 sm:px-6 pb-24 md:pb-8 pt-2 md:pt-0">
+        <div className="w-full max-w-5xl">
 
-        {/* Question text */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentQuestionIndex}
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 30 }}
-            transition={{ duration: 0.3 }}
-            className="w-full text-center"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold text-white leading-relaxed">
-              {currentQuestion.question}
-            </h2>
-            <p className="mt-2 text-sm text-text-secondary">
-              בחר את התשובה הנכונה ביותר
-            </p>
-          </motion.div>
-        </AnimatePresence>
+          {/* ── Mobile: stack / Desktop: side-by-side (RTL aware) ── */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-10 lg:gap-16">
 
-        {/* Answer buttons */}
-        <div className="mt-8 flex w-full flex-col gap-3 max-w-lg mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentQuestionIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col gap-3"
-            >
-              {displayedAnswers.map((answer, idx) => {
-                let borderColor = "border-border-card";
-                let radioColor = "border-text-muted";
-                let radioFill = "transparent";
-                let bgColor = "bg-bg-card";
+            {/* ── Column A (RIGHT in RTL): Question heading + answers ── */}
+            {/* DOM order first = RTL renders on the right side */}
+            <div className="flex flex-col md:flex-[3] gap-5 md:gap-6">
 
-                // Immediate "selected" feedback before API responds
-                if (selectedAnswer === answer.id && !answerResult) {
-                  borderColor = "border-blue-primary";
-                  radioColor = "border-blue-primary";
-                  radioFill = "#2563eb";
-                  bgColor = "bg-blue-primary/10";
-                }
-
-                // Final correct/wrong state after API responds
-                if (answerResult && selectedAnswer) {
-                  if (answer.id === answerResult.correctAnswerId) {
-                    borderColor = "border-success";
-                    radioColor = "border-success";
-                    radioFill = "#22c55e";
-                    bgColor = "bg-success/10";
-                  } else if (
-                    answer.id === selectedAnswer &&
-                    !answerResult.correct
-                  ) {
-                    borderColor = "border-error";
-                    radioColor = "border-error";
-                    radioFill = "#ef4444";
-                    bgColor = "bg-error/10";
-                  } else {
-                    bgColor = "bg-bg-card";
-                  }
-                }
-
-                return (
-                  <motion.button
-                    key={answer.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    whileTap={!selectedAnswer ? { scale: 0.98 } : {}}
-                    onClick={() => handleAnswer(answer.id)}
-                    disabled={!!selectedAnswer}
-                    aria-label={`תשובה: ${answer.text}`}
-                    className={`flex items-center gap-4 rounded-2xl border ${borderColor} ${bgColor} px-5 py-4 min-h-[64px] text-right transition-colors disabled:cursor-default`}
+              {/* Mobile image (hidden on desktop) */}
+              <div className="flex justify-center md:hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`img-mobile-${currentQuestionIndex}`}
+                    initial={{ scale: 0.85, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.85, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    {/* Radio circle */}
-                    <div
-                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 ${radioColor}`}
-                    >
-                      {radioFill !== "transparent" && (
+                    {currentQuestion.imageUrl ? (
+                      <QuestionImage src={currentQuestion.imageUrl} alt="איור לשאלה" />
+                    ) : (
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-primary/20">
+                        <LightbulbIcon size={32} color="#2563eb" />
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Question heading */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentQuestionIndex}
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 12 }}
+                  transition={{ duration: 0.28 }}
+                >
+                  <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-white leading-snug text-right">
+                    {currentQuestion.question}
+                  </h2>
+                  <p className="mt-2 text-sm text-text-secondary text-right">
+                    בחר את התשובה הנכונה ביותר
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Answer buttons */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`answers-${currentQuestionIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col gap-3"
+                >
+                  {displayedAnswers.map((answer, idx) => {
+                    let borderColor = "border-border-card";
+                    let radioColor = "border-text-muted";
+                    let radioFill = "transparent";
+                    let bgColor = "bg-bg-card";
+
+                    if (selectedAnswer === answer.id && !answerResult) {
+                      borderColor = "border-blue-primary";
+                      radioColor = "border-blue-primary";
+                      radioFill = "#2563eb";
+                      bgColor = "bg-blue-primary/10";
+                    }
+
+                    if (answerResult && selectedAnswer) {
+                      if (answer.id === answerResult.correctAnswerId) {
+                        borderColor = "border-success";
+                        radioColor = "border-success";
+                        radioFill = "#22c55e";
+                        bgColor = "bg-success/10";
+                      } else if (answer.id === selectedAnswer && !answerResult.correct) {
+                        borderColor = "border-error";
+                        radioColor = "border-error";
+                        radioFill = "#ef4444";
+                        bgColor = "bg-error/10";
+                      }
+                    }
+
+                    return (
+                      <motion.button
+                        key={answer.id}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.08 }}
+                        whileTap={!selectedAnswer ? { scale: 0.985 } : {}}
+                        onClick={() => handleAnswer(answer.id)}
+                        disabled={!!selectedAnswer}
+                        aria-label={`תשובה: ${answer.text}`}
+                        className={`flex items-center gap-4 rounded-2xl border-2 ${borderColor} ${bgColor} px-5 py-4 md:py-5 min-h-[60px] md:min-h-[68px] text-right transition-all duration-150 disabled:cursor-default hover:brightness-110`}
+                      >
                         <div
-                          className="h-3 w-3 rounded-full"
-                          style={{ backgroundColor: radioFill }}
-                        />
-                      )}
+                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 ${radioColor} transition-colors`}
+                        >
+                          {radioFill !== "transparent" && (
+                            <div className="h-3 w-3 rounded-full" style={{ backgroundColor: radioFill }} />
+                          )}
+                        </div>
+                        <span className="flex-1 text-right text-base md:text-lg lg:text-xl font-semibold text-white">
+                          {answer.text}
+                        </span>
+                      </motion.button>
+                    );
+                  })}
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Explanation box */}
+              {answerResult && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-full rounded-2xl border-2 border-amber-400/60 bg-amber-400/10 px-5 py-4"
+                >
+                  <p className="text-right text-sm md:text-base text-amber-200 font-medium leading-relaxed">
+                    💡 {answerResult.explanation}
+                  </p>
+                </motion.div>
+              )}
+            </div>
+
+            {/* ── Column B (LEFT in RTL): Large image — desktop only ── */}
+            <div className="hidden md:flex md:flex-[2] items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`img-desktop-${currentQuestionIndex}`}
+                  initial={{ scale: 0.85, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.85, opacity: 0 }}
+                  transition={{ duration: 0.35, type: "spring", stiffness: 200 }}
+                >
+                  {currentQuestion.imageUrl ? (
+                    <QuestionImage src={currentQuestion.imageUrl} alt="איור לשאלה" desktop />
+                  ) : (
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-primary/20">
+                      <LightbulbIcon size={48} color="#2563eb" />
                     </div>
-                    <span className="flex-1 text-right text-lg font-semibold text-white">
-                      {answer.text}
-                    </span>
-                  </motion.button>
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-        {/* Explanation box — only visible after answering */}
-        {answerResult && (
-          <div className="mt-6 w-full rounded-2xl border-2 border-dashed border-border-card px-5 py-4">
-            <p className="text-center text-sm text-text-muted leading-relaxed">
-              {answerResult.explanation}
-            </p>
           </div>
-        )}
-      </div>
-
-      {/* Decorative Jerusalem illustration - fills remaining space */}
-      <div className="relative mt-auto w-full overflow-hidden" style={{ maxHeight: '35vh' }}>
-        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-bg-primary to-transparent z-10" />
-        <img
-          src="/images/ui/jerusalem-quiz-bg.png"
-          alt=""
-          aria-hidden="true"
-          className="w-full object-cover object-top opacity-30"
-        />
+        </div>
       </div>
 
       <BottomNav variant="game" />
@@ -360,19 +384,23 @@ export default function GamePage() {
 }
 
 // --- Question image with fallback ---
-function QuestionImage({ src, alt }: { src: string; alt: string }) {
+function QuestionImage({ src, alt, desktop = false }: { src: string; alt: string; desktop?: boolean }) {
   const [failed, setFailed] = useState(false);
 
   if (failed) {
     return (
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-primary/20">
-        <LightbulbIcon size={32} color="#2563eb" />
+      <div className={`flex items-center justify-center rounded-full bg-blue-primary/20 ${desktop ? "h-24 w-24" : "h-16 w-16"}`}>
+        <LightbulbIcon size={desktop ? 48 : 32} color="#2563eb" />
       </div>
     );
   }
 
   return (
-    <div className="h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-56 lg:w-56 overflow-hidden rounded-2xl border-2 border-blue-primary/30 shadow-lg">
+    <div className={`overflow-hidden rounded-3xl border-2 border-blue-primary/30 shadow-2xl ${
+      desktop
+        ? "w-full max-w-xs lg:max-w-sm aspect-square"
+        : "h-44 w-44 sm:h-52 sm:w-52"
+    }`}>
       <img
         src={src}
         alt={alt}

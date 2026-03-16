@@ -27,13 +27,13 @@ router.post("/start", async (req: Request, res: Response) => {
       return;
     }
 
-    // Pick 25 random questions filtered by theme
+    // Pick 15 random questions filtered by theme
     const allQuestions = await db
       .select()
       .from(questions)
       .where(eq(questions.theme, theme))
       .orderBy(sql`RANDOM()`)
-      .limit(25);
+      .limit(15);
 
     if (allQuestions.length === 0) {
       res.status(500).json({ error: "No questions available" });

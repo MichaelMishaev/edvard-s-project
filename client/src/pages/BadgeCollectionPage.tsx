@@ -10,7 +10,7 @@ import type { BadgeDefinition } from "../lib/types";
 
 export default function BadgeCollectionPage() {
   const navigate = useNavigate();
-  const playerId = sessionStorage.getItem("playerId");
+  const playerId = localStorage.getItem("playerId");
   const lastTheme = sessionStorage.getItem("gameTheme") || "jerusalem";
   const [activeTheme, setActiveTheme] = useState<"jerusalem" | "pesach">(
     lastTheme as "jerusalem" | "pesach"

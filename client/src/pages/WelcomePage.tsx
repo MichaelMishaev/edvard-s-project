@@ -18,10 +18,10 @@ import AboutProjectModal from "../components/AboutProjectModal";
 export default function WelcomePage() {
   const [name, setName] = useState(() => {
     // Preserve player name for quick replay (Fix #17)
-    return sessionStorage.getItem("playerName") || "";
+    return localStorage.getItem("playerName") || "";
   });
   const [selectedClass, setSelectedClass] = useState(() => {
-    return sessionStorage.getItem("playerClassName") || "";
+    return localStorage.getItem("playerClassName") || "";
   });
   const [selectedTheme, setSelectedTheme] = useState<"jerusalem" | "pesach">("jerusalem");
   const [isAboutOpen, setIsAboutOpen] = useState(false);
@@ -116,9 +116,9 @@ export default function WelcomePage() {
         className: selectedClass,
       });
 
-      sessionStorage.setItem("playerId", player.id);
-      sessionStorage.setItem("playerName", player.name);
-      sessionStorage.setItem("playerClassName", player.className);
+      localStorage.setItem("playerId", player.id);
+      localStorage.setItem("playerName", player.name);
+      localStorage.setItem("playerClassName", player.className);
 
       const gameData = await startGame.mutateAsync({ playerId: player.id, theme: selectedTheme });
 
@@ -239,11 +239,10 @@ export default function WelcomePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.25 }}
-              className={`rounded-full px-3 py-0.5 text-sm font-semibold ${
-                selectedTheme === "pesach"
-                  ? "bg-orange-500/30 text-orange-200"
-                  : "bg-blue-primary/30 text-blue-200"
-              }`}
+              className={`rounded-full px-3 py-0.5 text-sm font-semibold ${selectedTheme === "pesach"
+                ? "bg-orange-500/30 text-orange-200"
+                : "bg-blue-primary/30 text-blue-200"
+                }`}
             >
               {selectedTheme === "pesach" ? "🍷 פסח" : "🕌 ירושלים"}
             </motion.span>
@@ -252,9 +251,8 @@ export default function WelcomePage() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.6, duration: 0.4 }}
-            className={`h-1 w-16 rounded-full transition-colors duration-500 ${
-              selectedTheme === "pesach" ? "bg-orange-400" : "bg-blue-primary"
-            }`}
+            className={`h-1 w-16 rounded-full transition-colors duration-500 ${selectedTheme === "pesach" ? "bg-orange-400" : "bg-blue-primary"
+              }`}
           />
         </div>
       </motion.div>
@@ -271,7 +269,7 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          className="mt-4"
+          className="mt-6"
           role="group"
           aria-label="בחר נושא משחק"
         >
@@ -280,11 +278,10 @@ export default function WelcomePage() {
             <button
               type="button"
               onClick={() => setSelectedTheme("jerusalem")}
-              className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-200 ${
-                selectedTheme === "jerusalem"
-                  ? "border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20"
-                  : "border-white/20 bg-white/5 hover:border-white/40"
-              }`}
+              className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-200 ${selectedTheme === "jerusalem"
+                ? "border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20"
+                : "border-white/20 bg-white/5 hover:border-white/40"
+                }`}
               aria-pressed={selectedTheme === "jerusalem"}
             >
               <span className="text-3xl" aria-hidden="true">🕌</span>
@@ -295,11 +292,10 @@ export default function WelcomePage() {
             <button
               type="button"
               onClick={() => setSelectedTheme("pesach")}
-              className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-200 ${
-                selectedTheme === "pesach"
-                  ? "border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20"
-                  : "border-white/20 bg-white/5 hover:border-white/40"
-              }`}
+              className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-200 ${selectedTheme === "pesach"
+                ? "border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20"
+                : "border-white/20 bg-white/5 hover:border-white/40"
+                }`}
               aria-pressed={selectedTheme === "pesach"}
             >
               <span className="text-3xl" aria-hidden="true">🍷</span>
@@ -347,191 +343,161 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-4 rounded-2xl border border-white/15 bg-bg-card px-5 py-6 shadow-xl"
+          className="mt-6 rounded-2xl border border-white/15 bg-bg-card px-6 py-8 shadow-xl"
         >
-        {/* Title with theme emoji */}
-        <motion.div
-          key={selectedTheme}
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-center"
-        >
-          <div className="mb-1 text-3xl" aria-hidden="true">
-            {selectedTheme === "pesach" ? "🍷" : "🕌"}
-          </div>
-          <h2 className="text-2xl font-extrabold text-white">
-            {selectedTheme === "pesach" ? "!בואו נגלה את סודות הפסח" : "!בואו נגלה את סודות ירושלים"}
-          </h2>
-          <p className="mt-1 text-sm text-white/55">
-            {selectedTheme === "pesach" ? "צאו למסע מרתק בעקבות יציאת מצרים" : "צאו למסע מרתק בין סמטאות העיר העתיקה"}
-          </p>
-        </motion.div>
+          {/* Title with theme emoji */}
+          <motion.div
+            key={selectedTheme}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center"
+          >
+            <div className="mb-1 text-3xl" aria-hidden="true">
+              {selectedTheme === "pesach" ? "🍷" : "🕌"}
+            </div>
+            <h2 className="text-2xl font-extrabold text-white">
+              {selectedTheme === "pesach" ? "!בואו נגלה את סודות הפסח" : "!בואו נגלה את סודות ירושלים"}
+            </h2>
+            <p className="mt-1 text-sm text-white/55">
+              {selectedTheme === "pesach" ? "צאו למסע מרתק בעקבות יציאת מצרים" : "צאו למסע מרתק בין סמטאות העיר העתיקה"}
+            </p>
+          </motion.div>
 
-        <div className="my-5 h-px bg-white/10" />
+          <div className="my-7 h-px bg-white/10" />
 
-        {/* Form Container - Centered & Compact */}
-        <form
-          className="w-full"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleStart();
-          }}
-          noValidate
-        >
-          {/* Name Input - Enhanced UX */}
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="player-name"
-              className="block text-right text-lg font-bold text-white"
-            >
-              ?איך קוראים לך
-            </label>
-            <div className="relative">
-              <input
-                id="player-name"
-                type="text"
-                value={name}
-                onChange={(e) => {
-                  const newValue = e.target.value;
-                  setName(newValue);
+          {/* Form Container - Centered & Compact */}
+          <form
+            className="w-full"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleStart();
+            }}
+            noValidate
+          >
+            {/* Name Input - Enhanced UX */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="player-name"
+                className="block text-right text-lg font-bold text-white"
+              >
+                איך קוראים לך 🧐? חובה להשתמש בשם האמיתי 😁
+              </label>
+              <div className="relative">
+                <input
+                  id="player-name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    setName(newValue);
 
-                  // Clear error only if input becomes valid
-                  const result = validateName(newValue);
+                    // Clear error only if input becomes valid
+                    const result = validateName(newValue);
+                    if (result.isValid && error) {
+                      setError("");
+                    }
+
+                    // Real-time validation with debounce
+                    if (newValue.trim()) {
+                      validateNameDebounced(newValue);
+                    } else {
+                      setValidationState((prev) => ({ ...prev, name: "idle" }));
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleStart();
+                    }
+                  }}
+                  placeholder="הכנס את שמך כאן..."
+                  maxLength={15}
+                  autoComplete="off"
+                  aria-invalid={validationState.name === "invalid"}
+                  aria-describedby={error ? "form-error" : undefined}
+                  className="w-full rounded-lg border-2 border-gray-300 bg-white px-5 py-4 pe-24 text-right text-lg font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 placeholder:text-gray-500 hover:border-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                  dir="rtl"
+                />
+                {/* Icons Container */}
+                <div className="pointer-events-none absolute end-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
+                  <ValidationIcon state={validationState.name} />
+                  <div className="text-gray-400" aria-hidden="true">
+                    <UserIcon size={20} color="currentColor" />
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <CharacterCounter
+                  current={name.length}
+                  max={15}
+                  isError={validationState.name === "invalid"}
+                />
+              </div>
+            </div>
+
+            {/* Class Selection - Two-Step Enhanced UX */}
+            <div className="mt-7">
+              <label
+                className="mb-3 block text-right text-lg font-bold text-white"
+              >
+                ?באיזו כיתה את/ה לומד
+              </label>
+              <ClassSelector
+                value={selectedClass}
+                onChange={(newValue: string) => {
+                  setSelectedClass(newValue);
+
+                  // Clear error only if selection becomes valid
+                  const result = validateClass(newValue);
                   if (result.isValid && error) {
                     setError("");
                   }
 
-                  // Real-time validation with debounce
+                  // Real-time validation
                   if (newValue.trim()) {
-                    validateNameDebounced(newValue);
+                    validateClassDebounced(newValue);
                   } else {
-                    setValidationState((prev) => ({ ...prev, name: "idle" }));
+                    setValidationState((prev) => ({ ...prev, class: "idle" }));
                   }
                 }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleStart();
-                  }
-                }}
-                placeholder="הכנס את שמך כאן..."
-                maxLength={15}
-                autoComplete="off"
-                aria-invalid={validationState.name === "invalid"}
-                aria-describedby={error ? "form-error" : undefined}
-                className="w-full rounded-lg border-2 border-gray-300 bg-white px-5 py-4 pe-24 text-right text-lg font-medium text-gray-900 shadow-sm outline-none transition-colors duration-200 placeholder:text-gray-500 hover:border-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
-                dir="rtl"
-              />
-              {/* Icons Container */}
-              <div className="pointer-events-none absolute end-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
-                <ValidationIcon state={validationState.name} />
-                <div className="text-gray-400" aria-hidden="true">
-                  <UserIcon size={20} color="currentColor" />
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <CharacterCounter
-                current={name.length}
-                max={15}
-                isError={validationState.name === "invalid"}
+                error={validationState.class === "invalid"}
               />
             </div>
-          </div>
 
-          {/* Class Selection - Two-Step Enhanced UX */}
-          <div className="mt-5">
-            <label
-              className="mb-3 block text-right text-lg font-bold text-white"
-            >
-              ?באיזו כיתה את/ה לומד
-            </label>
-            <ClassSelector
-              value={selectedClass}
-              onChange={(newValue: string) => {
-                setSelectedClass(newValue);
+            {/* Identity reminder */}
+            <p className="mt-5 text-center text-xs text-text-secondary" dir="rtl">
+              💡 כדי לשמור על ההתקדמות שלך — הכנס תמיד את אותו שם וכיתה
+            </p>
 
-                // Clear error only if selection becomes valid
-                const result = validateClass(newValue);
-                if (result.isValid && error) {
-                  setError("");
-                }
-
-                // Real-time validation
-                if (newValue.trim()) {
-                  validateClassDebounced(newValue);
-                } else {
-                  setValidationState((prev) => ({ ...prev, class: "idle" }));
-                }
-              }}
-              error={validationState.class === "invalid"}
-            />
-          </div>
-
-          {/* Error Message - Enhanced visibility and contrast */}
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-4"
-              role="alert"
-              aria-live="polite"
-            >
-              <p
-                id="form-error"
-                className="rounded-lg bg-red-900/30 px-4 py-3 text-center text-base font-medium text-red-300 shadow-sm"
+            {/* Error Message - Enhanced visibility and contrast */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4"
+                role="alert"
+                aria-live="polite"
               >
-                {error}
-              </p>
-            </motion.div>
-          )}
-
-          {/* Success Message */}
-          {submissionStatus === "success" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="mt-4"
-              role="status"
-              aria-live="polite"
-            >
-              <div className="flex items-center justify-center gap-2 rounded-lg bg-green-900/30 px-4 py-3 text-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-green-400"
+                <p
+                  id="form-error"
+                  className="rounded-lg bg-red-900/30 px-4 py-3 text-center text-base font-medium text-red-300 shadow-sm"
                 >
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-                <p className="text-base font-medium text-green-300">
-                  !נרשמת בהצלחה
+                  {error}
                 </p>
-              </div>
-            </motion.div>
-          )}
-          {/* Start button - inside form card */}
-          <div className="mb-1 mt-8 h-px bg-white/10" />
-          <div className="mt-6">
-            <Button
-              onClick={handleStart}
-              disabled={isLoading || submissionStatus === "success"}
-              aria-label={
-                submissionStatus === "success"
-                  ? "נרשמת בהצלחה"
-                  : isLoading
-                  ? "מתחבר לשרת"
-                  : "התחל משחק"
-              }
-              icon={
-                submissionStatus === "success" ? (
+              </motion.div>
+            )}
+
+            {/* Success Message */}
+            {submissionStatus === "success" && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-4"
+                role="status"
+                aria-live="polite"
+              >
+                <div className="flex items-center justify-center gap-2 rounded-lg bg-green-900/30 px-4 py-3 text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -542,25 +508,60 @@ export default function WelcomePage() {
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-white"
+                    className="text-green-400"
                   >
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                ) : isLoading ? (
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                ) : (
-                  <PlayIcon size={20} color="white" />
-                )
-              }
-            >
-              {submissionStatus === "success"
-                ? "!נרשמת בהצלחה"
-                : isLoading
-                ? "...מתחבר"
-                : "התחל משחק"}
-            </Button>
-          </div>
-        </form>
+                  <p className="text-base font-medium text-green-300">
+                    !נרשמת בהצלחה
+                  </p>
+                </div>
+              </motion.div>
+            )}
+            {/* Start button - inside form card */}
+            <div className="mb-1 mt-10 h-px bg-white/10" />
+            <div className="mt-7">
+              <Button
+                onClick={handleStart}
+                disabled={isLoading || submissionStatus === "success"}
+                aria-label={
+                  submissionStatus === "success"
+                    ? "נרשמת בהצלחה"
+                    : isLoading
+                      ? "מתחבר לשרת"
+                      : "התחל משחק"
+                }
+                icon={
+                  submissionStatus === "success" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  ) : isLoading ? (
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  ) : (
+                    <PlayIcon size={20} color="white" />
+                  )
+                }
+              >
+                {submissionStatus === "success"
+                  ? "!נרשמת בהצלחה"
+                  : isLoading
+                    ? "...מתחבר"
+                    : "התחל משחק"}
+              </Button>
+            </div>
+          </form>
         </motion.div>
         {/* End Form Card */}
 
@@ -570,7 +571,7 @@ export default function WelcomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-8 pb-4"
+            className="mt-10 pb-4"
           >
             <div className="mb-4 flex items-center justify-between">
               <button
@@ -602,11 +603,10 @@ export default function WelcomePage() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.8 + index * 0.1 }}
-                    className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 ${
-                      isFirst
-                        ? "border-yellow-400/40 bg-yellow-400/8 shadow-md shadow-yellow-400/10"
-                        : "border-border-card bg-bg-card/50"
-                    }`}
+                    className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 ${isFirst
+                      ? "border-yellow-400/40 bg-yellow-400/8 shadow-md shadow-yellow-400/10"
+                      : "border-border-card bg-bg-card/50"
+                      }`}
                   >
                     {/* Medal */}
                     <div

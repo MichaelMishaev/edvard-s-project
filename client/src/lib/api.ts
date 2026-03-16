@@ -62,8 +62,9 @@ export async function getLeaderboard(): Promise<Player[]> {
   return data;
 }
 
-export async function getBadgeDefinitions(): Promise<BadgeDefinition[]> {
-  const { data } = await api.get("/badges");
+export async function getBadgeDefinitions(theme?: string): Promise<BadgeDefinition[]> {
+  const params = theme ? `?theme=${theme}` : "";
+  const { data } = await api.get(`/badges${params}`);
   return data;
 }
 

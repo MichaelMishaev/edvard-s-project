@@ -7,6 +7,15 @@ import LeaderboardPage from "./pages/LeaderboardPage";
 import BadgeCollectionPage from "./pages/BadgeCollectionPage";
 import HallOfFamePage from "./pages/HallOfFamePage";
 
+// One-time migration: move identity keys from sessionStorage → localStorage
+const IDENTITY_KEYS = ["playerId", "playerName", "playerClassName"];
+IDENTITY_KEYS.forEach((key) => {
+  if (!localStorage.getItem(key)) {
+    const val = sessionStorage.getItem(key);
+    if (val) localStorage.setItem(key, val);
+  }
+});
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

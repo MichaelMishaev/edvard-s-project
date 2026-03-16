@@ -1,12 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { motion, AnimatePresence } from "framer-motion";
 import Button from "../components/Button";
-import Badge from "../components/Badge";
+import BadgePopup from "../components/BadgePopup";
 import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
 import { ArrowRightIcon, ChartIcon, RefreshIcon } from "../components/Icons";
-import { getEncouragingMessage, PESACH_BADGE_MAP } from "../lib/constants";
+import { getEncouragingMessage, PESACH_BADGE_MAP, BADGE_CONFIG } from "../lib/constants";
+import { getBadgeDefinitions } from "../lib/api";
 
 // Celebratory floating particles for kids
 function CelebrationParticles({ count = 12 }: { count?: number }) {
@@ -66,6 +68,17 @@ export default function ResultsPage() {
   const badges: string[] = (result.badges ?? []).map((b: string) =>
     gameTheme === "pesach" ? (PESACH_BADGE_MAP[b] ?? b) : b
   );
+
+  const [showBadgePopup, setShowBadgePopup] = useState(badges.length > 0);
+
+  const { data: badgeDefs = [] } = useQuery({
+    queryKey: ["badge-definitions", gameTheme],
+    queryFn: () => getBadgeDefinitions(gameTheme),
+    staleTime: 60000,
+    enabled: badges.length > 0,
+  });
+
+  const earnedBadgeDefs = badgeDefs.filter((b) => badges.includes(b.name));
 
   // Count-up animation for score
   useEffect(() => {
@@ -194,10 +207,32 @@ export default function ResultsPage() {
           <h4 className="mb-4 text-center text-sm font-medium text-text-secondary">
             הישגים שקיבלת
           </h4>
-          <div className="flex items-start justify-center gap-6">
-            {badges.map((badge: string, i: number) => (
-              <Badge key={badge} name={badge} size="lg" delay={0.8 + i * 0.15} />
-            ))}
+          <div className="flex flex-wrap items-start justify-center gap-6">
+            {(earnedBadgeDefs.length > 0 ? earnedBadgeDefs : badges.map((name) => ({ id: name, name, imageUrl: "", description: "", earned: true }))).map((badge, i) => {
+              const config = BADGE_CONFIG[badge.name];
+              const borderColor = config?.borderColor ?? (gameTheme === "pesach" ? "#f97316" : "#3b82f6");
+              return (
+                <motion.div
+                  key={badge.id}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.8 + i * 0.15, type: "spring", stiffness: 300, damping: 20 }}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <div className="relative h-20 w-20">
+                    <div
+                      className="absolute inset-0 rounded-full opacity-50 blur-sm"
+                      style={{ background: `linear-gradient(135deg, ${borderColor}80, ${borderColor}40)` }}
+                    />
+                    <div
+                      className="relative h-full w-full rounded-full border-4 bg-cover bg-center bg-no-repeat shadow-lg"
+                      style={{ borderColor, backgroundImage: badge.imageUrl ? `url(${badge.imageUrl})` : undefined, backgroundColor: badge.imageUrl ? undefined : "#1e2a45" }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-text-secondary">{badge.name}</span>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       )}
@@ -223,6 +258,16 @@ export default function ResultsPage() {
           שחק שוב
         </Button>
       </motion.div>
+
+      <AnimatePresence>
+        {showBadgePopup && (
+          <BadgePopup
+            badgeNames={badges}
+            theme={gameTheme}
+            onClose={() => setShowBadgePopup(false)}
+          />
+        )}
+      </AnimatePresence>
 
       <Footer />
       <BottomNav variant="results" />
