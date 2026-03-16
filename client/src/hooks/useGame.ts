@@ -33,7 +33,8 @@ export function useSubmitAnswer() {
 
 export function useCompleteGame() {
   return useMutation({
-    mutationFn: (sessionId: string) => api.completeGame(sessionId),
+    mutationFn: ({ sessionId, theme }: { sessionId: string; theme?: string }) =>
+      api.completeGame(sessionId, theme),
   });
 }
 
@@ -46,10 +47,10 @@ export function useLeaderboard() {
   });
 }
 
-export function useBadgeCollection(playerId: string | null) {
+export function useBadgeCollection(playerId: string | null, theme?: string) {
   return useQuery({
-    queryKey: ["badges", playerId],
-    queryFn: () => api.getPlayerBadges(playerId!),
+    queryKey: ["badges", playerId, theme],
+    queryFn: () => api.getPlayerBadges(playerId!, theme),
     enabled: !!playerId,
     staleTime: 10000,
   });

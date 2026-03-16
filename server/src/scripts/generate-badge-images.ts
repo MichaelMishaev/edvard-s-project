@@ -81,6 +81,67 @@ const BADGE_PROMPTS: BadgePrompt[] = [
     prompt:
       "A children's book illustration of a magnificent golden royal crown with jewels, sitting on a red pillow with stars around it, Jerusalem cityscape, round medal badge design, sparkling and colorful for kids",
   },
+  // ---- Pesach badges ----
+  {
+    id: "pesach-hero",
+    prompt:
+      "A children's book illustration of a joyful Seder plate with matzah, bitter herbs, and a lamb shank, surrounded by golden stars, warm orange and red tones, round medal badge design, festive and colorful for kids",
+  },
+  {
+    id: "pesach-explorer",
+    prompt:
+      "A children's book illustration of an open illustrated Haggadah book with glowing Hebrew letters and golden light emanating from the pages, desert background, round medal badge design, magical and colorful for kids",
+  },
+  {
+    id: "pesach-champion",
+    prompt:
+      "A children's book illustration of Moses holding the two stone tablets with golden light rays, Red Sea parting in the background, triumphant pose, round medal badge design, heroic and colorful for kids",
+  },
+  {
+    id: "fast-as-moses",
+    prompt:
+      "A children's book illustration of Moses running with a staff, golden lightning bolt behind him, Sinai desert background, speed lines effect, round medal badge design, dynamic and colorful for kids",
+  },
+  {
+    id: "pesach-sage",
+    prompt:
+      "A children's book illustration of a wise bearded elder reading from an ancient Haggadah scroll, with candles glowing around him, four cups of wine visible, round medal badge design, warm gold tones for kids",
+  },
+  {
+    id: "four-cups",
+    prompt:
+      "A children's book illustration of four ornate golden goblets filled with red wine, arranged in a circle on a white Passover tablecloth, stars and light rays, round medal badge design, festive and colorful for kids",
+  },
+  {
+    id: "parting-of-sea",
+    prompt:
+      "A children's book illustration of the dramatic parting of the Red Sea with two tall blue water walls and a golden path between them, ancient Israelites crossing in the background, round medal badge design, epic and colorful for kids",
+  },
+  {
+    id: "ten-plagues",
+    prompt:
+      "A children's book illustration of ten symbolic icons arranged in a circle: frogs, locusts, darkness cloud, water turning red, all in bright colors, Egyptian pyramids in background, round medal badge design, vivid and colorful for kids",
+  },
+  {
+    id: "sinai-desert",
+    prompt:
+      "A children's book illustration of the dramatic Mount Sinai with glowing golden clouds and lightning at the summit, vast desert landscape, ancient Israelite camp below, round medal badge design, majestic and colorful for kids",
+  },
+  {
+    id: "four-sons",
+    prompt:
+      "A children's book illustration of four cheerful cartoon children sitting around a Passover Seder table, each holding a question scroll, colorful clothing, round medal badge design, warm family atmosphere for kids",
+  },
+  {
+    id: "elijah-cup",
+    prompt:
+      "A children's book illustration of a magnificent overflowing silver Elijah's cup with purple wine glowing with magic light and sparkles floating around it, dark purple night sky background, round medal badge design, mystical and colorful for kids",
+  },
+  {
+    id: "pesach-crown",
+    prompt:
+      "A children's book illustration of a golden crown decorated with the Star of David and Passover symbols — matzah, wine cup, and lamb — with orange and gold jewels, sparkling night background, round medal badge design, regal and colorful for kids",
+  },
 ];
 
 async function generateBadgeImage(badge: BadgePrompt): Promise<void> {

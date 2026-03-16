@@ -1,3 +1,15 @@
+const GRADE_LABELS: Record<string, string> = {
+  dalet: "ד׳",
+  heh: "ה׳",
+  vav: "ו׳",
+};
+
+export function formatClassName(raw: string): string {
+  const match = raw.match(/^(dalet|heh|vav)(\d+)$/);
+  if (!match) return raw;
+  return `${GRADE_LABELS[match[1]]}${match[2]}`;
+}
+
 export const BADGE_CONFIG: Record<
   string,
   { icon: string; color: string; bgColor: string; borderColor: string }
@@ -74,7 +86,19 @@ export const BADGE_CONFIG: Record<
     bgColor: "#78350f",
     borderColor: "#fbbf24",
   },
-  // Pesach equivalents
+  // ---- Pesach badges (with images) ----
+  "גיבור הפסח": {
+    icon: "participation",
+    color: "#f97316",
+    bgColor: "#7c2d12",
+    borderColor: "#f97316",
+  },
+  "חוקר המגילה": {
+    icon: "compass",
+    color: "#60a5fa",
+    bgColor: "#1e3a5f",
+    borderColor: "#60a5fa",
+  },
   "אלוף הפסח": {
     icon: "star-medal",
     color: "#22c55e",
@@ -122,6 +146,18 @@ export const BADGE_CONFIG: Record<
     color: "#a855f7",
     bgColor: "#581c87",
     borderColor: "#a855f7",
+  },
+  "מהיר כמשה": {
+    icon: "lightning",
+    color: "#f59e0b",
+    bgColor: "#78350f",
+    borderColor: "#f59e0b",
+  },
+  "כתר הפסח": {
+    icon: "crown",
+    color: "#fbbf24",
+    bgColor: "#78350f",
+    borderColor: "#fbbf24",
   },
 };
 

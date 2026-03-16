@@ -76,6 +76,9 @@ export default function BottomNav({ variant = "game" }: BottomNavProps) {
 
   return (
     <>
+      {/* Placeholder spacer — same height as the fixed nav, keeps content above it */}
+      <div className="h-[72px] shrink-0" aria-hidden="true" />
+
       {/* "Coming soon" toast */}
       <AnimatePresence>
         {toast && (

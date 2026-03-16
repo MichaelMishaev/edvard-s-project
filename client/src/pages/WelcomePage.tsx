@@ -142,7 +142,7 @@ export default function WelcomePage() {
   const isLoading = submissionStatus === "loading";
 
   return (
-    <div className="flex min-h-dvh flex-col items-center bg-bg-primary pb-32">
+    <div className="flex min-h-dvh flex-col items-center bg-bg-primary">
       {/* Hero Image Area */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -342,23 +342,37 @@ export default function WelcomePage() {
           </motion.div>
         )}
 
-        {/* Hebrew subtitle */}
-        <motion.h2
-          key={selectedTheme}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="mt-6 text-center text-2xl font-bold text-white"
+        {/* Form Card - groups title + form + button */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-4 rounded-2xl border border-white/15 bg-bg-card px-5 py-6 shadow-xl"
         >
-          {selectedTheme === "pesach" ? "!בואו נגלה את סודות הפסח" : "!בואו נגלה את סודות ירושלים"}
-        </motion.h2>
-        <p className="mt-2 text-center text-base text-white/70 drop-shadow-sm">
-          {selectedTheme === "pesach" ? "צאו למסע מרתק בעקבות יציאת מצרים" : "צאו למסע מרתק בין סמטאות העיר העתיקה"}
-        </p>
+        {/* Title with theme emoji */}
+        <motion.div
+          key={selectedTheme}
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-center"
+        >
+          <div className="mb-1 text-3xl" aria-hidden="true">
+            {selectedTheme === "pesach" ? "🍷" : "🕌"}
+          </div>
+          <h2 className="text-2xl font-extrabold text-white">
+            {selectedTheme === "pesach" ? "!בואו נגלה את סודות הפסח" : "!בואו נגלה את סודות ירושלים"}
+          </h2>
+          <p className="mt-1 text-sm text-white/55">
+            {selectedTheme === "pesach" ? "צאו למסע מרתק בעקבות יציאת מצרים" : "צאו למסע מרתק בין סמטאות העיר העתיקה"}
+          </p>
+        </motion.div>
+
+        <div className="my-5 h-px bg-white/10" />
 
         {/* Form Container - Centered & Compact */}
         <form
-          className="mx-auto mt-8 w-full max-w-md"
+          className="w-full"
           onSubmit={(e) => {
             e.preventDefault();
             handleStart();
@@ -366,20 +380,13 @@ export default function WelcomePage() {
           noValidate
         >
           {/* Name Input - Enhanced UX */}
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <CharacterCounter
-                current={name.length}
-                max={15}
-                isError={validationState.name === "invalid"}
-              />
-              <label
-                htmlFor="player-name"
-                className="text-right text-lg font-bold text-white"
-              >
-                ?איך קוראים לך
-              </label>
-            </div>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="player-name"
+              className="block text-right text-lg font-bold text-white"
+            >
+              ?איך קוראים לך
+            </label>
             <div className="relative">
               <input
                 id="player-name"
@@ -424,12 +431,19 @@ export default function WelcomePage() {
                 </div>
               </div>
             </div>
+            <div className="flex justify-end">
+              <CharacterCounter
+                current={name.length}
+                max={15}
+                isError={validationState.name === "invalid"}
+              />
+            </div>
           </div>
 
           {/* Class Selection - Two-Step Enhanced UX */}
-          <div className="mt-6">
+          <div className="mt-5">
             <label
-              className="mb-4 block text-right text-lg font-bold text-white"
+              className="mb-3 block text-right text-lg font-bold text-white"
             >
               ?באיזו כיתה את/ה לומד
             </label>
@@ -503,51 +517,52 @@ export default function WelcomePage() {
               </div>
             </motion.div>
           )}
-        </form>
-        {/* End Form Container */}
-
-        {/* Start button */}
-        <div className="mx-auto mt-8 w-full max-w-md">
-          <Button
-            onClick={handleStart}
-            disabled={isLoading || submissionStatus === "success"}
-            aria-label={
-              submissionStatus === "success"
-                ? "נרשמת בהצלחה"
+          {/* Start button - inside form card */}
+          <div className="mb-1 mt-8 h-px bg-white/10" />
+          <div className="mt-6">
+            <Button
+              onClick={handleStart}
+              disabled={isLoading || submissionStatus === "success"}
+              aria-label={
+                submissionStatus === "success"
+                  ? "נרשמת בהצלחה"
+                  : isLoading
+                  ? "מתחבר לשרת"
+                  : "התחל משחק"
+              }
+              icon={
+                submissionStatus === "success" ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-white"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                ) : isLoading ? (
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                ) : (
+                  <PlayIcon size={20} color="white" />
+                )
+              }
+            >
+              {submissionStatus === "success"
+                ? "!נרשמת בהצלחה"
                 : isLoading
-                ? "מתחבר לשרת"
-                : "התחל משחק"
-            }
-            icon={
-              submissionStatus === "success" ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white"
-                >
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-              ) : isLoading ? (
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              ) : (
-                <PlayIcon size={20} color="white" />
-              )
-            }
-          >
-            {submissionStatus === "success"
-              ? "!נרשמת בהצלחה"
-              : isLoading
-              ? "...מתחבר"
-              : "התחל משחק"}
-          </Button>
-        </div>
+                ? "...מתחבר"
+                : "התחל משחק"}
+            </Button>
+          </div>
+        </form>
+        </motion.div>
+        {/* End Form Card */}
 
         {/* Leaderboard Preview */}
         {leaderboard && leaderboard.length > 0 && (
@@ -557,7 +572,7 @@ export default function WelcomePage() {
             transition={{ delay: 0.7, duration: 0.5 }}
             className="mt-8 pb-4"
           >
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between">
               <button
                 onClick={() => navigate("/leaderboard")}
                 className="flex items-center gap-1.5 text-blue-primary"
@@ -566,7 +581,10 @@ export default function WelcomePage() {
                 <ChartIcon size={18} color="#2563eb" />
                 <span className="text-sm font-medium">צפה בכולם</span>
               </button>
-              <h3 className="text-sm font-bold text-white">מובילים</h3>
+              <h3 className="flex items-center gap-1.5 text-base font-extrabold text-white">
+                <span aria-hidden="true">🏆</span>
+                מובילים
+              </h3>
             </div>
 
             {/* Top 3 Mini Cards */}
@@ -575,6 +593,8 @@ export default function WelcomePage() {
                 const rank = index + 1;
                 const rankColor = RANK_COLORS[rank];
                 const avatarColor = AVATAR_COLORS[index % AVATAR_COLORS.length];
+                const medals = ["🥇", "🥈", "🥉"];
+                const isFirst = rank === 1;
 
                 return (
                   <motion.div
@@ -582,18 +602,18 @@ export default function WelcomePage() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.8 + index * 0.1 }}
-                    className="flex items-center gap-2.5 rounded-xl border border-border-card bg-bg-card/50 px-3 py-2"
+                    className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 ${
+                      isFirst
+                        ? "border-yellow-400/40 bg-yellow-400/8 shadow-md shadow-yellow-400/10"
+                        : "border-border-card bg-bg-card/50"
+                    }`}
                   >
-                    {/* Rank Badge */}
+                    {/* Medal */}
                     <div
-                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold"
-                      style={{
-                        color: rankColor?.text || "#8b95a8",
-                        backgroundColor: rankColor?.bg || "transparent",
-                      }}
+                      className="flex h-8 w-8 shrink-0 items-center justify-center text-xl"
                       aria-label={`מקום ${rank}`}
                     >
-                      {rank}
+                      {medals[index]}
                     </div>
 
                     {/* Avatar */}
@@ -610,17 +630,18 @@ export default function WelcomePage() {
 
                     {/* Name */}
                     <div className="flex-1 text-right">
-                      <div className="text-sm font-bold text-white">{player.name}</div>
+                      <div className={`text-sm font-bold ${isFirst ? "text-yellow-200" : "text-white"}`}>{player.name}</div>
                     </div>
 
                     {/* Score */}
-                    <div className="text-center">
+                    <div className="flex items-baseline gap-1">
                       <span
-                        className="text-sm font-bold"
+                        className="text-base font-extrabold"
                         style={{ color: rankColor?.text || "#ffffff" }}
                       >
                         {player.score}
                       </span>
+                      <span className="text-xs text-white/40">נק׳</span>
                     </div>
 
                     {/* Badges */}

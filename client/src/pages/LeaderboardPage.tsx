@@ -2,25 +2,30 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import BottomNav from "../components/BottomNav";
+import Footer from "../components/Footer";
 import { MedalIcon, BadgeStarIcon } from "../components/Icons";
 import { useClassLeaderboard, useSchoolLeaderboard } from "../hooks/useGame";
-import { getRankTitle, RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG } from "../lib/constants";
+import { getRankTitle, RANK_COLORS, AVATAR_COLORS, BADGE_CONFIG, formatClassName, CLASSES } from "../lib/constants";
 import type { Player } from "../lib/types";
 
 type LeaderboardView = "class" | "school";
 
 export default function LeaderboardPage() {
   const navigate = useNavigate();
-  const [playerClassName, setPlayerClassName] = useState<string | null>(null);
   const [view, setView] = useState<LeaderboardView>("school");
+  const [selectedClass, setSelectedClass] = useState<string>(() => {
+    return sessionStorage.getItem("playerClassName") || CLASSES[0].id;
+  });
 
   useEffect(() => {
     const className = sessionStorage.getItem("playerClassName");
-    setPlayerClassName(className);
-    if (className) setView("class");
+    if (className) {
+      setSelectedClass(className);
+      setView("class");
+    }
   }, []);
 
-  const { data: classLeaderboard, isLoading: isLoadingClass } = useClassLeaderboard(playerClassName);
+  const { data: classLeaderboard, isLoading: isLoadingClass } = useClassLeaderboard(selectedClass);
   const { data: schoolLeaderboard, isLoading: isLoadingSchool } = useSchoolLeaderboard();
 
   const entries: Player[] = view === "class" ? (classLeaderboard || []) : (schoolLeaderboard || []);
@@ -46,24 +51,43 @@ export default function LeaderboardPage() {
         >
           כל בית הספר
         </button>
-        {playerClassName && (
-          <button
-            onClick={() => setView("class")}
-            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-              view === "class"
-                ? "bg-blue-primary text-white"
-                : "text-text-muted hover:text-white"
-            }`}
-          >
-            הכיתה שלי
-          </button>
-        )}
+        <button
+          onClick={() => setView("class")}
+          className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            view === "class"
+              ? "bg-blue-primary text-white"
+              : "text-text-muted hover:text-white"
+          }`}
+        >
+          לפי כיתה
+        </button>
       </div>
+
+      {/* Class picker — only shown in class view */}
+      {view === "class" && (
+        <div className="mx-4 mt-3 max-w-2xl md:mx-auto">
+          <select
+            value={selectedClass}
+            onChange={(e) => setSelectedClass(e.target.value)}
+            className="w-full rounded-xl border border-white/15 bg-bg-card px-4 py-2.5 text-right text-sm font-bold text-white outline-none focus:border-blue-primary"
+            dir="rtl"
+            aria-label="בחר כיתה"
+          >
+            {CLASSES.map((cls) => (
+              <option key={cls.id} value={cls.id}>
+                כיתה {cls.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Content */}
       <div className="px-4 pt-6 w-full max-w-2xl mx-auto">
         <h3 className="mb-3 text-right text-lg font-bold text-white">
-          {view === "class" ? "מובילי הכיתה" : "מובילי בית הספר"}
+          {view === "class"
+            ? `מובילי כיתה ${CLASSES.find(c => c.id === selectedClass)?.label ?? ""}`
+            : "מובילי בית הספר"}
         </h3>
 
         {/* Column headers */}
@@ -115,6 +139,7 @@ export default function LeaderboardPage() {
         )}
       </div>
 
+      <Footer />
       <BottomNav variant="leaderboard" />
     </div>
   );
@@ -198,9 +223,9 @@ function PlayerRow({
         <div className="text-right">
           <div className="text-sm font-bold text-white">{entry.name}</div>
           <div className="text-xs text-text-muted">
-            {view === "school" && entry.className ? (
+            {entry.className ? (
               <>
-                {rankTitle} • {entry.className}
+                {rankTitle} • {formatClassName(entry.className)}
               </>
             ) : (
               rankTitle

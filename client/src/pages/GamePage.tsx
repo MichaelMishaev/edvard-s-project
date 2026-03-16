@@ -152,7 +152,8 @@ export default function GamePage() {
 
   const handleGameComplete = async () => {
     try {
-      const result = await completeGame.mutateAsync(sessionId);
+      const theme = sessionStorage.getItem("gameTheme") || "jerusalem";
+      const result = await completeGame.mutateAsync({ sessionId, theme });
       sessionStorage.setItem("gameResult", JSON.stringify(result));
 
       // Register contest participation if there's an active contest

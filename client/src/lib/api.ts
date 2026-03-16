@@ -50,9 +50,10 @@ export async function submitAnswer(
 }
 
 export async function completeGame(
-  sessionId: string
+  sessionId: string,
+  theme?: string
 ): Promise<CompleteGameResponse> {
-  const { data } = await api.post(`/games/${sessionId}/complete`);
+  const { data } = await api.post(`/games/${sessionId}/complete`, { theme: theme || "jerusalem" });
   return data;
 }
 
@@ -67,9 +68,11 @@ export async function getBadgeDefinitions(): Promise<BadgeDefinition[]> {
 }
 
 export async function getPlayerBadges(
-  playerId: string
+  playerId: string,
+  theme?: string
 ): Promise<BadgeCollectionResponse> {
-  const { data } = await api.get(`/badges/${playerId}`);
+  const params = theme ? `?theme=${theme}` : "";
+  const { data } = await api.get(`/badges/${playerId}${params}`);
   return data;
 }
 

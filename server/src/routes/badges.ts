@@ -2,19 +2,22 @@ import { Router, Request, Response } from "express";
 import { db } from "../db/index.js";
 import { players } from "../db/schema.js";
 import { eq } from "drizzle-orm";
-import { BADGE_DEFINITIONS } from "../services/badges.js";
+import { JERUSALEM_BADGE_DEFINITIONS, PESACH_BADGE_DEFINITIONS } from "../services/badges.js";
 
 const router = Router();
 
-// GET /api/badges - returns all badge definitions
-router.get("/", (_req: Request, res: Response) => {
-  res.json(BADGE_DEFINITIONS);
+// GET /api/badges - returns all badge definitions (optionally filtered by theme)
+router.get("/", (req: Request, res: Response) => {
+  const theme = req.query.theme as string | undefined;
+  const defs = theme === "pesach" ? PESACH_BADGE_DEFINITIONS : JERUSALEM_BADGE_DEFINITIONS;
+  res.json(defs);
 });
 
 // GET /api/badges/:playerId - returns badge definitions + which ones the player has earned
 router.get("/:playerId", async (req: Request, res: Response) => {
   try {
     const playerId = req.params.playerId as string;
+    const theme = (req.query.theme as string) || "jerusalem";
 
     const [player] = await db
       .select()
@@ -27,16 +30,19 @@ router.get("/:playerId", async (req: Request, res: Response) => {
     }
 
     const earnedNames = new Set(player.badges);
+    const defs = theme === "pesach" ? PESACH_BADGE_DEFINITIONS : JERUSALEM_BADGE_DEFINITIONS;
 
-    const badges = BADGE_DEFINITIONS.map((def) => ({
+    const badges = defs.map((def) => ({
       ...def,
       earned: earnedNames.has(def.name),
     }));
 
+    const earnedCount = badges.filter((b) => b.earned).length;
+
     res.json({
       badges,
-      earnedCount: player.badges.length,
-      totalCount: BADGE_DEFINITIONS.length,
+      earnedCount,
+      totalCount: defs.length,
     });
   } catch (error) {
     console.error("Error fetching player badges:", error);

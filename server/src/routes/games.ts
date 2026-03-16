@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { db } from "../db/index.js";
 import { gameSessions, players, questions } from "../db/schema.js";
 import { eq, inArray, sql } from "drizzle-orm";
-import { calculateBadges } from "../services/badges.js";
+import { calculateBadges, calculatePesachBadges } from "../services/badges.js";
 
 const router = Router();
 
@@ -159,6 +159,7 @@ router.post("/:id/answer", async (req: Request, res: Response) => {
 router.post("/:id/complete", async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const { theme = "jerusalem" } = req.body as { theme?: string };
 
     // Get the session
     const [session] = await db
@@ -209,8 +210,10 @@ router.post("/:id/complete", async (req: Request, res: Response) => {
     const totalTimeSeconds = Math.round(totalTimeMs / 1000);
     const correctCount = answers.filter((a) => a.correct).length;
 
-    // Calculate badges
-    const badges = calculateBadges(answers, sessionQuestions, totalTimeSeconds);
+    // Calculate badges (theme-aware)
+    const badges = theme === "pesach"
+      ? calculatePesachBadges(answers, sessionQuestions, totalTimeSeconds)
+      : calculateBadges(answers, sessionQuestions, totalTimeSeconds);
 
     // Get existing player to merge badges cumulatively
     const [existingPlayer] = await db
