@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
 import { MedalIcon, BadgeStarIcon } from "../components/Icons";
@@ -66,19 +66,7 @@ export default function LeaderboardPage() {
       {/* Class picker — only shown in class view */}
       {view === "class" && (
         <div className="mx-4 mt-3 max-w-2xl md:mx-auto">
-          <select
-            value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
-            className="w-full rounded-xl border border-white/15 bg-bg-card px-4 py-2.5 text-right text-sm font-bold text-white outline-none focus:border-blue-primary"
-            dir="rtl"
-            aria-label="בחר כיתה"
-          >
-            {CLASSES.map((cls) => (
-              <option key={cls.id} value={cls.id}>
-                כיתה {cls.label}
-              </option>
-            ))}
-          </select>
+          <ClassPicker value={selectedClass} onChange={setSelectedClass} />
         </div>
       )}
 
@@ -141,6 +129,136 @@ export default function LeaderboardPage() {
 
       <Footer />
       <BottomNav variant="leaderboard" />
+    </div>
+  );
+}
+
+const CLASS_GROUPS = [
+  { grade: "ד׳", ids: ["dalet1", "dalet2", "dalet3", "dalet4"] },
+  { grade: "ה׳", ids: ["heh1", "heh2", "heh3", "heh4"] },
+  { grade: "ו׳", ids: ["vav1", "vav2", "vav3", "vav4"] },
+];
+
+function ClassPicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const selected = CLASSES.find((c) => c.id === value);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={ref} dir="rtl">
+      {/* ── Desktop: badge grid ── */}
+      <div className="hidden md:block">
+        <p className="mb-3 text-right text-xs font-medium text-text-muted">בחר כיתה</p>
+        <div className="flex flex-wrap justify-end gap-3">
+          {CLASSES.map((cls) => {
+            const isSelected = cls.id === value;
+            return (
+              <button
+                key={cls.id}
+                type="button"
+                onClick={() => onChange(cls.id)}
+                title={`כיתה ${cls.label}`}
+                className={`group relative flex flex-col items-center transition-all duration-150 active:scale-95 focus:outline-none ${
+                  isSelected ? "scale-110" : "opacity-70 hover:opacity-100 hover:scale-105"
+                }`}
+              >
+                <div className={`relative rounded-xl overflow-hidden ${isSelected ? "ring-2 ring-blue-primary shadow-lg shadow-blue-primary/40" : "ring-1 ring-white/10 hover:ring-white/30"}`}
+                  style={{ width: 72, height: 72 }}>
+                  <img
+                    src={`/images/class-badges/${cls.id}.png`}
+                    alt={`כיתה ${cls.label}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  {isSelected && (
+                    <div className="absolute inset-0 bg-blue-primary/20 flex items-center justify-center">
+                      <svg className="h-6 w-6 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                <span className={`mt-1 text-xs font-bold ${isSelected ? "text-blue-primary" : "text-text-muted"}`}>
+                  {cls.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Mobile: dropdown ── */}
+      <div className="relative md:hidden">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="flex w-full items-center gap-3 rounded-2xl border-2 border-blue-primary bg-blue-primary/10 px-4 py-3.5 transition-all hover:bg-blue-primary/20 focus:outline-none active:scale-[0.98]"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label="בחר כיתה"
+        >
+          <div className="flex flex-1 flex-col items-end gap-0.5">
+            <span className="text-xs font-medium text-blue-primary/80">כיתה נבחרת</span>
+            <span className="text-lg font-bold text-white">{selected ? `כיתה ${selected.label}` : "בחר כיתה"}</span>
+          </div>
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-primary">
+            <svg
+              className={`h-5 w-5 text-white transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+
+        <AnimatePresence>
+          {open && (
+            <motion.ul
+              role="listbox"
+              aria-label="רשימת כיתות"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.15 }}
+              className="absolute z-50 mt-1 w-full overflow-y-auto rounded-xl border border-white/15 bg-bg-card shadow-xl"
+              style={{ maxHeight: "260px" }}
+            >
+              {CLASSES.map((cls) => {
+                const isSelected = cls.id === value;
+                return (
+                  <li
+                    key={cls.id}
+                    role="option"
+                    aria-selected={isSelected}
+                    onClick={() => { onChange(cls.id); setOpen(false); }}
+                    className={`flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-medium transition-colors hover:bg-white/8 ${
+                      isSelected ? "bg-blue-primary/10 text-blue-primary" : "text-white"
+                    }`}
+                  >
+                    {isSelected && (
+                      <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className="flex-1 text-right">כיתה {cls.label}</span>
+                  </li>
+                );
+              })}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
