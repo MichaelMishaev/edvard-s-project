@@ -8,3 +8,23 @@ build/
 .next/
 coverage/
 .cache/
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Screenshots / test artifacts
+*.png
+!client/public/**/*.png
+!public/**/*.png
+playwright-report/
+test-results/
+
+# Test files
+playwright.config.ts
+e2e/
+
+# One-off scripts
+test-*.mjs
+
+# Docs generated during sessions
+docs/ux-*.md
