@@ -19,6 +19,7 @@ export const players = pgTable("players", {
   badges: jsonb("badges").$type<string[]>().default([]).notNull(),
   className: text("class_name").notNull(),
   contestBadges: jsonb("contest_badges").$type<string[]>().default([]).notNull(),
+  isTest: boolean("is_test").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

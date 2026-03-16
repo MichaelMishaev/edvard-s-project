@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db/index.js";
 import { players } from "../db/schema.js";
-import { desc, asc } from "drizzle-orm";
+import { desc, asc, eq } from "drizzle-orm";
 
 const router = Router();
 
@@ -11,6 +11,7 @@ router.get("/", async (req: Request, res: Response) => {
     const allPlayers = await db
       .select()
       .from(players)
+      .where(eq(players.isTest, false))
       .orderBy(desc(players.score), asc(players.timeSeconds));
 
     res.json(allPlayers);

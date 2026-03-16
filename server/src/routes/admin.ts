@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { db } from "../db/index.js";
-import { sql } from "drizzle-orm";
+import { sql, eq } from "drizzle-orm";
+import { players } from "../db/schema.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -41,6 +42,35 @@ router.post("/run-contest-migration", async (req, res) => {
       error: error.message,
       hint: "Tables might already exist",
     });
+  }
+});
+
+// PATCH /api/admin/players/:id/mark-test - Mark a player as test user
+router.patch("/players/:id/mark-test", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isTest } = req.body as { isTest?: boolean };
+
+    if (typeof isTest !== "boolean") {
+      res.status(400).json({ error: "isTest must be a boolean" });
+      return;
+    }
+
+    const [updated] = await db
+      .update(players)
+      .set({ isTest })
+      .where(eq(players.id, id))
+      .returning({ id: players.id, name: players.name, isTest: players.isTest });
+
+    if (!updated) {
+      res.status(404).json({ error: "Player not found" });
+      return;
+    }
+
+    res.json({ success: true, player: updated });
+  } catch (error: any) {
+    console.error("Mark test error:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
