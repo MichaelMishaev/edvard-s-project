@@ -565,6 +565,25 @@ export default function WelcomePage() {
         </motion.div>
         {/* End Form Card */}
 
+        {/* Cyber Presentation Banner */}
+        <motion.a
+          href="/presentations/cyber-attacks/"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-4 flex items-center justify-between gap-3 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-900/30 to-blue-900/30 px-4 py-3.5 text-right transition-all hover:border-cyan-400/50 hover:bg-cyan-900/40"
+          aria-label="פתח מצגת על מתקפות סייבר"
+        >
+          <span className="text-xl" aria-hidden="true">↗</span>
+          <div className="flex-1">
+            <div className="text-sm font-bold text-cyan-300">מצגת סייבר לתלמידים</div>
+            <div className="text-xs text-white/50">מתקפות סייבר: איך מזהים ונשמרים</div>
+          </div>
+          <span className="text-2xl" aria-hidden="true">🛡️</span>
+        </motion.a>
+
         {/* Leaderboard Preview */}
         {leaderboard && leaderboard.length > 0 && (
           <motion.div

@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>מתקפות סייבר: איך מזהים ונשמרים</title>
+    <link rel="stylesheet" href="styles.css?v=finale-image-only" />
+  </head>
+  <body>
+    <a class="skip-link" href="#slides">דלגו למצגת</a>
+
+    <header class="topbar" aria-label="סרגל מצגת">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✓</span>
+        <span>שיעור סייבר לתלמידים</span>
+      </div>
+      <div class="toolbar" aria-label="פקדי מצגת">
+        <button type="button" class="icon-button mission-open" data-action="mission" aria-label="פתיחת משימת השקופית">משימה</button>
+        <button type="button" class="icon-button" data-action="overview" aria-label="תצוגת כל השקופיות">▦</button>
+        <button type="button" class="icon-button" data-action="notes" aria-label="הצגת הערות למורה">הערות</button>
+        <button type="button" class="icon-button" data-action="print" aria-label="הדפסה">הדפסה</button>
+        <button type="button" class="icon-button" data-action="fullscreen" aria-label="מסך מלא">⛶</button>
+      </div>
+    </header>
+
+    <main id="slides" class="deck" aria-live="polite">
+      <section class="slide hero-slide is-active" data-title="פתיחה" aria-labelledby="slide-1-title">
+        <div class="hero-copy">
+          <p class="lesson-chip">45 דקות · כיתות ז׳-ט׳ · הגנה בלבד</p>
+          <h1 id="slide-1-title">מתקפות סייבר: איך מזהים ונשמרים</h1>
+          <p class="lead">
+            שיעור קצר וברור על הודעות חשודות, סיסמאות, התחזות, קבצים מסוכנים, ומה כל אחד מאיתנו יכול לעשות.
+          </p>
+          <div class="story-card">
+            <strong>סיפור פתיחה:</strong>
+            דמיינו שקיבלתם הודעה: "זכיתם בפרס! לחצו עכשיו". מה עושים לפני שלוחצים?
+          </div>
+          <article class="real-story">
+            <h3>סיפור אמיתי לפתיחה</h3>
+            <p>הרבה מתקפות מתחילות בהודעה שמלחיצה אותנו: פרס, חשבון שעומד להיסגר, או בקשה לקוד. הלחץ הוא הפיתיון.</p>
+            <a href="https://consumer.ftc.gov/articles/how-recognize-avoid-phishing-scams" target="_blank" rel="noreferrer">מקור: FTC</a>
+          </article>
+        </div>
+        <figure class="hero-art">
+          <img src="assets/concept-cyber-classroom.png" alt="תלמיד ליד מחשב, גשר מגן וטירה בטוחה כסמל להגנת סייבר" />
+        </figure>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            לפתוח בשאלה, לא בהגדרה. בקשו מהכיתה להרים יד: מי קיבל פעם הודעה שנראתה דחופה מדי או טובה מדי?
+            הדגישו שהשיעור הוא על הגנה, בדיקה ועזרה לחברים, לא על איך לתקוף.
+          </p>
+          <p>
+            זמן מומלץ: 3 דקות. מילים ללוח: סייבר, מתקפה, הגנה, סימן אזהרה.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide stat-slide" data-title="מה זה?" aria-labelledby="slide-2-title">
+        <div class="slide-grid">
+          <div>
+            <p class="lesson-chip">הרעיון המרכזי</p>
+            <h2 id="slide-2-title">מה זו מתקפת סייבר?</h2>
+            <p class="lead">
+              כשמישהו מנסה לפגוע במידע, להיכנס לחשבון בלי רשות, או לגרום לנו ללחוץ ולשתף משהו שלא רצינו.
+            </p>
+            <ul class="big-list">
+              <li><span>מידע</span> תמונות, הודעות, שיעורי בית, פרטי חשבון.</li>
+              <li><span>גישה</span> כניסה לחשבון בלי רשות.</li>
+              <li><span>אמון</span> לגרום לנו להאמין למשהו לא אמיתי.</li>
+            </ul>
+            <article class="real-story">
+              <h3>גם חברות ענק נופלות</h3>
+              <p>במקרה אמיתי, שתי חברות אינטרנט גדולות שילמו הרבה כסף בגלל אימיילים וחשבוניות מזויפים. גם מבוגרים וחברות יכולים לטעות.</p>
+              <a href="https://www.justice.gov/usao-sdny/pr/lithuanian-man-arrested-theft-over-100-million-fraudulent-email-compromise-scheme" target="_blank" rel="noreferrer">מקור: DOJ</a>
+            </article>
+          </div>
+          <div class="evidence-panel">
+            <h3>למה זה חשוב?</h3>
+            <p class="giant-number">כמעט $21B</p>
+            <p>
+              לפי דוח IC3 של ה-FBI לשנת 2025, אנשים בארה"ב דיווחו על יותר ממיליון מקרי פשיעה באינטרנט ועל הפסדים של כמעט 21 מיליארד דולר.
+            </p>
+            <a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf" target="_blank" rel="noreferrer">מקור: FBI IC3 2025</a>
+          </div>
+        </div>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            להסביר: "סייבר" הוא לא רק סרטים ומחשבים של חברות גדולות. גם חשבון משחק, אימייל, ווטסאפ או מערכת בית ספר הם חלק מהחיים הדיגיטליים.
+            הנתון הגדול נועד להראות שזה נושא אמיתי, אבל לא להפחיד: המטרה היא לדעת לזהות ולעצור בזמן.
+          </p>
+          <p>שאלת כיתה: איזה מידע שלכם הייתם רוצים לשמור פרטי?</p>
+        </aside>
+      </section>
+
+      <section class="slide image-right" data-title="פישינג" aria-labelledby="slide-3-title">
+        <div class="copy-panel">
+          <p class="lesson-chip">סוג 1 מתוך 5</p>
+          <h2 id="slide-3-title">פישינג: הודעה שמנסה לעבוד עלינו</h2>
+          <div class="problem-solution">
+            <div>
+              <h3>הבעיה</h3>
+              <p>הודעה מלחיצה או מפתה: "אשרו עכשיו", "החשבון ייסגר", "זכיתם".</p>
+            </div>
+            <div>
+              <h3>ההגנה</h3>
+              <p>עוצרים. בודקים מי שלח. לא לוחצים על קישור מוזר. נכנסים דרך האפליקציה או האתר הרשמי.</p>
+            </div>
+          </div>
+          <ul class="clue-list">
+            <li>לחץ מוגזם</li>
+            <li>כתובת שולח מוזרה</li>
+            <li>בקשה לסיסמה או קוד</li>
+            <li>שגיאות ניסוח או הצעה טובה מדי</li>
+          </ul>
+          <article class="real-story">
+            <h3>הסיפור של הקוד שנראה תמים</h3>
+            <p>אנשים פרסמו משהו למכירה. "קונה" ביקש קוד כדי לבדוק שהם אמיתיים. מי שנתן את הקוד עזר לרמאי לפתוח חשבון על שמו.</p>
+            <a href="https://consumer.ftc.gov/consumer-alerts/2021/10/google-voice-scam-how-verification-code-scam-works-how-avoid-it" target="_blank" rel="noreferrer">מקור: FTC</a>
+          </article>
+        </div>
+        <figure class="slide-art framed">
+          <img src="assets/phishing-scene.png" alt="תלמיד בוחן הודעות חשודות באמצעות זכוכית מגדלת" />
+        </figure>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            לפי ה-FTC, הודעות פישינג מספרות לעיתים סיפור שנועד לגרום לנו ללחוץ או למסור מידע. בקשו מהתלמידים להמציא דוגמה בטוחה
+            בלי להשתמש בשם של חברה אמיתית: "מועדון המשחקים שלך צריך אימות מיד".
+          </p>
+          <p>
+            הדגישו משפט קצר: אם הודעה מלחיצה אותך, זה סימן לעצור ולא לרוץ.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide image-left" data-title="סיסמאות" aria-labelledby="slide-4-title">
+        <figure class="slide-art framed">
+          <img src="assets/rate-limit-vault.png" alt="כספת, לוח מקשים ורמזור הגנה שמאט ניסיונות כניסה חוזרים" />
+        </figure>
+        <div class="copy-panel">
+          <p class="lesson-chip">סוג 2 מתוך 5</p>
+          <h2 id="slide-4-title">סיסמאות: כשמנסים לנחש שוב ושוב</h2>
+          <div class="problem-solution">
+            <div>
+              <h3>הבעיה</h3>
+              <p>סיסמה קצרה, מוכרת או חוזרת קלה יותר לניחוש.</p>
+            </div>
+            <div>
+              <h3>ההגנה</h3>
+              <p>בוחרים סיסמה ארוכה, לא משתמשים באותה סיסמה בכל מקום, ומפעילים קוד נוסף כשאפשר.</p>
+            </div>
+          </div>
+          <p class="callout">כלל כיתה: סיסמה טובה היא כמו משפט סודי, לא כמו מילה אחת.</p>
+          <article class="real-story">
+            <h3>כשהסיסמה חוזרת</h3>
+            <p>במקרה של 23andMe, החברה אמרה שתוקף כנראה השתמש בסיסמאות שדלפו מאתרים אחרים. לכן לא כדאי למחזר סיסמאות.</p>
+            <a href="https://blog.23andme.com/articles/addressing-data-security-concerns" target="_blank" rel="noreferrer">מקור: 23andMe</a>
+          </article>
+        </div>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            לא לבקש מתלמידים לומר סיסמאות אמיתיות. אפשר להדגים עם משפט מומצא כמו "הדרקון אוכל פיצה ביום שלישי" ולהראות
+            למה אורך חשוב. לפי NIST, אורך הסיסמה הוא גורם מרכזי בחוזק שלה, ומערכות צריכות להגביל ניסיונות כושלים.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide type-slide" data-title="נוזקות" aria-labelledby="slide-5-title">
+        <div class="type-card malware">
+          <span class="type-icon" aria-hidden="true">!</span>
+          <h2 id="slide-5-title">קבצים מסוכנים: לפני שפותחים, בודקים</h2>
+          <p>
+            נוזקה היא תוכנה שמזיקה למחשב. כופרה יכולה לנעול קבצים. ההגנה שלנו: לא פותחים קובץ חשוד, מעדכנים תוכנות ושומרים גיבוי.
+          </p>
+        </div>
+        <div class="defense-steps">
+          <article>
+            <h3>בעיה</h3>
+            <p>קובץ "מצחיק" או "פרס" מגיע ממישהו לא מוכר.</p>
+          </article>
+          <article>
+            <h3>בדיקה</h3>
+            <p>מי שלח? האם ביקשתי את זה? האם שם הקובץ נראה הגיוני?</p>
+          </article>
+          <article>
+            <h3>הגנה</h3>
+            <p>שואלים מבוגר, לא פותחים בלחץ, מעדכנים ושומרים גיבוי.</p>
+          </article>
+        </div>
+        <article class="real-story wide-story">
+          <h3>כשבית ספר שלם מרגיש את זה</h3>
+          <p>ב-2022 ה-FBI ו-CISA הזהירו שקבוצת כופרה פוגעת בבתי ספר. זה אומר שגם מיילים, קבצים ושיעורים דיגיטליים צריכים הגנה.</p>
+          <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-249a-0" target="_blank" rel="noreferrer">מקור: CISA</a>
+        </article>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            להישאר ברמת התנהגות בטוחה. אין צורך להסביר איך נוזקה עובדת בפנים. שאלו: "מה עדיף, לפתוח כדי לבדוק או לעצור כדי לבדוק?"
+            התשובה: לעצור. בדיקה בטוחה קודמת לסקרנות.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide type-slide teal" data-title="פרטיות" aria-labelledby="slide-6-title">
+        <div class="type-card privacy">
+          <span class="type-icon" aria-hidden="true">◎</span>
+          <h2 id="slide-6-title">מידע פרטי: לחשוב לפני שמשתפים</h2>
+          <p>
+            לפעמים לא צריך "האקר". מידע יכול לצאת החוצה כי פרסמנו תמונה, שלחנו לקבוצה הלא נכונה, או אישרנו הרשאות בלי לחשוב.
+          </p>
+        </div>
+        <div class="split-checks">
+          <div>
+            <h3>לפני שמעלים או שולחים</h3>
+            <ul>
+              <li>האם יש בתמונה כתובת, בית ספר או מספר טלפון?</li>
+              <li>האם מישהו אחר מופיע בתמונה?</li>
+              <li>האם זה בסדר אם זה יישאר באינטרנט?</li>
+            </ul>
+          </div>
+          <div>
+            <h3>הגנות פשוטות</h3>
+            <ul>
+              <li>חשבון פרטי כשאפשר.</li>
+              <li>בדיקת הרשאות באפליקציות.</li>
+              <li>לחשוב לפני שיתוף מחדש.</li>
+            </ul>
+          </div>
+        </div>
+        <article class="real-story wide-story">
+          <h3>אפליקציית ריצה שחשפה יותר מדי</h3>
+          <p>מפת פעילות של Strava הראתה מסלולי ריצה במקומות רגישים. גם מידע שנראה "רק ספורט" יכול לספר איפה אנחנו נמצאים ומה אנחנו עושים.</p>
+          <a href="https://privacyinternational.org/examples/1946/strava-fitness-app-exposes-jogging-routes-around-military-bases" target="_blank" rel="noreferrer">מקור: Privacy International</a>
+        </article>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            הפכו את זה לתרגיל: "איזה מידע אפשר לראות מתמונה תמימה של שולחן?" התלמידים יגלו רקע, מיקום, שמות על מחברות ועוד.
+            המסר: פרטיות היא שריר של תשומת לב.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide type-slide coral" data-title="התחזות" aria-labelledby="slide-7-title">
+        <div class="type-card social">
+          <span class="type-icon" aria-hidden="true">?</span>
+          <h2 id="slide-7-title">התחזות: מישהו מעמיד פנים שהוא מוכר</h2>
+          <p>
+            "זה אני, החלפתי מספר", "שלח לי קוד", "אל תגיד לאף אחד". התחזות מנצלת אמון.
+          </p>
+        </div>
+        <div class="defense-steps compact">
+          <article>
+            <h3>סימן אזהרה</h3>
+            <p>בקשה דחופה, סודית או מוזרה ממישהו שמוכר לנו.</p>
+          </article>
+          <article>
+            <h3>בדיקה</h3>
+            <p>בודקים בדרך אחרת: שיחה, הורה, מורה או הודעה נפרדת.</p>
+          </article>
+          <article>
+            <h3>משפט מגן</h3>
+            <p>"אני בודק לפני שאני שולח קוד או כסף."</p>
+          </article>
+        </div>
+        <article class="real-story wide-story">
+          <h3>"זה בן משפחה, זה דחוף"</h3>
+          <p>ה-FTC מתאר רמאים שמתחזים לחבר או בן משפחה במצב חירום. הם מבקשים כסף או כרטיס מתנה, ולפעמים אומרים: "אל תספרו".</p>
+          <a href="https://consumer.ftc.gov/articles/avoiding-and-reporting-gift-card-scams" target="_blank" rel="noreferrer">מקור: FTC</a>
+        </article>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            תנו לתלמידים להתאמן על משפט מגן בקול. זה חשוב במיוחד לילדים שמרגישים לא נעים לסרב. הפכו את הבדיקה לנורמה חברתית:
+            חבר טוב יבין שבודקים.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide castle-slide" data-title="הגשר" aria-labelledby="slide-8-title">
+        <div class="copy-panel">
+          <p class="lesson-chip">אנלוגיה לציור על הלוח</p>
+          <h2 id="slide-8-title">גשר ההגנה: כמה שכבות שומרות עלינו</h2>
+          <p class="lead">
+            הגנה טובה היא לא דבר אחד. היא כמה צעדים קטנים שעוזרים לנו לעצור בזמן.
+          </p>
+          <pre class="whiteboard" aria-label="תרשים טירה פשוט לציור על הלוח">[תלמיד] ==גשר== [שער 1] [שער 2] [שער 3] ==&gt; [טירה בטוחה]
+          סיסמה    קוד נוסף   עצירה לפני קליק   גיבוי</pre>
+          <article class="real-story">
+            <h3>למה צריך כמה שערים?</h3>
+            <p>בכל הסיפורים שראינו, שכבה אחת לא הספיקה. סיסמה, קוד נוסף, בדיקה ושיחה עם מבוגר נותנים לנו עוד זמן לעצור.</p>
+          </article>
+        </div>
+        <figure class="slide-art framed">
+          <img src="assets/security-castle-bridge.png" alt="גשר עם שערי הגנה בדרך לטירה בטוחה" />
+        </figure>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            ציירו את התרשים הפשוט על הלוח בזמן שהשקופית מוצגת. התנועה הפיזית של הציור עוזרת לזכור: כל שער עוצר סוג אחר של טעות.
+            בקשו מהתלמידים לתת שם לכל שער: סיסמה, קוד נוסף, עדכון, פרטיות, גיבוי.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide math-slide" data-title="קצב ניסיונות" aria-labelledby="slide-9-title">
+        <div>
+          <p class="lesson-chip">הגנה שפחות מדברים עליה</p>
+          <h2 id="slide-9-title">למה אתרים אומרים: חכו רגע?</h2>
+          <p class="lead">
+            אם מישהו מנסה לנחש סיסמה שוב ושוב, אתר טוב מאט אותו.
+          </p>
+          <div class="math-row">
+            <div class="math-card danger">
+              <span>בלי הגבלה</span>
+              <strong>1,000,000 ניסיונות</strong>
+              <p>בלי האטה, מחשב מהיר יכול לבדוק הרבה אפשרויות בזמן קצר.</p>
+            </div>
+            <div class="math-card safe">
+              <span>עם הגבלה</span>
+              <strong>ניסיון כל 20 דקות</strong>
+              <p>עם המתנה בין ניסיונות, אותו מספר ניסיונות יכול לקחת שנים.</p>
+            </div>
+          </div>
+          <article class="real-story">
+            <h3>הסיפור מאחורי הבלמים</h3>
+            <p>לפעמים תוקפים מנסים הרבה סיסמאות שכבר דלפו. לכן אתרים טובים מוסיפים בלמים: המתנה, נעילה זמנית וקוד נוסף.</p>
+            <a href="https://pages.nist.gov/800-63-4/sp800-63b.html" target="_blank" rel="noreferrer">מקור: NIST</a>
+          </article>
+          <p class="source-note">זו דוגמה מתמטית פשוטה. הרעיון: האטה יכולה להפוך ניחוש למשהו שלא משתלם.</p>
+        </div>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            זה רגע "וואו" של השיעור. כתבו על הלוח: 1,000,000 אפשרויות. בלי להיכנס לתכנות, הראו שההגנה לא חייבת לנצח את הניחוש;
+            היא יכולה פשוט להאט אותו כל כך שהניחוש כבר לא משתלם.
+          </p>
+          <p>
+            חשוב לומר: אנחנו לא לומדים איך לנחש סיסמאות. אנחנו לומדים למה אתרים נועלים זמנית חשבון או מבקשים המתנה.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide image-right" data-title="רשימה" aria-labelledby="slide-10-title">
+        <div class="copy-panel">
+          <p class="lesson-chip">מה עושים מחר בבוקר?</p>
+          <h2 id="slide-10-title">רשימת הגנה אישית</h2>
+          <ol class="number-list">
+            <li><strong>סיסמה ארוכה</strong> ושונה לכל חשבון חשוב.</li>
+            <li><strong>קוד נוסף</strong> כשאפשר להפעיל.</li>
+            <li><strong>עדכונים</strong> לטלפון, למחשב ולאפליקציות.</li>
+            <li><strong>פרטיות והרשאות</strong> בודקים מי רואה ומה האפליקציה מבקשת.</li>
+            <li><strong>עצירה לפני קליק</strong> כשמשהו דחוף, סודי או מוזר.</li>
+          </ol>
+          <article class="real-story">
+            <h3>הפעולה הקטנה שמנצחת</h3>
+            <p>אחרי כל סיפור אמיתי חוזרת אותה מסקנה: פעולה קטנה בזמן הנכון יכולה לעצור בעיה גדולה. בוחרים דבר אחד לשפר השבוע.</p>
+          </article>
+        </div>
+        <figure class="slide-art framed">
+          <img src="assets/safety-checklist.png" alt="תלמיד מוקף בחמש שכבות הגנה דיגיטלית" />
+        </figure>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            בקשו מכל תלמיד לבחור פעולה אחת שהוא יכול לעשות השבוע. לא צריך הכל בבת אחת. הצלחה בשיעור היא שינוי קטן:
+            להפעיל קוד נוסף, לבדוק הרשאות, או לדבר עם הורה על סיסמאות.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide quiz-slide" data-title="חידון" aria-labelledby="slide-11-title">
+        <figure class="quiz-art">
+          <img src="assets/quiz-game.png" alt="כיתה משחקת חידון סייבר עם קלפים ושביל משחק" />
+        </figure>
+        <div class="quiz-panel">
+          <p class="lesson-chip">משחק סיכום</p>
+          <h2 id="slide-11-title">חידון: מה קורה כאן?</h2>
+          <div class="quiz-status" aria-label="מצב החידון">
+            <span>שאלה <strong id="quiz-current">1</strong>/<strong id="quiz-total">5</strong></span>
+            <span>ניקוד <strong id="quiz-score">0</strong>/<strong id="quiz-score-total">5</strong></span>
+          </div>
+          <div class="quiz-progress" aria-hidden="true"><span id="quiz-progress-bar"></span></div>
+          <p id="quiz-question" class="quiz-question">הודעה אומרת: "לחצו עכשיו או שהחשבון ייסגר". מה זה מזכיר?</p>
+          <div class="quiz-options" role="group" aria-label="אפשרויות תשובה">
+            <button type="button" data-answer="true">פישינג</button>
+            <button type="button" data-answer="false">גיבוי</button>
+            <button type="button" data-answer="false">עדכון תוכנה</button>
+          </div>
+          <p id="quiz-feedback" class="quiz-feedback" aria-live="polite">בחרו תשובה כדי לקבל רמז.</p>
+          <div class="quiz-actions">
+            <button type="button" class="secondary-button" data-action="next-question">שאלה הבאה</button>
+            <button type="button" class="ghost-button" data-action="reset-quiz">איפוס ניקוד</button>
+          </div>
+        </div>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            החידון מחזיר את כל חמשת סוגי ההתקפות בלי להרגיש כמו מבחן. אפשר לשחק בהרמת ידיים, כרטיסים בצבעים או קבוצות.
+            אחרי כל תשובה שאלו: "מה ההגנה המתאימה?"
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide table-slide" data-title="סיכום" aria-labelledby="slide-12-title">
+        <p class="lesson-chip">כל השיעור בטבלה אחת</p>
+        <h2 id="slide-12-title">סוג התקפה, סימן אזהרה, מה עושים</h2>
+        <div class="summary-table" role="table" aria-label="טבלת סיכום מתקפות והגנות">
+          <div role="row" class="table-head">
+            <span role="columnheader">סוג</span>
+            <span role="columnheader">סימן אזהרה</span>
+            <span role="columnheader">מה עושים</span>
+          </div>
+          <div role="row"><span role="cell">פישינג</span><span role="cell">דחוף מדי או טוב מדי</span><span role="cell">לא לוחצים, בודקים מקור</span></div>
+          <div role="row"><span role="cell">סיסמה</span><span role="cell">סיסמה קצרה או חוזרת</span><span role="cell">סיסמה ארוכה + קוד נוסף</span></div>
+          <div role="row"><span role="cell">קובץ מסוכן</span><span role="cell">קובץ או קישור לא צפוי</span><span role="cell">עוצרים, שואלים, מעדכנים</span></div>
+          <div role="row"><span role="cell">מידע פרטי</span><span role="cell">שיתוף בלי לחשוב</span><span role="cell">בודקים פרטיות והרשאות</span></div>
+          <div role="row"><span role="cell">התחזות</span><span role="cell">בקשה סודית או מוזרה</span><span role="cell">בודקים בערוץ אחר</span></div>
+        </div>
+        <article class="real-story summary-story">
+          <h3>הדפוס שחוזר בכל הסיפורים</h3>
+          <p>הרמאי מנסה לגרום לנו למהר, להתבייש או לשמור סוד. ההגנה: לעצור, לבדוק עם מקור אמין, ולבקש עזרה.</p>
+        </article>
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            זה זמן טוב לחזור על השפה: סימן אזהרה, עצירה, בדיקה, פעולה בטוחה. בקשו מכל זוג תלמידים לבחור שורה אחת ולהמציא
+            "משפט מגן" שמתאים לה.
+          </p>
+        </aside>
+      </section>
+
+      <section class="slide finale-slide" data-title="סיום" aria-labelledby="slide-13-title">
+        <h2 id="slide-13-title" class="sr-only">תפסנו את התרמית!</h2>
+        <img class="finale-image" src="assets/hacker-busted-finale.png" alt="תלמידים ומורה עוצרים ניסיון פישינג בעזרת מגן דיגיטלי" />
+        <aside class="speaker-notes">
+          <h2>הערות למורה</h2>
+          <p>
+            לסיים במסר מעצים: אבטחת מידע היא לא פחד ממחשבים, אלא הרגל של בדיקה ועזרה. אם תלמיד שואל על מקרה אמיתי,
+            לא לפתור מול כל הכיתה פרטים אישיים; להציע לדבר אחרי השיעור או עם מבוגר אחראי.
+          </p>
+        </aside>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="ניווט שקופיות">
+      <button type="button" class="nav-button" data-action="prev" aria-label="שקופית קודמת">הקודמת</button>
+      <div class="progress-wrap">
+        <div class="slide-counter"><span id="current-slide">1</span>/<span id="total-slides">13</span></div>
+        <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+        <div id="dots" class="dots" aria-label="מעבר לשקופית"></div>
+      </div>
+      <button type="button" class="mission-score" data-action="mission" aria-label="פתיחת משימות הכיתה">
+        משימות <strong id="mission-score">0</strong>/<span id="mission-total">13</span>
+      </button>
+      <button type="button" class="nav-button primary" data-action="next" aria-label="שקופית הבאה">הבאה</button>
+    </nav>
+
+    <aside id="mission-panel" class="mission-panel" aria-labelledby="mission-title" aria-live="polite" hidden>
+      <div class="mission-card">
+        <button type="button" class="mission-close" data-action="close-mission" aria-label="סגירת משימה">×</button>
+        <img src="assets/mission-badge.png" alt="תג משימה עם מגן, טירה וכרטיסי בדיקה" />
+        <div class="mission-content">
+          <p class="lesson-chip">משימת שקופית</p>
+          <h2 id="mission-title">משימה</h2>
+          <p id="mission-prompt" class="mission-prompt"></p>
+          <div id="mission-options" class="mission-options" role="group" aria-label="אפשרויות משימה"></div>
+          <p id="mission-feedback" class="mission-feedback"></p>
+          <div class="mission-footer">
+            <span id="mission-status">לא הושלמה</span>
+            <button type="button" class="ghost-button" data-action="reset-missions">איפוס משימות</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <script src="script.js?v=finale-image-only"></script>
+  </body>
+</html>
